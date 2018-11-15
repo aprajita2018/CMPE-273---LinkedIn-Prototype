@@ -1,0 +1,10 @@
+#mainNav{
+    position: absolute;
+    height: 60px;
+    font-family: "Roboto", "Lato", Arial, "Helvetica Neue", sans-serif;
+    background-color: rgba(200, 200, 200, 0.2);
+}
+
+#mainNav > div.container{
+    background-color: transparent;
+}

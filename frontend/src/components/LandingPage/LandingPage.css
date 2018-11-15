@@ -1,0 +1,10 @@
+div.container{
+    background-color: transparent;
+}
+
+header{
+    background: url("/img/header.jpg");
+    background-repeat: none;
+    background-size: 100% 100%;
+    min-height: 100vh;
+}
