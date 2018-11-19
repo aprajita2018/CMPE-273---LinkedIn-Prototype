@@ -1,12 +1,12 @@
 import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER} from "../actions/types";
 
-const intialState = {
+const initialState = {
   user: {},
   token: "",
   name: "",
 };
 
-export default function(state = intialState, action) {
+export default function(state = initialState, action) {
     switch (action.type) {
       case LOGIN_USER:
         return {
@@ -25,7 +25,7 @@ export default function(state = intialState, action) {
       case LOGOUT_USER:
         console.log("Logging out user. Resetting users store");
         return {
-          ...intialState  // resetting the state
+          ...initialState  // resetting the state
         }
 
       default:
