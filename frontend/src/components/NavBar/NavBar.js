@@ -2,7 +2,8 @@ import React,{Component} from 'react';
 import './NavBar.css';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {login} from '../../actions/user_action';
+//import {login} from '../../actions/user_action';
+import * as actions from '../../store/actions/index';
 
 class NavBar extends Component {
         
@@ -31,11 +32,16 @@ class NavBar extends Component {
 }
 
 
-const mapStateToProps = state => ({
-    token: state.users.token,
-    user: state.users.user,
-    name: state.users.name,
-    user_type: state.users.user_type
-});
+// const mapStateToProps = state => {
+//     return{
+//         token: state.login.token,
+//         user: state.login.user,
+//         name: state.login.name,
+//         user_type: state.login.user_type
 
-export default connect(mapStateToProps, {login})(NavBar);
+//     }
+    
+// };
+
+//export default connect(mapStateToProps, null)(NavBar);
+export default NavBar;
