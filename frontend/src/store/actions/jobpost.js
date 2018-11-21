@@ -54,11 +54,43 @@ export const showJobqual = () => {
        company : data.company,
        jobtitle : data.jobtitle,
        address : data.address, 
-       
+       errorFlag : false,
+       successFlag: false,
+      
     }
  
  
  }
+
+
+ export const jobDraftSuccess= (data, jobid) => {
+    return {
+        type: actionTypes.POST_JOB_DRAFT_SUCCESS,
+       
+       jobid : jobid, 
+       company : data.company,
+       jobtitle : data.jobtitle,
+       address : data.address,
+       jobfunc : data.jobfunc,
+       emptype : data.emptype,
+       industry : data.industry,
+       senlevel : data.senlevel,
+       jobdes : data.jobdes,
+       recapp : data.recapp,
+       source : data.source,
+       draftSuccessFlag: true,
+       draftFailFlag : false
+    };
+};
+
+export const jobDraftFail = () => {
+    return {
+        type: actionTypes.POST_JOB_DRAFT_FAIL,
+        
+        draftSuccessFlag: false,
+        draftFailFlag : true
+    };
+};
 
 
  export const jobPostSuccess= () => {
@@ -66,7 +98,8 @@ export const showJobqual = () => {
         type: actionTypes.POST_JOB_CHECKOUT_SUCCESS,
         
         errorFlag : false,
-        errormsg: '',
+        successFlag: true,
+        activeSteps : 2,
     };
 };
 
@@ -74,12 +107,22 @@ export const jobPostFail = () => {
     return {
         type: actionTypes.POST_JOB_CHECKOUT_FAIL,
         
-        errorFlag : false,
-        errormsg: '',
+        errorFlag : true,
+        successFlag: false,
+        activeSteps : 1,
     };
 };
 
-
+export const jobresetErrors = () => {
+    return {
+        type: actionTypes.POST_JOB_RESET_ERRORS,
+        
+        errorFlag : false,
+        //successFlag: false,
+        draftSuccessFlag: false,
+        draftFailFlag : false
+    };
+};
 
 
 export const continueJobdesc = (data) => {
@@ -116,47 +159,33 @@ export const continueJobqual = (data) => {
  export const jobcheckout = (data) => {
     return dispatch => {
         axios.defaults.withCredentials = true;
-    //     let token = JSON.parse(localStorage.getItem("token"));
-    //     console.log("print token", token );
-    //     var config = {
-    //         headers: {'Authorization': token}
-    //    };
+   
     axios.post('/jobupdate',data) 
     .then((response) => {
        console.log("Status Code : ",response.status);
        if(response.status === 200){
-               //this.setState({httpres: response.data.concat(response.data) })
-               console.log("Success Post");
-
-               
+               console.log("Success Post");   
                console.log(response.data);
-              
+               if(data.poststatus ==='draft'){
+                   dispatch(jobDraftSuccess(data,response.data.jobid)); 
+               }
+               else{
+                dispatch(jobPostSuccess());
+               }
                
-               //console.log("showform.showPhotoForm ",showform.showPhotoForm , val );
-               //console.log("response.data.progBarVal : ",listing.progBarVal);
-               dispatch(jobPostSuccess());
 
-           
        }
-      
        
        })
        .catch(err => {
-        if(err.response){
-            //console.log("error  response is : ",err.response.status);
-            if(err.response.status===401)
-            {
-                //dispatch(unauthRedirectOwner());
-            }
-            else{
-                dispatch(jobPostFail(err.response));
-            }
-        }        
-        
-        
+        if(data.poststatus ==='draft'){
+            dispatch(jobDraftFail()); 
+        } 
+        else{
+            dispatch(jobPostFail()); 
+        }   
+                      
     });
-       
-
     
     }
 }   
