@@ -14,10 +14,11 @@
 .section-page{
     margin: 48px auto 0;
     padding : 24px;
-    max-width: 408px;
+    max-width: 500px;
+    min-height: 320px;
     background: #fff;
     border-radius: 2px;
-
+    
 
 }
 .form{

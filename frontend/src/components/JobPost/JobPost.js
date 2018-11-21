@@ -485,8 +485,10 @@ handleChange = name => value => {
       Invalidjobdes : false,
       Invalidfield :false,
     });
-   
-
+    if(this.props.draftSuccessFlag || this.props.draftFailFlag){
+        this.props.jobresetErrors(); 
+      } 
+ 
   };
 
 
@@ -506,17 +508,66 @@ changeHandler(e){
       Invalidfield :false,
       activeStep : '0',   
   })
-  //to do
-  // this.props.resetErrors();
-
+  if(this.props.draftSuccessFlag || this.props.draftFailFlag){
+    this.props.jobresetErrors(); 
   }
+   
+}
 
 
 
-  saveDraft(e){
-    e.preventDefault();
+  saveDraft(){
     
-//To do
+    let { company, jobtitle, address,jobfunc, emptype, industry, senlevel,jobdes,recapp,source} = this.state;
+
+    
+    if(company && jobtitle && address && jobfunc &&  emptype && industry &&  senlevel && jobdes){
+
+        
+        
+        let data ={
+          jobid : this.props.jobid,
+          company : company,
+          jobtitle : jobtitle,
+          address : address,
+          jobfunc : jobfunc,
+          emptype : emptype,
+          industry : industry,
+          senlevel : senlevel,
+          jobdes : jobdes,
+          recapp : recapp,
+          source : source,
+          poststatus : 'draft'
+        }
+        
+        
+        this.props.continuejobdesc(data); 
+        console.log("jobfunc",data.jobfunc);
+        console.log("emptype",data.emptype);
+        console.log("industry",data.industry);
+        console.log("senlevel",data.senlevel);
+        console.log("jobdes",data.jobdes);
+        console.log("recapp",data.recapp);
+        console.log("source",data.source);
+        this.props.jobcheckout(data);
+        
+
+    }
+    else{
+        
+        this.setState({Invalidfield:true})
+        if(!company){this.setState({Invalidcompany:true}) }
+        if(!jobtitle){this.setState({Invalidjobtitle:true}) }
+        if(!address){this.setState({Invalidaddress:true}) }
+        if(!jobfunc){this.setState({Invalidjobfunc:true}) }
+        if(!emptype){this.setState({Invalidemptype:true}) }
+        if(!industry){this.setState({Invalidindustry:true}) }
+        if(!senlevel){this.setState({Invalidsenlevel:true}) }
+        if(!jobdes){this.setState({Invalidjobdes:true}) } 
+
+
+    }
+   
     
 }
 
@@ -623,7 +674,7 @@ submitCheckout(){
         explevel : this.props.explevel,
         edulevel: this.props.edulevel,  
         rate : rate,
-        poststatus : 'live'      
+        poststatus : 'active'      
 
      }
     
@@ -640,9 +691,26 @@ render(){
     let showsecond = null;
     let showthird = null;
     let showStepper = null;
-    //console.log("this.props.show1stform",this.props.show1stform);
-    //console.log("this.props.showinit",this.props.ShowInit);
-if(this.props.ShowInit)  {
+    let showSuccess = null;
+    let showError = null;
+    let showInputError = null;
+    let draftsaveSuccess =null;
+    let draftsaveFail =null;
+      
+       
+    if(this.props.successPost){
+        showSuccess = <div className="alert alert-success" role="alert">
+    <h2>Job Post Successful</h2>
+      </div>
+    }
+    if(this.props.failPost){
+        showError = <div className="alert-danger">
+    <h2>Job Not Created, Try Again Later !!</h2>
+      </div>
+    }
+    
+
+    if(this.props.ShowInit)  {
     showinit = 
     <div className="container-box">
         <div className="header-page">
@@ -653,20 +721,24 @@ if(this.props.ShowInit)  {
         <section className="section-page">
 
         <form className="form">
+        <br/>
          <input type="text" className="form-control"  name="company" onChange={this.changeHandler}
             placeholder={this.props.company?this.props.company: "Company"}></input>
-   
+        <br/>
         <input type="text" onChange={this.changeHandler} className="form-control"  name="jobtitle" 
           placeholder={this.props.jobtitle?this.props.jobtitle: "Job title"}></input>
-        
+         <br/>
     	
     
      <input type="text" onChange={this.changeHandler} className="form-control"  name="address" 
       placeholder={this.props.address?this.props.address:"Job address or city"}></input>
+       <br/>
    </form>
-    <button   style={{marginLeft:"100px",position:"relative"}} className="btn btn-primary" onClick={this.startJobHandler} >Start Job Post</button>
+   <br/>
+   <div className="col-md-12" style={{textAlign:'center'}}> 
+    <button   className="btn btn-primary" onClick={this.startJobHandler} >Start Job Post</button>
 
-     
+     </div>
      
      </section>
 
@@ -681,12 +753,34 @@ if(this.props.ShowInit)  {
                    {title: ''}] } 
                    activeStep={this.props.activeSteps} />
             </div>
-   
+     if(this.state.Invalidcompany || this.state.Invalidjobtitle || this.state.Invalidaddress|| this.state.Invalidjobfunc|| 
+        this.state.Invalidemptype || this.state.Invalidindustry || this.state.Invalidindustry || this.state.Invalidjobdes) {
+
+            showInputError = <div className="alert-danger">
+            <h2>Invalid Input, Fields cannot be empty</h2>
+              </div>
+
+        } 
+
+     if(this.props.draftSuccessFlag) {
+        draftsaveSuccess= <div className="alert alert-success" role="alert">
+        <h2>Draft Save Successful</h2>
+          </div>
+     } 
+     if(this.props.draftFailFlag) {
+        draftsaveFail= <div className="alert-danger">
+        <h2>Draft Save not successful. Try Again !</h2>
+          </div>
+     }
+
     if(this.props.show1stform) {
         
         showfirst =
         <div className="panel-containers">
             <div className ="container-props">
+            {showInputError}
+            {draftsaveSuccess}
+            {draftsaveFail}
                <h2> Step 1: What job do you want to post?</h2>
                  {/* {fieldcheck}
                {errorlog} */}
@@ -697,18 +791,18 @@ if(this.props.ShowInit)  {
               <div className="form-row">
                      <div className="form-group col-md-4">
                         <label >Company *</label>
-                        <input type="text" className="form-control" name="company" style={{ borderColor:this.state.Invalidcompany?'red':'grey'}}  onChange={this.changeHandler} 
+                        <input type="text" className="form-control" name="company" style={{ borderColor:this.state.Invalidcompany?'red':''}}  onChange={this.changeHandler} 
                         placeholder={this.props.company?this.props.company: "Company"}/> 
                     </div>
                     <div className="form-group col-md-4">
                         <label >Job title *</label>
-                        <input type="text" name="jobtitle" className="form-control" style={{ borderColor:this.state.Invalidjobtitle?'red':'grey'}} onChange={this.changeHandler} 
+                        <input type="text" name="jobtitle" className="form-control" style={{ borderColor:this.state.Invalidjobtitle?'red':''}} onChange={this.changeHandler} 
                         placeholder={this.props.jobtitle?this.props.jobtitle: "Job Title"}/>
         
                     </div>
                     <div className="form-group col-md-4">
                         <label >Location *</label>
-                        <input type="text" className="form-control" style={{ borderColor:this.state.Invalidaddress?'red':'grey'}} name="address" onChange={this.changeHandler} 
+                        <input type="text" className="form-control" style={{ borderColor:this.state.Invalidaddress?'red':''}} name="address" onChange={this.changeHandler} 
                         placeholder={this.props.address?this.props.address: "Location"}/>            
                     </div>             
               </div>
@@ -719,13 +813,13 @@ if(this.props.ShowInit)  {
                         <label >Job Function *</label>
                         
                         <Select isMulti options={JobFunct} isSearchable   name="jobfunc"  onChange={this.handleChange('jobfunc')} 
-                        style={{ borderColor:this.state.Invalidjobfunc?'red':'grey'}} defaultValue={this.props.jobfunc}/>
+                        style={{ borderColor:this.state.Invalidjobfunc?'red':''}} defaultValue={this.props.jobfunc}/>
                     </div>
                     <div className="form-group col-md-4">
                         <label >Employment Type *</label>
-                    <select   className="form-control" style={{ borderColor:this.state.Invalidemptype?'red':'grey'}} 
+                    <select   className="form-control" style={{ borderColor:this.state.Invalidemptype?'red':''}} 
                     name="emptype" onChange={this.changeHandler}>
-                    <option >{this.props.emptype?this.props.emptype:"Choose One..."}</option>
+                    <option >{this.props.emptype?this.props.emptype:"Select..."}</option>
                     <option >Full-time</option>
                     <option >Part-time</option>
                     <option >Contract</option>
@@ -741,14 +835,14 @@ if(this.props.ShowInit)  {
               <div className="form-group col-md-8">
                         <label >Company Industry *</label>
                         
-                        <Select isMulti options={Industry} isSearchable  style={{ borderColor:this.state.Invalidindustry?'red':'grey'}}  
+                        <Select isMulti options={Industry} isSearchable  style={{ borderColor:this.state.Invalidindustry?'red':''}}  
                         name="industry"  onChange={this.handleChange('industry')} defaultValue={this.props.industry}/>
                     </div>
                     <div className="form-group col-md-4">
                         <label >Seniority Level *</label>
-                    <select  className="form-control" name="senlevel" style={{ borderColor:this.state.Invalidsenlevel?'red':'grey'}} 
+                    <select  className="form-control" name="senlevel" style={{ borderColor:this.state.Invalidsenlevel?'red':''}} 
                     onChange={this.changeHandler} >
-                    <option >{this.props.senlevel?this.props.senlevel:"Choose One..."}</option>
+                    <option >{this.props.senlevel?this.props.senlevel:"Select..."}</option>
                     <option >Internship</option>
                     <option >Associate</option>
                     <option >Mid-Senior level</option>
@@ -762,7 +856,7 @@ if(this.props.ShowInit)  {
                      <br/>
                      <label >Job Description *</label>
                      
-                    <textarea onChange={this.changeHandler} style={{ borderColor:this.state.Invalidjobdes?'red':'grey'}}  className="form-control row" rows="18" 
+                    <textarea onChange={this.changeHandler} style={{ borderColor:this.state.Invalidjobdes?'red':''}}  className="form-control row" rows="18" 
                     name="jobdes" placeholder={this.props.jobdes?this.props.jobdes:"Job Description"}></textarea>
                    
             <br/>
@@ -770,7 +864,7 @@ if(this.props.ShowInit)  {
 
             <div className="form-row">
                         <label >Let candidates apply with their LinkedIn profile or add external site address</label>
-                        <input type="text" className="form-control" name="recapp" style={{ borderColor:'grey'}} onChange={this.changeHandler} 
+                        <input type="text" className="form-control" name="recapp"  onChange={this.changeHandler} 
                         placeholder={this.props.recapp?this.props.recapp:"abc.abd@gmail.com"}/> 
                     </div>
             
@@ -778,8 +872,8 @@ if(this.props.ShowInit)  {
             <br/>   
             <div className="form-row">
                         <label >How Did you hear about us?</label>
-                        <select className="form-control" name="source" style={{ borderColor:'grey'}} onChange={this.changeHandler}>
-                    <option >{this.props.source?this.props.source:"Choose One..."}</option>
+                        <select className="form-control" name="source"  onChange={this.changeHandler}>
+                    <option >{this.props.source?this.props.source:"Select..."}</option>
                     <option >In the Mail</option>
                     <option >Radio</option>
                     <option >Online as/search Engine</option>
@@ -793,7 +887,7 @@ if(this.props.ShowInit)  {
             </div>
             </form> 
             <br/> 
-             <button  style={{color:"blue"}} className="btn btn-secondary" onClick={this.saveDraft} >Save Draft</button>
+             <button  style={{color:"white"}} className="btn btn-secondary" onClick={this.saveDraft} >Save Draft</button>
             <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary pull-right" 
                    onClick={this.continueJobdesc} >Continue</button>                
                
@@ -858,7 +952,7 @@ if(this.props.ShowInit)  {
     <br/> 
     
         
-          <button  style={{color:"blue"}} className="btn btn-secondary" onClick={this.backJobqual} >Back</button>
+          <button  style={{color:"white"}} className="btn btn-secondary" onClick={this.backJobqual} >Back</button>
           <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary pull-right" 
            onClick={this.continueJobqual} >Continue</button>  
         
@@ -873,6 +967,8 @@ if(this.props.ShowInit)  {
     
     if(this.props.show3rdform){
         showthird = <div className="panel-containers">
+        {showSuccess}
+        {showError}
     <div className ="container-props">
     <h2> <b>Step 3:</b>Set your budget, pay when candidates view your job</h2>
     <br/> 
@@ -906,17 +1002,17 @@ if(this.props.ShowInit)  {
     </div>
     <br/> 
     <br/> 
-    
+    </form>
           <br/> 
     <br/> 
     
        
-          <button  style={{color:"blue"}} className="btn btn-secondary" onClick={this.backJobcheckout} >Back</button>
+          <button  style={{color:"white"}} className="btn btn-secondary" disabled={this.props.successPost} onClick={this.backJobcheckout} >Back</button>
           <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary pull-right" 
-             onClick={this.submitCheckout}>Checkout</button>  
+            disabled={this.props.successPost} onClick={this.submitCheckout}>Checkout</button>  
         
         
-        </form>
+        
     
           
     </div>
@@ -956,6 +1052,7 @@ return {
     show1stform : state.jobpost.show1stform,
     show2ndform : state.jobpost.show2ndform,
     show3rdform : state.jobpost.show3rdform,
+    jobid : state.jobpost.jobid,
     company : state.jobpost.company,
     jobtitle : state.jobpost.jobtitle,
     address : state.jobpost.address,
@@ -971,13 +1068,14 @@ return {
     edulevel: state.jobpost.edulevel,
     rate : state.jobpost.rate,
     activeSteps : state.jobpost.activeSteps,
-    //username : state.login.username,
+    failPost : state.jobpost.errorFlag,
+    successPost: state.jobpost.successFlag,
+    draftSuccessFlag: state.jobpost.draftSuccessFlag,
+    draftFailFlag : state.jobpost.draftFailFlag,
 
     // user : state.login.user,
     // isLoggedIn : state.login.isLoggedIn,
     // username : state.login.username,
-    // updateSuccess: state.login.updateSuccess,
-    // errorMsg:state.login.errorMsg,
     // unAuthRedirect : state.login.unAuthRedirect
 };
 };
@@ -989,10 +1087,10 @@ return {
     showjobqual : () => dispatch (actions.showJobqual()),
     showjobcheckout : () => dispatch (actions.showJobcheckout()),
     initsubmit : (data) => dispatch (actions.initsubmit(data)),
-    //savedraft : (data) => dispatch (actions.saveDraft(data)),
     continuejobdesc : (data) => dispatch (actions.continueJobdesc(data)),
     continuejobqual : (data) => dispatch (actions.continueJobqual(data)),
     jobcheckout : (data) => dispatch (actions.jobcheckout(data)),
+    jobresetErrors : () => dispatch (actions.jobresetErrors()),
 };
 };
 
