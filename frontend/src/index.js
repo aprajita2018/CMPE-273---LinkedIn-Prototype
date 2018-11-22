@@ -1,4 +1,3 @@
-
 import 'bootstrap/dist/css/bootstrap.min.css';
 import React from 'react';
 import ReactDOM from 'react-dom';
@@ -8,18 +7,16 @@ import registerServiceWorker from './registerServiceWorker';
 import { Provider } from 'react-redux';
 import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-import loginReducer from './store/reducers/login';
-
-
 import jobpostReducer from './store/reducers/jobpost';
 import reducer_profile from './store/reducers/reducer_profile';
 import { reducer as formReducer } from "redux-form";
+import userReducer from './store/reducers/userReducer';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
 const rootReducer = combineReducers({
     
-    login: loginReducer,
+    user: userReducer,
     jobpost : jobpostReducer,
     reducer_profile: reducer_profile,
     form: formReducer
