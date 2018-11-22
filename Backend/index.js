@@ -3,30 +3,19 @@ var express = require('express');
 var app = express();
 var bodyParser = require('body-parser');
 var session = require('express-session');
-var cookieParser = require('cookie-parser');
 var cors = require('cors');
-
 var kafka = require('./kafka/client');
-
 const multer = require('multer');
-
-
-
 const port = 3001;
 var passport = require('passport');
-
 var crypt = require('./crypt');
 var pool = require('./pool');
 var {mongoose} = require('./mongoose');
 var jwt = require('jsonwebtoken');
 var config = require('./settings');
-
 const uuidv4 = require('uuid/v4');
 const path = require('path');
 const fs = require('fs');
-
-
-
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -41,9 +30,7 @@ const storage = multer.diskStorage({
   
 const upload = multer({ storage });
 
-
 var mysql = require('mysql');
-
 
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
@@ -81,19 +68,19 @@ app.use(function (req, res, next) {
 });
 
 
+//requiring router modules
+var loginRouter           = require('./routes/loginRouter');
+var signupRouter          = require('./routes/signupRouter');
+var logout                = require('./routes/logout');
+// var jobupdate             = require ('./routes/jobupdate');
+var profile               = require('./routes/profile');
 
-  //var loginRouter           = require('./routes/loginRouter');
-  //var signupRouter          = require('./routes/signupRouter');
-  //var logout                = require('./routes/logout');
-  //var jobupdate             = require ('./routes/jobupdate');
-  
-  //routing to different routes
-  //app.use('/login', loginRouter);
-  //app.use('/userSignup', signupRouter);
-  //app.use('/logout', logout);
-  //app.use('/jobupdate', jobupdate);
-
-
+// routing to different routes
+app.use('/login', loginRouter);
+app.use('/userSignup', signupRouter);
+app.use('/logout', logout);
+// app.use('/jobupdate', jobupdate);
+app.use('/profile',profile);
 
 
 //Protected authenticated route with JWT
@@ -137,7 +124,6 @@ console.log("out of job post handler")
  
 
 
-
 app.get('/postjob',  function(req,res){
     
     console.log("Inside recruiter get request");
@@ -171,15 +157,6 @@ app.get('/postjob',  function(req,res){
    
     console.log("Going out of get Job ");
 })
-
-
-
-
-var profile = require('./routes/profile');
-
-
-app.use('/profile',profile);
-
 
 
 

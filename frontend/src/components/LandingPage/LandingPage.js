@@ -2,20 +2,24 @@ import React,{Component} from 'react';
 import './LandingPage.css';
 import NavBar from '../NavBar/NavBar';
 import Footer from '../Footer/Footer';
+import {signup} from '../../store/actions/useraction';
+import {connect} from 'react-redux';
+
 
 class LandingPage extends Component{
     constructor(props){
         super(props);
 
         this.state = {
-            fname: '',
-            lname: '',
-            email: '',
-            password: ''
+            firstname   : '',
+            lastname    : '',
+            email       : '',
+            user_type   : '',
+            password    : ''
         }
 
-        this.onChange = this.onChange.bind(this);
-        this.onSubmit = this.onSubmit.bind(this);
+        this.onChange   = this.onChange.bind(this);
+        this.onSubmit   = this.onSubmit.bind(this);
     }
 
     onChange(e) {
@@ -24,7 +28,8 @@ class LandingPage extends Component{
     onSubmit(e) {
         e.preventDefault();
         const values = {
-            ...this.state
+            ...this.state,
+            user_type: document.getElementsByName('user_type')[0].checked?'applicant':'recruiter'
         };
         this.props.signup(values, (res) => {
             if(res.status === "SUCCESS"){
@@ -63,22 +68,36 @@ class LandingPage extends Component{
                                         
                                         <div className='form-group form-group-sm'>
                                             <label className='col-form-label col-form-label-sm' htmlFor='input-firstname'>First Name</label>
-                                            <input type='text' className="form-control form-control-sm" id="input-firstname" name='input-firstname' aria-required='true' />
+                                            <input type='text' className="form-control form-control-sm" id="input-firstname" name='firstname' aria-required='true' value={this.state.firstname} onChange={this.onChange} />
                                         </div>
                                         
-                                        <div className='form-group'>
+                                        <div className='form-group form-group-sm'>
                                             <label className='col-form-label col-form-label-sm' htmlFor='input-lastname'>Last Name</label>
-                                            <input type='text' className='form-control form-control-sm' id='input-lastname' name='input-lastname' aria-required='true' />
+                                            <input type='text' className='form-control form-control-sm' id='input-lastname' name='lastname' aria-required='true' value={this.state.lastname} onChange={this.onChange} />
                                         </div>
                                         
-                                        <div className='form-group'>
+                                        <div className='form-group form-group-sm'>
                                             <label className='col-form-label col-form-label-sm' htmlFor='input-email'>Email</label>
-                                            <input type='email' className='form-control form-control-sm' id='input-email' name='input-email' aria-required='true' />
+                                            <input type='email' className='form-control form-control-sm' id='input-email' name='email' aria-required='true' value={this.state.email} onChange={this.onChange}/>
                                         </div>
                                         
-                                        <div className='form-group'>
+                                        <p className='font-weight-bold'>Signing up as :</p>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="user_type" id="input-usertype1" value="applicant" checked/>
+                                            <label class="form-check-label" for="input-usertype1">
+                                                Applicant
+                                            </label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="user_type" id="input-usertype2" value="recruiter"/>
+                                            <label class="form-check-label" for="input-usertype2">
+                                                Recruiter
+                                            </label>
+                                        </div>
+
+                                        <div className='form-group form-group-sm'>
                                             <label className='col-form-label col-form-label-sm' htmlFor='input-password'>Password(6 or more characters)</label>
-                                            <input type='password' className='form-control form-control-sm' id='input-password' name='input-password' aria-required='true' />
+                                            <input type='password' className='form-control form-control-sm' id='input-password' name='password' aria-required='true' value={this.state.password} onChange={this.onChange} />
                                         </div>
                                         <p className='font-weight-light text-center'>
                                             <small>By clicking Join now, you agree to the LinkedIn <br/> User Agreement, Privacy Policy, and Cookie Policy.</small>
@@ -89,14 +108,20 @@ class LandingPage extends Component{
                                     </div>
                                 </form>
                             </div>
-                            <div className="container">
+                            {/* <div className="container">
                                 <Footer/>
-                            </div>
+                            </div> */}
                         </div>
                     </div>
                 </header>
+                <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
+                    <p id="alert_text"></p>
+                </div>
+                <div id="success_snackbar" className="alert alert-success snackbar" role="alert" style={{display: 'none'}}>
+                    <p id="success_text"></p>
+                </div>
             </div>
         );
     }
 }
-export default LandingPage;
+export default connect(null, {signup})(LandingPage);

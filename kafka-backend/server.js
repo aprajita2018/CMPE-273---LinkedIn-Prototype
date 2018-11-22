@@ -5,17 +5,14 @@ var jobpost = require('./services/jobpost.js');
 
 var GetProfile = require('./services/getprofile.js');
 
-
-
-function handleTopicRequest(topic_name,fname){
-  
+function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
     var producer = connection.getProducer();
     console.log('server is running ');
     consumer.on('message', function (message) {
   
         console.log('message received for ' + topic_name +" ", fname);
-       console.log(JSON.stringify(message.value));
+        console.log(JSON.stringify(message.value));
     
         var data = JSON.parse(message.value);
         
@@ -34,15 +31,12 @@ function handleTopicRequest(topic_name,fname){
                 console.log("Data: ",data);
             });
             return; 
-        });
-  
+        });  
     });
-
 }
 
 console.log("Kafka Backend");
 handleTopicRequest("jobpost",jobpost);
 handleTopicRequest("getjobpost",getjobpost);
-
- handleTopicRequest("getprofile",GetProfile);
+handleTopicRequest("getprofile",GetProfile);
  
