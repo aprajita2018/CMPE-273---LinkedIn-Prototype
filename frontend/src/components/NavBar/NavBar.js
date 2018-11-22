@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import './NavBar.css';
 import {Link, Redirect} from 'react-router-dom';
 import {connect} from 'react-redux';
-import {login} from '../../store/actions/useraction';
+import {login, logout} from '../../store/actions/useraction';
 
 class NavBar extends Component {
     constructor(props){
@@ -14,10 +14,26 @@ class NavBar extends Component {
         }
         this.onChange   = this.onChange.bind(this);
         this.onSubmit   = this.onSubmit.bind(this); 
+        this.handlelogout    = this.handlelogout.bind(this);
     }
 
     onChange(e){
         this.setState({[e.target.name]: e.target.value});
+    }
+
+    handlelogout(){
+        this.props.logout( (res) =>{
+            if(res.status === 'SUCCESS'){
+                this.setState({
+                    isLoggedIn: false
+                });
+                document.getElementById("success_text").innerHTML =  res.message;
+                document.getElementById("success_snackbar").style.setProperty('display', 'block');
+                setTimeout(() => {
+                    window.location = "/";          
+                }, 2000)
+            }
+        }) 
     }
 
     onSubmit(e){
@@ -31,8 +47,13 @@ class NavBar extends Component {
         this.props.login(values, (res) => {
             console.log(res);
             if(res.status === "SUCCESS"){
-                window.location = "/profile";          
+                this.setState({
+                    isLoggedIn: true
+                });
+                // window.location = "/profile";          
+                console.log("Signed in successfully");
             }
+
             else{
                 console.log("Err in login.");
                 document.getElementById("alert_text").innerHTML = "ERROR: " + res.message;
@@ -88,16 +109,16 @@ class NavBar extends Component {
                                     <div className="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdownMenuLink">
                                         <div className='dropdown-item' >
                                             <span><img src='img/JaneDoe.png' alt='profile pic' height='60' width='60' /></span>
-                                            <div className='navbar-profile-name'>Profile Name</div>
+                                            <div className='navbar-profile-name'>{this.props.name}</div>
                                             <div className='navbar-profile-title'>Title</div>
                                             <br/>
                                             <Link to="/profile"><span className='text-info'>View Profile</span></Link>                                 
 
                                         </div>
-                                        <Link to="/"><span className='dropdown-item text-secondary'>Sign Out</span></Link>                             
+                                        <span className='dropdown-item text-secondary'><button className='btn btn-danger' onClick={this.handlelogout}>Sign Out</button></span>                            
                                     </div>
                                 </li>
-                                <li className='nav-item  mx-4'>
+                                <li className='nav-item  mx-4' style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
                                     <Link to="/jobpost"><span className='icon-text'><i className="fas fa-file-alt fa-2x"></i><br/>Post Jobs</span></Link>                                 
                                 </li>
                             </ul>
@@ -110,15 +131,13 @@ class NavBar extends Component {
 }
 
 
-// const mapStateToProps = state => {
-//     return{
-//         token: state.login.token,
-//         user: state.login.user,
-//         name: state.login.name,
-//         user_type: state.login.user_type
+const mapStateToProps = state => {
+    return{
+        // token: state.login.token,
+        user: state.user.user,
+        name: state.user.name,
+        user_type: state.user.user_type
+    }    
+};
 
-//     }
-    
-// };
-
-export default connect(null, {login})(NavBar);
+export default connect(mapStateToProps, {login, logout})(NavBar);

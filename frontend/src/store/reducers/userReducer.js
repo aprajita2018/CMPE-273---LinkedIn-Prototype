@@ -1,4 +1,4 @@
-import {LOGIN_USER, SIGNUP_USER} from '../actions/actionTypes';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER} from '../actions/actionTypes';
 
 const initialState = {
   user: {},
@@ -22,11 +22,11 @@ export default function(state = initialState, action) {
           ...state,
         }
 
-    //   case LOGOUT_USER:
-    //     console.log("Logging out user. Resetting users store");
-    //     return {
-    //       ...initialState  // resetting the state
-    //     }
+      case LOGOUT_USER:
+        console.log("Logging out user. Resetting users store");
+        return {
+          ...initialState  // resetting the state
+        }
 
       default:
         return state;

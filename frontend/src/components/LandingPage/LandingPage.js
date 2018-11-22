@@ -42,11 +42,11 @@ class LandingPage extends Component{
             }
             else{
                 console.log("Err in creating the user profile.");
-                document.getElementById("alert_text").innerHTML = "ERROR: Could not create your account.";
+                document.getElementById("alert_text").innerHTML = res.message;
                 document.getElementById("alert_snackbar").style.setProperty('display', 'block');
-                setTimeout(() => {
-                    document.getElementById("alert_snackbar").style.setProperty('display', 'none');
-                }, 2000);
+                // setTimeout(() => {
+                //     document.getElementById("alert_snackbar").style.setProperty('display', 'none');
+                // }, 2000);
             }
         });
     }
