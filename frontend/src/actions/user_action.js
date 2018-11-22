@@ -1,5 +1,5 @@
 import axios from "axios";
-import {LOGIN_USER, SIGNUP_USER, UPDATE_USER, GET_USERDETAILS,GET_USERDETAILS_BYID, FETCH_OWNER, SEND_MSG, RECEIVE_MSGS, LOGOUT_USER} from './types';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER} from './types';
 
 //function/ action to post the login form
 export const login = (values, callback) => dispatch =>  {    

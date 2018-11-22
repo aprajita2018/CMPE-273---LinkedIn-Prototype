@@ -1,6 +1,7 @@
 import React,{Component} from 'react';
 import './LandingPage.css';
 import NavBar from '../NavBar/NavBar';
+import Footer from '../Footer/Footer';
 
 class LandingPage extends Component{
     constructor(props){
@@ -9,7 +10,6 @@ class LandingPage extends Component{
         this.state = {
             fname: '',
             lname: '',
-            phone: '',
             email: '',
             password: ''
         }
@@ -55,40 +55,42 @@ class LandingPage extends Component{
                             <div className='col-md-6 offset-md-3 col-lg-4 offset-lg-4 d-flex justify-content-center p-0 bg-white'>
                                 <form id='regForm' onSubmit={this.onSubmit} className="w-100">
 
-                                    <h3 className='text-center'>Be great at what you do</h3>
-                                    <h4 className='font-weight-light text-center'>Get started - it's free</h4>                                     
-                                    
+                                    <h4 className='text-center mt-3'>Be great at what you do</h4>
+                                    {/* <h5 className='font-weight-light text-center '>Get started - it's free</h5>                                      */}
+                                    <h5 className='text-center mb-3'><small>Get started - it's free</small></h5>
+
                                     <div className='bg-light mx-0 p-2'>
                                         
-                                        <div className='form-group'>
-                                            <label for='input-firstname'>First Name</label>
-                                            <input type='text' className="form-control" id="input-firstname" name='input-firstname' aria-required='true' />
+                                        <div className='form-group form-group-sm'>
+                                            <label className='col-form-label col-form-label-sm' htmlFor='input-firstname'>First Name</label>
+                                            <input type='text' className="form-control form-control-sm" id="input-firstname" name='input-firstname' aria-required='true' />
                                         </div>
                                         
                                         <div className='form-group'>
-                                            <label for='input-lastname'>Last Name</label>
-                                            <input type='text' className='form-control' id='input-lastname' name='input-lastname' aria-required='true' />
+                                            <label className='col-form-label col-form-label-sm' htmlFor='input-lastname'>Last Name</label>
+                                            <input type='text' className='form-control form-control-sm' id='input-lastname' name='input-lastname' aria-required='true' />
                                         </div>
                                         
                                         <div className='form-group'>
-                                            <label for='input-email'>Email</label>
-                                            <input type='email' className='form-control' id='input-email' name='input-email' aria-required='true' />
+                                            <label className='col-form-label col-form-label-sm' htmlFor='input-email'>Email</label>
+                                            <input type='email' className='form-control form-control-sm' id='input-email' name='input-email' aria-required='true' />
                                         </div>
                                         
                                         <div className='form-group'>
-                                            <label for='input-password'>Password(6 or more characters)</label>
-                                            <input type='password' className='form-control' id='input-password' name='input-password' aria-required='true' />
+                                            <label className='col-form-label col-form-label-sm' htmlFor='input-password'>Password(6 or more characters)</label>
+                                            <input type='password' className='form-control form-control-sm' id='input-password' name='input-password' aria-required='true' />
                                         </div>
-                                        <span className='font-weight-light text-center'>
+                                        <p className='font-weight-light text-center'>
                                             <small>By clicking Join now, you agree to the LinkedIn <br/> User Agreement, Privacy Policy, and Cookie Policy.</small>
-                                        </span>
+                                        </p>
                                         <div className='my-2'>
-                                            <button type='submit' className='btn btn-primary w-100'>Join Now</button>
+                                            <button type='submit' className='btn btn-primary btn-sm w-100'>Join Now</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            <div className="col-lg-10 mx-auto">
+                            <div className="container">
+                                <Footer/>
                             </div>
                         </div>
                     </div>

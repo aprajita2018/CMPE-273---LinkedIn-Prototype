@@ -1,10 +1,31 @@
+body{
+    font-family: -apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue","Fira Sans",Ubuntu,Oxygen,"Oxygen Sans",Cantarell,"Droid Sans","Apple Color Emoji","Segoe UI Emoji","Segoe UI Emoji","Segoe UI Symbol","Lucida Grande",Helvetica,Arial,sans-serif;
+}
+
 #mainNav{
     position: absolute;
+    left: 0;
+    top: 0;
     width: 100%;
-    font-family: "Roboto", "Lato", Arial, "Helvetica Neue", sans-serif;
+    /* font-family: "Roboto", "Lato", Arial, "Helvetica Neue", sans-serif; */
     background-color:#283e4a;
 }
 
 #mainNav > div.container{
     background-color: transparent;
+}
+
+.nav-item{
+    text-align: center
+}
+
+.icon-text{
+    color:#f7f9fc;
+    font-size: 0.8em;
+    font-weight: lighter;
+    
+}
+
+.dropdown-item .navbar-profile-name{
+    font-weight: bold;
 }
