@@ -15,8 +15,10 @@ body{
 
 .snackbar{
     position: fixed;
-    bottom: 5px;
-    width: 70%;
+    bottom: 4px;
+    width: 100%;
     text-align: center;
+    line-height: 1.0;
     padding-bottom: 2px;
+    font-weight: bold;
 }
