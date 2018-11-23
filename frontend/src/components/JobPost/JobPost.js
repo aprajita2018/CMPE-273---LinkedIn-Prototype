@@ -13,7 +13,7 @@ import 'rc-slider/assets/index.css';
 
 import Slider, {createSliderWithTooltip} from 'rc-slider';
 //import ReactBootstrapSlider from 'react-bootstrap-slider';
-
+import NavBar from '../NavBar/NavBar';
 //const createSliderWithTooltip = Slider.createSliderWithTooltip;
 const Range = createSliderWithTooltip(Slider.Range);
 const SliderWithTooltip = createSliderWithTooltip(Slider);
@@ -452,20 +452,15 @@ class JobPost extends Component {
 
   
 }
+componentDidMount(){
 
+    this.props.getinitdata(this.props.username);
+
+
+}
 
 startJobHandler(){
     
-    let { company, jobtitle, address} = this.state;
-    let data ={
-        company : company,
-        jobtitle:jobtitle,
-        address:address,
-    }
-   this.props.initsubmit(data);
-   console.log("company",company);
-   console.log("jobtitle",jobtitle);
-   console.log("address",address);
    this.props.showjobdesc();
 
 }
@@ -473,8 +468,14 @@ startJobHandler(){
 
 
 handleChange = name => value => {
+    
+    let data = {
+        name : name,
+        value : value,
+    
+    }
     this.setState({
-      [name]: value,
+      //[name]: value,
       Invalidcompany : false,
       Invalidjobtitle : false,
       Invalidaddress : false,
@@ -485,6 +486,8 @@ handleChange = name => value => {
       Invalidjobdes : false,
       Invalidfield :false,
     });
+    this.props.setPropsValue(data);
+
     if(this.props.draftSuccessFlag || this.props.draftFailFlag){
         this.props.jobresetErrors(); 
       } 
@@ -494,9 +497,15 @@ handleChange = name => value => {
 
 changeHandler(e){
     
+let data = {
+    name : e.target.name,
+    value :e.target.value,
+
+}
+this.props.setPropsValue(data);
 
     this.setState({
-      [e.target.name] : e.target.value,
+      //[e.target.name] : e.target.value,
       Invalidcompany : false,
       Invalidjobtitle : false,
       Invalidaddress : false,
@@ -518,30 +527,28 @@ changeHandler(e){
 
   saveDraft(){
     
-    let { company, jobtitle, address,jobfunc, emptype, industry, senlevel,jobdes,recapp,source} = this.state;
-
-    
-    if(company && jobtitle && address && jobfunc &&  emptype && industry &&  senlevel && jobdes){
+    if(this.props.company && this.props.jobtitle && this.props.address && this.props.jobfunc.length &&  this.props.emptype && this.props.industry.length &&  this.props.senlevel && this.props.jobdes){
 
         
         
         let data ={
+          username : this.props.username,  
           jobid : this.props.jobid,
-          company : company,
-          jobtitle : jobtitle,
-          address : address,
-          jobfunc : jobfunc,
-          emptype : emptype,
-          industry : industry,
-          senlevel : senlevel,
-          jobdes : jobdes,
-          recapp : recapp,
-          source : source,
+          company : this.props.company,
+          jobtitle : this.props.jobtitle,
+          address : this.props.address,
+          jobfunc : this.props.jobfunc,
+          emptype : this.props.emptype,
+          industry : this.props.industry,
+          senlevel : this.props.senlevel,
+          jobdes : this.props.jobdes,
+          recapp : this.props.recapp,
+          source : this.props.source,
           poststatus : 'draft'
         }
         
         
-        this.props.continuejobdesc(data); 
+        //this.props.continuejobdesc(data); 
         console.log("jobfunc",data.jobfunc);
         console.log("emptype",data.emptype);
         console.log("industry",data.industry);
@@ -555,15 +562,15 @@ changeHandler(e){
     }
     else{
         
-        this.setState({Invalidfield:true})
-        if(!company){this.setState({Invalidcompany:true}) }
-        if(!jobtitle){this.setState({Invalidjobtitle:true}) }
-        if(!address){this.setState({Invalidaddress:true}) }
-        if(!jobfunc){this.setState({Invalidjobfunc:true}) }
-        if(!emptype){this.setState({Invalidemptype:true}) }
-        if(!industry){this.setState({Invalidindustry:true}) }
-        if(!senlevel){this.setState({Invalidsenlevel:true}) }
-        if(!jobdes){this.setState({Invalidjobdes:true}) } 
+        //this.setState({Invalidfield:true})
+        if(!this.props.company){this.setState({Invalidcompany:true}) }
+        if(!this.props.jobtitle){this.setState({Invalidjobtitle:true}) }
+        if(!this.props.address){this.setState({Invalidaddress:true}) }
+        if(!this.props.jobfunc.length){this.setState({Invalidjobfunc:true}) }
+        if(!this.props.emptype){this.setState({Invalidemptype:true}) }
+        if(!this.props.industry.length){this.setState({Invalidindustry:true}) }
+        if(!this.props.senlevel){this.setState({Invalidsenlevel:true}) }
+        if(!this.props.jobdes){this.setState({Invalidjobdes:true}) } 
 
 
     }
@@ -572,35 +579,19 @@ changeHandler(e){
 }
 
 continueJobdesc (){
-    let { company, jobtitle, address,jobfunc, emptype, industry, senlevel,jobdes,recapp,source} = this.state;
+    //let { company, jobtitle, address,jobfunc, emptype, industry, senlevel,jobdes,recapp,source} = this.state;
     
-    if(company && jobtitle && address && jobfunc &&  emptype && industry &&  senlevel && jobdes){
-
+    if(this.props.company && this.props.jobtitle && this.props.address && this.props.jobfunc.length &&  this.props.emptype && this.props.industry.length &&  this.props.senlevel && this.props.jobdes){
         
         
-        let data ={
-          company : company,
-          jobtitle : jobtitle,
-          address : address,
-          jobfunc : jobfunc,
-          emptype : emptype,
-          industry : industry,
-          senlevel : senlevel,
-          jobdes : jobdes,
-          recapp : recapp,
-          source : source,
-    
-        }
-        
-        
-        this.props.continuejobdesc(data); 
-        console.log("jobfunc",data.jobfunc);
-        console.log("emptype",data.emptype);
-        console.log("industry",data.industry);
-        console.log("senlevel",data.senlevel);
-        console.log("jobdes",data.jobdes);
-        console.log("recapp",data.recapp);
-        console.log("source",data.source);
+        //this.props.continuejobdesc(data); 
+        console.log("jobfunc",this.props.jobfunc);
+        console.log("emptype",this.props.emptype);
+        console.log("industry",this.props.industry);
+        console.log("senlevel",this.props.senlevel);
+        console.log("jobdes",this.props.jobdes);
+        console.log("recapp",this.props.recapp);
+        console.log("source",this.props.source);
         
         this.props.showjobqual();
         
@@ -608,15 +599,15 @@ continueJobdesc (){
     }
     else{
         
-        this.setState({Invalidfield:true})
-        if(!company){this.setState({Invalidcompany:true}) }
-        if(!jobtitle){this.setState({Invalidjobtitle:true}) }
-        if(!address){this.setState({Invalidaddress:true}) }
-        if(!jobfunc){this.setState({Invalidjobfunc:true}) }
-        if(!emptype){this.setState({Invalidemptype:true}) }
-        if(!industry){this.setState({Invalidindustry:true}) }
-        if(!senlevel){this.setState({Invalidsenlevel:true}) }
-        if(!jobdes){this.setState({Invalidjobdes:true}) } 
+        //this.setState({Invalidfield:true})
+        if(!this.props.company){this.setState({Invalidcompany:true}) }
+        if(!this.props.jobtitle){this.setState({Invalidjobtitle:true}) }
+        if(!this.props.address){this.setState({Invalidaddress:true}) }
+        if(!this.props.jobfunc.length){this.setState({Invalidjobfunc:true}) }
+        if(!this.props.emptype){this.setState({Invalidemptype:true}) }
+        if(!this.props.industry.length){this.setState({Invalidindustry:true}) }
+        if(!this.props.senlevel){this.setState({Invalidsenlevel:true}) }
+        if(!this.props.jobdes){this.setState({Invalidjobdes:true}) } 
 
 
     }
@@ -628,19 +619,9 @@ continueJobdesc (){
 }
 
 continueJobqual(){
-let { skills , explevel , edulevel} = this.state;
-    
-let data = {
 
-    skills : skills,
-    explevel: explevel,
-    edulevel: edulevel,
+//this.props.continuejobqual(data);
 
-}
-this.props.continuejobqual(data);
-console.log("skills",data.skills);
-console.log("explevel",data.explevel);
-console.log("edulevel",data.edulevel);
 this.props.showjobcheckout();
 }
 
@@ -656,7 +637,7 @@ backJobcheckout(){
 submitCheckout(){
 
     // e.preventDefault();
-    let { rate} = this.state
+    //let { rate} = this.state
      let data = {
         jobid : this.props.jobid,
         username : this.props.username, 
@@ -673,7 +654,8 @@ submitCheckout(){
         skills : this.props.skills,
         explevel : this.props.explevel,
         edulevel: this.props.edulevel,  
-        rate : rate,
+        rate : this.props.rate,
+        easyapply : this.props.easyapply,
         poststatus : 'active'      
 
      }
@@ -757,7 +739,7 @@ render(){
         this.state.Invalidemptype || this.state.Invalidindustry || this.state.Invalidindustry || this.state.Invalidjobdes) {
 
             showInputError = <div className="alert-danger">
-            <h2>Invalid Input, Fields cannot be empty</h2>
+            <h2>Please fill out all required fields</h2>
               </div>
 
         } 
@@ -888,7 +870,7 @@ render(){
             </form> 
             <br/> 
              <button  style={{color:"white"}} className="btn btn-secondary" onClick={this.saveDraft} >Save Draft</button>
-            <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary pull-right" 
+            <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary float-right" 
                    onClick={this.continueJobdesc} >Continue</button>                
                
          
@@ -953,7 +935,7 @@ render(){
     
         
           <button  style={{color:"white"}} className="btn btn-secondary" onClick={this.backJobqual} >Back</button>
-          <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary pull-right" 
+          <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary float-right" 
            onClick={this.continueJobqual} >Continue</button>  
         
     
@@ -1002,14 +984,27 @@ render(){
     </div>
     <br/> 
     <br/> 
+
+    <div className="form-row">
+                        <label >Easy Apply?</label>
+                        <select className="form-control" name="easyapply"  onChange={this.changeHandler}>
+                    <option >{this.props.easyapply?'Yes':'No'}</option>
+                    <option value='true'>Yes</option>
+                    <option value='false'>No</option>
+                    
+                  </select>
+
+    </div>  
+            <br/> 
+    <br/> 
     </form>
           <br/> 
     <br/> 
     
        
           <button  style={{color:"white"}} className="btn btn-secondary" disabled={this.props.successPost} onClick={this.backJobcheckout} >Back</button>
-          <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary pull-right" 
-            disabled={this.props.successPost} onClick={this.submitCheckout}>Checkout</button>  
+          <button  style={{backgroundColor:"#337ab7",color:"#fff"}} className="btn btn-primary float-right" 
+            disabled={this.props.successPost} onClick={this.submitCheckout}>Post Job</button>  
         
         
         
@@ -1030,6 +1025,7 @@ render(){
 return(
 
        <div>
+          <NavBar /> 
         {showinit}
         
       {showStepper}
@@ -1067,6 +1063,7 @@ return {
     explevel : state.jobpost.explevel,
     edulevel: state.jobpost.edulevel,
     rate : state.jobpost.rate,
+    easyapply : state.jobpost.easyapply,
     activeSteps : state.jobpost.activeSteps,
     failPost : state.jobpost.errorFlag,
     successPost: state.jobpost.successFlag,
@@ -1082,6 +1079,7 @@ return {
 
 const mapDispatchToProps = dispatch => {
 return {
+    getinitdata:(username) =>dispatch(actions.getinitdata(username)),
     showinit : () => dispatch (actions.showInit()),
     showjobdesc : () => dispatch (actions.showJobdesc()),
     showjobqual : () => dispatch (actions.showJobqual()),
@@ -1091,6 +1089,7 @@ return {
     continuejobqual : (data) => dispatch (actions.continueJobqual(data)),
     jobcheckout : (data) => dispatch (actions.jobcheckout(data)),
     jobresetErrors : () => dispatch (actions.jobresetErrors()),
+    setPropsValue : (data) => dispatch (actions.setpropsvalue(data)),
 };
 };
 
