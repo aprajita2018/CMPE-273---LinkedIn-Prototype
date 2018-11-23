@@ -4,7 +4,7 @@ var passport = require('passport');
 var jwt = require('jsonwebtoken');
 var config = require('../settings');
 var {Jobs} = require('../models/jobs');
-var {mongoose} = require('../mongoose');
+var { mongoose } = require('../db/mongoose');
 
 
 function handle_request(msg, callback){
@@ -73,6 +73,7 @@ function handle_request(msg, callback){
         var explevel = msg.explevel;
         var edulevel = msg.edulevel;
         var rate = msg.rate;
+        var easyapply = msg.easyapply;
         var poststatus = msg.poststatus;
         jobid = Math.random().toString(36).substr(2, 9);
         console.log("jobid : ", jobid);
@@ -93,6 +94,7 @@ function handle_request(msg, callback){
             explevel : explevel,
             edulevel: edulevel,
             rate : rate,
+            easyapply: easyapply,
             poststatus : poststatus,
 
            });

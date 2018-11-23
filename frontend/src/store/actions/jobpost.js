@@ -12,6 +12,22 @@ export const showInit = () => {
     }
 }  
 
+
+export const setpropsvalue = (data) => {
+    
+    return {
+     type:actionTypes.SET_PROPS_VALUE,   
+     
+     data : data
+     
+     
+
+       
+    }
+}
+
+
+
 export const showJobdesc = () => {
     
         return {
@@ -51,9 +67,7 @@ export const showJobqual = () => {
   export const initsubmit = (data) => {
     return {
        type : actionTypes.SHOW_INIT_JOB_POST, 
-       company : data.company,
-       jobtitle : data.jobtitle,
-       address : data.address, 
+       
        errorFlag : false,
        successFlag: false,
       
@@ -118,6 +132,7 @@ export const jobresetErrors = () => {
         type: actionTypes.POST_JOB_RESET_ERRORS,
         
         errorFlag : false,
+        //waiting for login module
         //successFlag: false,
         draftSuccessFlag: false,
         draftFailFlag : false
@@ -155,10 +170,88 @@ export const continueJobqual = (data) => {
     };
 };
 
+export const getinitdataSuccess = (data) => {
+    return {
+       type: actionTypes.INIT_GET_JOB_SUCCESS,
+       
+       jobid : data.jobid, 
+       company : data.company,
+       jobtitle : data.jobtitle,
+       address : data.address,
+       jobfunc : data.jobfunc,
+       emptype : data.emptype,
+       industry : data.industry,
+       senlevel : data.senlevel,
+       jobdes : data.jobdes,
+       recapp : data.recapp,
+       source : data.source,
+       skills : data.skills,
+       explevel : data.explevel, 
+       edulevel : data.edulevel,
+       rate : data.rate,
+       easyapply : data.easyapply,
+       poststatus : data.poststatus,
+
+
+       
+    };
+};
+
+export const getinitdataFail = (data) => {
+    return {
+       type: actionTypes.INIT_GET_JOB_FAIL,
+       skills: data.skills,
+       explevel : data.explevel, 
+       edulevel : data.edulevel,
+       show2ndform : true,
+       activeSteps : 1,
+    };
+};
+
+
+export const getinitdata = (username) => {
+    return dispatch => {
+        axios.defaults.withCredentials = true;
+    //     let token = JSON.parse(localStorage.getItem("token"));
+    //     console.log("print token", token );
+    //     var config = {
+    //         headers: {'Authorization': token}
+    //    };
+        axios.get('/postjob',{
+       params: {
+           username: username,
+         }
+        }) 
+    .then((response) => {
+      
+       console.log("Status Code : ",response.status);
+       if(response.status === 200){
+               console.log("Success Post");
+               console.log(response.data.job);
+               dispatch(getinitdataSuccess(response.data.job));
+ 
+       }
+    
+       })
+       .catch(err => {
+        if(err.response){
+            
+            //dispatch(getinitdataFail(err.response));
+            console.log(err.response);
+        }        
+        
+        
+    });
+       
+
+    
+    }
+}  
+
 
  export const jobcheckout = (data) => {
     return dispatch => {
-        axios.defaults.withCredentials = true;
+    axios.defaults.withCredentials = true;
    
     axios.post('/jobupdate',data) 
     .then((response) => {

@@ -22,10 +22,13 @@ const initialState ={
   explevel : '',
   edulevel: '',
   rate : '',
+  easyapply: false,
   errorFlag : false,
   successFlag: false,
   draftSuccessFlag: false,
-  draftFailFlag : false
+  draftFailFlag : false,
+  //waiting for login module to make change
+  username : 'Recruiter',
 }
 
 
@@ -34,7 +37,7 @@ const initialState ={
 
 
 
-
+//TO Do after Login Module
 
 // const unauthRedirectJobPost = (state ,action) => {
 //     return updateObject (state,{
@@ -66,6 +69,10 @@ const showJobdesc = (state ,action) => {
         show2ndform:false,
         show3rdform:false,
         activeSteps : action.activeSteps,
+        errorFlag : false,
+        successFlag: false,
+        draftSuccessFlag:false,
+        draftFailFlag:false,
 
 
     
@@ -79,6 +86,8 @@ const showJobqual = (state ,action) => {
         show2ndform:action.show2ndform,
         show3rdform:false,
         activeSteps : action.activeSteps,
+        errorFlag : false,
+        successFlag: false,
         draftSuccessFlag:false,
         draftFailFlag:false,
     
@@ -91,17 +100,17 @@ const showJobcheckout = (state ,action) => {
         show1stform:false,
         show2ndform:false,
         show3rdform:action.show3rdform,
-        activeSteps : action.activeSteps
+        activeSteps : action.activeSteps,
+        errorFlag : false,
+        successFlag: false,
+        draftSuccessFlag:false,
+        draftFailFlag:false,
     
     })
 }
 
 const initsubmit = (state ,action) => {
     return updateObject (state,{
-    
-       company : action.company,
-       jobtitle : action.jobtitle,
-       address : action.address,
        errorFlag : action.errorFlag,
        successFlag: action.successFlag,
        draftSuccessFlag:false,
@@ -191,6 +200,7 @@ const jobpostFail = (state ,action) => {
 const jobResetErrors = (state ,action) => {
     return updateObject (state,{
         errorFlag : action.errorFlag,
+        // TO DO after Login Module
         //successFlag: action.successFlag,
         draftSuccessFlag: action.draftSuccessFlag,
        draftFailFlag : action.draftFailFlag
@@ -198,10 +208,51 @@ const jobResetErrors = (state ,action) => {
 }
 
 
+const setpropsval = (state ,action) => {
+   
+    return updateObject (state,{
+        [action.data.name] : action.data.value,
+       
+    })
+}
+
+
+const getinitdataSuccess = (state ,action) => {
+    return updateObject (state,{
+        jobid : action.jobid, 
+       company : action.company,
+       jobtitle : action.jobtitle,
+       address : action.address,
+       jobfunc : action.jobfunc,
+       emptype : action.emptype,
+       industry : action.industry,
+       senlevel : action.senlevel,
+       jobdes : action.jobdes,
+       recapp : action.recapp,
+       source : action.source,
+       skills : action.skills,
+       explevel : action.explevel, 
+       edulevel : action.edulevel,
+       rate : action.rate,
+       poststatus : action.poststatus,
+       easyapply : action.easyapply,
+    })
+}
+const getinitdataFail = (state ,action) => {
+    return updateObject (state,{
+        errorFlag : action.errorFlag,
+        //successFlag: action.successFlag,
+        draftSuccessFlag: action.draftSuccessFlag,
+       draftFailFlag : action.draftFailFlag
+    })
+}
+
+
+
  const reducer = ( state = initialState, action ) => {
     switch ( action.type ) {
-        //case actionTypes.INIT_JOB_POST_SUCCESS: return initJobsuccess(state, action);
-        //case actionTypes.INIT_JOB_POST_FAIL: return initJobfail(state, action);
+        case actionTypes.INIT_GET_JOB_SUCCESS: return getinitdataSuccess(state, action);
+        case actionTypes.INIT_GET_JOB_FAIL: return getinitdataFail(state, action);
         case actionTypes.SHOW_INIT_JOB: return showInit(state, action);
         case actionTypes.SHOW_JOB_DESC: return showJobdesc(state, action);
         case actionTypes.SHOW_JOB_QUAL: return showJobqual(state, action);
@@ -214,7 +265,9 @@ const jobResetErrors = (state ,action) => {
         case actionTypes.POST_JOB_DRAFT_SUCCESS : return jobdraftSuccess(state, action);
         case actionTypes.POST_JOB_DRAFT_FAIL: return jobdraftFail(state, action);
         case actionTypes.POST_JOB_RESET_ERRORS: return jobResetErrors(state, action);
+        case actionTypes.SET_PROPS_VALUE: return setpropsval(state, action);
 
+        
 
         
         default :   
