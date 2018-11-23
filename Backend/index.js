@@ -10,7 +10,7 @@ const port = 3001;
 var passport = require('passport');
 var crypt = require('./crypt');
 var pool = require('./pool');
-var {mongoose} = require('./mongoose');
+var {mongoose} = require('./db/mongoose');
 var jwt = require('jsonwebtoken');
 var config = require('./settings');
 const uuidv4 = require('uuid/v4');
@@ -72,15 +72,18 @@ app.use(function (req, res, next) {
 var loginRouter           = require('./routes/loginRouter');
 var signupRouter          = require('./routes/signupRouter');
 var logout                = require('./routes/logout');
-// var jobupdate             = require ('./routes/jobupdate');
+var jobupdate             = require ('./routes/jobupdate');
+var postjob               = require('./routes/postjob');
 var profile               = require('./routes/profile');
 
 // routing to different routes
 app.use('/login', loginRouter);
 app.use('/userSignup', signupRouter);
 app.use('/logout', logout);
-// app.use('/jobupdate', jobupdate);
+app.use('/jobupdate', jobupdate);
+app.use('/postjob', postjob);
 app.use('/profile',profile);
+
 
 
 //Protected authenticated route with JWT
@@ -89,77 +92,6 @@ app.get('/protectedRoute', requireAuth, function (request, response) {
 }); 
 
 
-
-app.post('/jobupdate', (req, res) => {
- 
-    console.log("Inside Job Update/Create");
-    kafka.make_request('jobpost', req.body , function(err,results){
-        
-        if (err){
-            console.log("Inside err");
-            res.status(404).json({
-                status:"error",
-                msg:"System Error, Try Again."
-            })
-        }else{
-            if(results){   
-            console.log('in result');
-            console.log(results);
-            console.log("Inside else");                
-            res.status(results.code).json({
-                message:results.message,
-                success: results.success,
-                jobid : results.jobid    
-            });
-
-            res.end("Job Update/Create Successful");
-
-        }
-            
-    }
-})  
-console.log("out of job post handler") 
-    
-})
- 
-
-
-app.get('/postjob',  function(req,res){
-    
-    console.log("Inside recruiter get request");
-    kafka.make_request('getjobpost', req.query , function(err,results){
-        if (err){
-            console.log("Inside err");
-            res.status(404).json({
-                status:"error",
-                msg:"System Error, Try Again."
-            })
-        }else{
-            if(results){   
-            console.log('in result');
-            console.log(results);
-            console.log("Inside else");                
-            res.status(results.code).json({
-                job:results.job,
-                message:results.message,
-                success: results.success,
-                    
-            });
-
-                res.end("Job Post Search Successful");
-
-        }
-            
-    }
-        
-});
-
-   
-    console.log("Going out of get Job ");
-})
-
-
-
 //start your server on port 3001
-app.listen(3001);
-console.log("Server Listening on port 3001");
+app.listen(port);
+console.log("Server Listening on port",port);

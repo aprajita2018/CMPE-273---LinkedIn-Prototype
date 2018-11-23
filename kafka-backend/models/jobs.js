@@ -59,6 +59,9 @@ var Jobs = mongoose.model('Jobs',{
    poststatus : {
     type : String
    },
+   easyapply : {
+    type : String
+   },
 
 });
 

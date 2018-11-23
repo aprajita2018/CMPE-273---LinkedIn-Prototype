@@ -2,7 +2,7 @@
 var JwtStrategy = require('passport-jwt').Strategy;
 var ExtractJwt = require('passport-jwt').ExtractJwt;
 var config = require('./settings');
-var {mongoose} = require('./mongoose');
+var {mongoose} = require('./db/mongoose');
 var {Profiles} = require('./models/profile');
 var config = require('./settings');
 // Setup work and export for the JWT passport strategy
