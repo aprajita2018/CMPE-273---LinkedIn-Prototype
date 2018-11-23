@@ -22,10 +22,14 @@ body{
 }
 
 .icon-text{
-    color:#f7f9fc;
+    color:#c5c5c5;
     font-size: 0.8rem;
     font-weight: lighter;
     line-height: 1.0; 
+}
+
+.icon-text:hover{
+    color: #ffffff;
 }
 
 .dropdown-item .navbar-profile-name{
