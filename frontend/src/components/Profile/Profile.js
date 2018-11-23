@@ -8,8 +8,9 @@ import _ from "lodash";
 import { Link } from 'react-router-dom';
 import { Alert } from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Glyphicon } from "react-bootstrap";
+import { Glyphicon, Nav } from "react-bootstrap";
 import ProfileContact from './ProfileContact';
+import NavBar from '../NavBar/NavBar';
 
 class Profile extends Component {
 
@@ -303,7 +304,8 @@ class Profile extends Component {
 
         return (
             <div>
-                <div className="container">
+                <NavBar />
+                <div className="container mt-5 pt-2">
                     <div className="signup-form">
                         <div className="main-div">
                             <div className="panel">
