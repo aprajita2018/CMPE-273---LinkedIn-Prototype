@@ -11,7 +11,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Glyphicon, Nav } from "react-bootstrap";
 import ProfileContact from './ProfileContact';
 import NavBar from '../NavBar/NavBar';
-
+//import BACKEND_HOST from '.../store/actions/host_config';
+import {BACKEND_HOST} from '../host_config';
 class Profile extends Component {
 
     constructor(props) {
@@ -24,6 +25,7 @@ class Profile extends Component {
         this.edit_experience_toggle = this.edit_experience_toggle.bind(this);
         this.editEducation = this.editEducation.bind(this);
         this.editExperience = this.editExperience.bind(this);
+       
     }
 
 
@@ -46,7 +48,26 @@ class Profile extends Component {
         console.log("Enterting edit intro");
         values.username = "applicant1@mail.com";
 
-        this.props.editIntro(values);
+        const image  = this.props.image;
+        console.log(image);
+        let formData = new FormData();
+        formData.append('image',image);
+        values.image = formData;    
+         
+        const data = {
+            username : 'applicant1@mail.com' 
+        }
+
+        console.log(formData);
+
+        axios.post('http://localhost:3001/uploadphotos/setname',data )
+        .then(() => {
+            axios.post('http://localhost:3001/uploadphotos', formData)
+            .then(() => {  this.props.editIntro(values); });
+        });
+          
+
+       
     }
 
     edit_education_toggle(selected) {
@@ -93,7 +114,13 @@ class Profile extends Component {
         }
         this.props.toggleEditExperience();
     }
-
+    onChangeimage = (e) => {
+      
+           var values = e.target.files;
+       
+         this.props.uploadimage(values);
+     
+       }
 
     componentWillMount() {
         console.log("Will Mount Profile");
@@ -187,8 +214,9 @@ class Profile extends Component {
         const { handleSubmit } = this.props;
         const closeEditEducation = <button className="close" onClick={this.edit_education_toggle}>&times;</button>;
         const closeEditExperience = <button className="close" onClick={this.edit_experience_toggle}>&times;</button>;
-        var firstName, lastName, headline, location, education, experience, contact, current_position, industry;
-
+        var image, firstName, lastName, headline, location, education, experience, contact, current_position, industry;
+        if(this.props.image)
+        image = 'data:image/jpg;base64, ' + this.props.image;
         if (this.props.firstName)
             firstName = this.props.firstName;
         else
@@ -313,6 +341,7 @@ class Profile extends Component {
 
                                     <div className="row">
                                         <div className="col-sm-4">
+                                        <img width={'100em'} height={'100em'} src={image} />
                                             <h5><b>{firstName}{" "}{lastName}</b></h5>
                                             <h6>{headline}</h6>
                                             <h6>{location}</h6>
@@ -330,7 +359,7 @@ class Profile extends Component {
                                                 <ModalHeader toggle={this.edit_intro_toggle} close={closeEditIntro}>Edit intro</ModalHeader>
                                                 <ModalBody>
 
-                                                    <form name={"edit_intro_form"} onSubmit={handleSubmit(this.editIntro.bind(this))} >
+                                                    <form name={"edit_intro_form"} enctype="multipart/form-data"  onSubmit={handleSubmit(this.editIntro.bind(this))} >
                                                         {/*   <input type="file" name="images" onChange={this.onChangeimages} />
                                                        Image
                                                        <Field
@@ -338,6 +367,9 @@ class Profile extends Component {
                                                             type="file"
                                                             component={this.renderField}
                                                         /> */}
+                                                           Upload Profile Image
+                                                        <input type="file" name="image"  onChange={this.onChangeimage} />
+                                  
                                                         First Name
                                                         <Field
                                                             placeholder={firstName}
@@ -510,6 +542,7 @@ class Profile extends Component {
                                                     component={this.renderField}
                                                 />
 
+
                                                 <Field
                                                     placeholder={this.props.edit_exp_fromYear}
                                                     name="fromYear"
@@ -661,9 +694,10 @@ class Profile extends Component {
 
 
 const mapStateToProps = state => {
-
+console.log(state);
 
     return {
+        image : state.reducer_profile.image, 
         firstName: state.reducer_profile.firstName,
         lastName: state.reducer_profile.lastName,
         headline: state.reducer_profile.headline,
@@ -707,13 +741,13 @@ const mapDispatchStateToProps = dispatch => {
     return {
         getprofile: (username) => {
             console.log("Getting Profile");
-            axios.get('http://localhost:3001/profile/' + username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/' + username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE", payload: response.data, statusCode: response.status })
                 })
         },
         /*  postprofile: (values) => {
-              axios.post('http://localhost:3001/profile', values)
+              axios.post(BACKEND_HOST + '/profile', values)
                   .then((response) => {
   
                       dispatch({ type: "POSTPROFILE", payload: response.data })
@@ -721,13 +755,13 @@ const mapDispatchStateToProps = dispatch => {
           },*/
         addEducation: (values) => {
 
-            axios.post('http://localhost:3001/profile/education', values)
+            axios.post(BACKEND_HOST + '/profile/education', values)
                 .then((response) => {
                     console.log("Dispacting ADDEDUCATION");
                     dispatch({ type: "ADDEDUCATION", payload: response.data });
 
                 })
-            axios.get('http://localhost:3001/profile/education/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status })
@@ -737,12 +771,12 @@ const mapDispatchStateToProps = dispatch => {
 
         addExperience: (values) => {
 
-            axios.post('http://localhost:3001/profile/experience', values)
+            axios.post(BACKEND_HOST + '/profile/experience', values)
                 .then((response) => {
                     dispatch({ type: "ADDEXPERIENCE", payload: response.data });
 
                 })
-            axios.get('http://localhost:3001/profile/experience/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/experience/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })
@@ -752,14 +786,14 @@ const mapDispatchStateToProps = dispatch => {
 
 
         editEducation: (values) => {
-            axios.put('http://localhost:3001/profile/education', values)
+            axios.put(BACKEND_HOST + '/profile/education', values)
                 .then((response) => {
                     dispatch({
                         type: "EDITEDUCATION", payload: response.data
                     });
                 })
 
-            axios.get('http://localhost:3001/profile/education/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status });
                 })
@@ -779,14 +813,14 @@ const mapDispatchStateToProps = dispatch => {
 
         editExperience: (values) => {
 
-            axios.put('http://localhost:3001/profile/experience', values)
+            axios.put(BACKEND_HOST + '/profile/experience', values)
                 .then((response) => {
                     dispatch({
                         type: "EDITEXPERIENCE", payload: response.data
                     });
                 })
 
-            axios.get('http://localhost:3001/profile/experience/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/experience/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })
                 });
@@ -799,14 +833,14 @@ const mapDispatchStateToProps = dispatch => {
         },
 
         deleteEducation: (value) => {
-            axios.delete('http://localhost:3001/profile/education', { data: value })
+            axios.delete(BACKEND_HOST + '/profile/education', { data: value })
                 .then((response) => {
                     dispatch({
                         type: "DELETE_EDUCATION", payload: response.data
                     });
                 })
 
-            axios.get('http://localhost:3001/profile/education/' + value.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/education/' + value.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status })
@@ -815,14 +849,14 @@ const mapDispatchStateToProps = dispatch => {
 
         deleteExperience: (value) => {
             console.log(value);
-            axios.delete('http://localhost:3001/profile/experience', { data: value })
+            axios.delete(BACKEND_HOST + '/profile/experience', { data: value })
                 .then((response) => {
                     dispatch({
                         type: "DELETE_EDUCATION", payload: response.data
                     });
                 })
 
-            axios.get('http://localhost:3001/profile/experience/' + value.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/experience/' + value.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })
@@ -861,13 +895,17 @@ const mapDispatchStateToProps = dispatch => {
         },
         editIntro: (values) => {
             console.log("Dispatching Action EI");
-            axios.put('http://localhost:3001/profile/intro', values)
+            axios.put(BACKEND_HOST + '/profile/intro', values)
                 .then((response) => {
                     console.log("Response", response.data);
                     dispatch({
                         type: "EDITINTRO", payload: response.data
                     });
                 })
+        },
+        uploadimage : (values) =>{
+           
+            dispatch({type:"UPLOADIMAGE",payload: values})
         },
 
     }
