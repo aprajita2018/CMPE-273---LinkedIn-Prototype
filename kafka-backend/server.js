@@ -2,7 +2,6 @@ var connection =  new require('./kafka/Connection');
 
 var getjobpost = require('./services/getjobpost.js');
 var jobpost = require('./services/jobpost.js');
-
 var GetProfile = require('./services/getprofile.js');
 
 function handleTopicRequest(topic_name,fname){  
