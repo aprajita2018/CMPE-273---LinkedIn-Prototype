@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var user = require('../models/user');
-
 var jwt = require('jsonwebtoken'); 
 var config = require('../settings');
 //var {mongoose} = require('../db/mongoose');
@@ -15,7 +14,7 @@ router.post('*', (req, res, next) =>{
         if(err) throw err;
         if(!userinfo){
             console.log("User not found");
-            res.status(500).send({success: false, status: "ERROR", message:"User not found"});
+            res.status(200).send({success: false, status: "ERROR", message:"User not found"});
         }
         else{
             console.log(userinfo);
@@ -40,7 +39,7 @@ router.post('*', (req, res, next) =>{
                 }
                 else{
                     console.log("Wrong Password!");
-                    res.status(500).send({success: false, status: "ERROR", message: 'Wrong Password!'});
+                    res.status(200).send({success: false, status: "ERROR", message: 'Wrong Password!'});
                 }
             });
         }

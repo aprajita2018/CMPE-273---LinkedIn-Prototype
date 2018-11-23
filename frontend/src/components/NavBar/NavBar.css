@@ -35,3 +35,12 @@ body{
 .dropdown-item .navbar-profile-name{
     font-weight: bold;
 }
+.snackbar{
+    position: fixed;
+    bottom: 4px;
+    width: 100%;
+    text-align: center;
+    line-height: 1.0;
+    padding-bottom: 2px;
+    font-weight: bold;
+}

@@ -13,7 +13,7 @@ body{
     font-family: Arial, Helvetica, sans-serif;
 }
 
-.snackbar{
+/* .snackbar{
     position: fixed;
     bottom: 4px;
     width: 100%;
@@ -21,4 +21,4 @@ body{
     line-height: 1.0;
     padding-bottom: 2px;
     font-weight: bold;
-}
+} */
