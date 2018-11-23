@@ -6,18 +6,19 @@ import {BACKEND_HOST} from './host_config';
 export const login = (values, callback) => dispatch =>  {    
     axios.post(BACKEND_HOST + '/login', values)
         .then((res) => {
-            if(res.status === 200){  
+            if(res.data.status === 'SUCCESS'){  
                 localStorage.setItem('jwt_token', res.data.token);
                 dispatch({
                     type : LOGIN_USER,
                     payload: res.data
                 });
-                callback(res.data);
+                //callback(res.data);
             }
             else{
                 console.log("Some error")
-                callback({status: "ERROR", message: "Could not log in"});
-            }            
+                //callback(res.data);
+            }
+            callback(res.data);            
         })
         .catch( (err) => {
             callback({status: "ERROR", message: err});
@@ -28,7 +29,7 @@ export const login = (values, callback) => dispatch =>  {
 export const signup = (values, callback) => dispatch => {        
     axios.post(BACKEND_HOST+ '/userSignup', values)
         .then((res) => {
-            if(res.status === 200){  
+            if(res.data.status === 'SUCCESS'){  
                 dispatch({
                     type : SIGNUP_USER,
                     payload: res.data
