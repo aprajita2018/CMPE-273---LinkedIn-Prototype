@@ -1,7 +1,6 @@
 var express = require('express');
 var router = express.Router();
 var user = require('../models/user');
-
 var jwt = require('jsonwebtoken'); 
 var config = require('../settings');
 //var {mongoose} = require('../db/mongoose');
