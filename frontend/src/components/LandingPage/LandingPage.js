@@ -34,8 +34,8 @@ class LandingPage extends Component{
         this.props.signup(values, (res) => {
             if(res.status === "SUCCESS"){
                 console.log("Successfully created user!");
-                document.getElementById("success_text").innerHTML = "Your account is created!";
-                document.getElementById("success_snackbar").style.setProperty('display', 'flex'); 
+                document.getElementById("success_text").innerHTML = res.message;
+                document.getElementById("success_snackbar").style.setProperty('display', 'block'); 
                 setTimeout(() => {
                     document.getElementById("success_snackbar").style.setProperty('display', 'none');
                 }, 2000);
@@ -43,10 +43,10 @@ class LandingPage extends Component{
             else{
                 console.log("Err in creating the user profile.");
                 document.getElementById("alert_text").innerHTML = res.message;
-                document.getElementById("alert_snackbar").style.setProperty('display', 'flex');
-                // setTimeout(() => {
-                //     document.getElementById("alert_snackbar").style.setProperty('display', 'none');
-                // }, 2000);
+                document.getElementById("alert_snackbar").style.setProperty('display', 'block');
+                setTimeout(() => {
+                    document.getElementById("alert_snackbar").style.setProperty('display', 'none');
+                }, 2000);
             }
         });
     }
@@ -82,15 +82,15 @@ class LandingPage extends Component{
                                         </div>
                                         
                                         <p className='font-weight-bold'>Signing up as :</p>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="user_type" id="input-usertype1" value="applicant" checked/>
-                                            <label class="form-check-label" for="input-usertype1">
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="user_type" id="input-usertype1" value="applicant" defaultChecked/>
+                                            <label className="form-check-label" htmlFor="input-usertype1">
                                                 Applicant
                                             </label>
                                         </div>
-                                        <div class="form-check form-check-inline">
-                                            <input class="form-check-input" type="radio" name="user_type" id="input-usertype2" value="recruiter"/>
-                                            <label class="form-check-label" for="input-usertype2">
+                                        <div className="form-check form-check-inline">
+                                            <input className="form-check-input" type="radio" name="user_type" id="input-usertype2" value="recruiter"/>
+                                            <label className="form-check-label" htmlFor="input-usertype2">
                                                 Recruiter
                                             </label>
                                         </div>
@@ -114,14 +114,14 @@ class LandingPage extends Component{
                         </div>
                     </div>
                 </header>
-                <div id="d-flex-inline mx-auto">
+                {/* <div id="d-flex-inline mx-auto">
                     <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
                         <p id="alert_text"></p>
                     </div>
                     <div id="success_snackbar" className="alert alert-success snackbar" role="alert" style={{display: 'none'}}>
                         <p id="success_text"></p>
                     </div>
-                </div>
+                </div> */}
             </div>
         );
     }

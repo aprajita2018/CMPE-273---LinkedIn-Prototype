@@ -12,9 +12,9 @@ class NavBar extends Component {
             email       : '',
             password    : ''
         }
-        this.onChange   = this.onChange.bind(this);
-        this.onSubmit   = this.onSubmit.bind(this); 
-        this.handlelogout    = this.handlelogout.bind(this);
+        this.onChange       = this.onChange.bind(this);
+        this.onSubmit       = this.onSubmit.bind(this); 
+        this.handlelogout   = this.handlelogout.bind(this);
     }
 
     onChange(e){
@@ -30,8 +30,10 @@ class NavBar extends Component {
                 document.getElementById("success_text").innerHTML =  res.message;
                 document.getElementById("success_snackbar").style.setProperty('display', 'block');
                 setTimeout(() => {
-                    window.location = "/";          
-                }, 2000)
+                        this.setState({
+                            logoutRedirect: true,
+                        })          
+                }, 500)
             }
         }) 
     }
@@ -48,27 +50,43 @@ class NavBar extends Component {
             console.log(res);
             if(res.status === "SUCCESS"){
                 this.setState({
-                    isLoggedIn: true
-                });
-                // window.location = "/profile";          
+                    isLoggedIn: true,
+                    loginRedirect: true,
+                });          
                 console.log("Signed in successfully");
             }
 
             else{
                 console.log("Err in login.");
+                console.log(res.message);
                 document.getElementById("alert_text").innerHTML = "ERROR: " + res.message;
                 document.getElementById("alert_snackbar").style.setProperty('display', 'block');
-                // setTimeout(() => {
-                //     document.getElementById("alert_snackbar").style.setProperty('display', 'none');
-                // }, 2000)
+                setTimeout(() => {
+                    document.getElementById("alert_snackbar").style.setProperty('display', 'none');
+                }, 2000)
             }
         })
 
     }
+    componentDidMount(){
+        if (this.props.name !== ''){
+            this.setState({
+                isLoggedIn: true
+            });
+        }
+    }
         
     render() {
+        let redirectVar=null;
+        if(this.state.loginRedirect){
+            redirectVar = <Redirect to="/profile" />;
+        }
+        else if(this.state.logoutRedirect){
+            redirectVar = <Redirect to="/" />
+        }
         return(
             <div>
+                {redirectVar}
                 <nav className ="navbar navbar-expand-sm" id="mainNav" >
                     <div className="container">
                         <div className="d-flex w-100">
@@ -128,6 +146,14 @@ class NavBar extends Component {
                         </div>
                     </div>                    
                 </nav>
+                <div id="d-flex-inline mx-auto">
+                    <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
+                        <p id="alert_text"></p>
+                    </div>
+                    <div id="success_snackbar" className="alert alert-success snackbar" role="alert" style={{display: 'none'}}>
+                        <p id="success_text"></p>
+                    </div>
+                </div>
             </div>
         );
     }
