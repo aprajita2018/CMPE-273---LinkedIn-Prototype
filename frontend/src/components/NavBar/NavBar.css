@@ -9,7 +9,7 @@ body{
     width: 100%;
     /* font-family: "Roboto", "Lato", Arial, "Helvetica Neue", sans-serif; */
     background-color:#283e4a;
-    font-size: 1.2em;
+    height: 52px;
 }
 
 #mainNav > div.container{
@@ -17,14 +17,15 @@ body{
 }
 
 .nav-item{
-    text-align: center
+    text-align: center;
+    line-height: 1.0;
 }
 
 .icon-text{
     color:#f7f9fc;
-    font-size: 0.6em;
+    font-size: 0.8rem;
     font-weight: lighter;
-    
+    line-height: 1.0; 
 }
 
 .dropdown-item .navbar-profile-name{
