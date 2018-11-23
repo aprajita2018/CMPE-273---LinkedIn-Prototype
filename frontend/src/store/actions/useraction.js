@@ -18,6 +18,9 @@ export const login = (values, callback) => dispatch =>  {
                 console.log("Some error")
                 callback({status: "ERROR", message: "Could not log in"});
             }            
+        })
+        .catch( (err) => {
+            callback({status: "ERROR", message: err});
         });        
 }
 

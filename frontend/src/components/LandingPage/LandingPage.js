@@ -35,7 +35,7 @@ class LandingPage extends Component{
             if(res.status === "SUCCESS"){
                 console.log("Successfully created user!");
                 document.getElementById("success_text").innerHTML = "Your account is created!";
-                document.getElementById("success_snackbar").style.setProperty('display', 'block'); 
+                document.getElementById("success_snackbar").style.setProperty('display', 'flex'); 
                 setTimeout(() => {
                     document.getElementById("success_snackbar").style.setProperty('display', 'none');
                 }, 2000);
@@ -43,7 +43,7 @@ class LandingPage extends Component{
             else{
                 console.log("Err in creating the user profile.");
                 document.getElementById("alert_text").innerHTML = res.message;
-                document.getElementById("alert_snackbar").style.setProperty('display', 'block');
+                document.getElementById("alert_snackbar").style.setProperty('display', 'flex');
                 // setTimeout(() => {
                 //     document.getElementById("alert_snackbar").style.setProperty('display', 'none');
                 // }, 2000);
@@ -114,11 +114,13 @@ class LandingPage extends Component{
                         </div>
                     </div>
                 </header>
-                <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
-                    <p id="alert_text"></p>
-                </div>
-                <div id="success_snackbar" className="alert alert-success snackbar" role="alert" style={{display: 'none'}}>
-                    <p id="success_text"></p>
+                <div id="d-flex-inline mx-auto">
+                    <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
+                        <p id="alert_text"></p>
+                    </div>
+                    <div id="success_snackbar" className="alert alert-success snackbar" role="alert" style={{display: 'none'}}>
+                        <p id="success_text"></p>
+                    </div>
                 </div>
             </div>
         );

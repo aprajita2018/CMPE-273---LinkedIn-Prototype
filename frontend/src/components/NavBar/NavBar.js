@@ -58,9 +58,9 @@ class NavBar extends Component {
                 console.log("Err in login.");
                 document.getElementById("alert_text").innerHTML = "ERROR: " + res.message;
                 document.getElementById("alert_snackbar").style.setProperty('display', 'block');
-                setTimeout(() => {
-                    document.getElementById("alert_snackbar").style.setProperty('display', 'none');
-                }, 2000)
+                // setTimeout(() => {
+                //     document.getElementById("alert_snackbar").style.setProperty('display', 'none');
+                // }, 2000)
             }
         })
 
