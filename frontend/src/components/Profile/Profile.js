@@ -305,7 +305,7 @@ class Profile extends Component {
         return (
             <div>
                 <NavBar />
-                <div className="container mt-5 pt-2">
+                <div className="container">
                     <div className="signup-form">
                         <div className="main-div">
                             <div className="panel">
