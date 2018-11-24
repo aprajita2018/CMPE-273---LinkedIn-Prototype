@@ -1,6 +1,8 @@
 var mongoose = require('mongoose');
-var Schema = mongoose.Schema,
-ObjectId = Schema.ObjectId;
+var Schema = mongoose.Schema;
+//const config = require('../settings');
+
+// ObjectId = Schema.ObjectId;
 var users = mongoose.model('users',{
 	
     firstName :{
@@ -9,8 +11,11 @@ var users = mongoose.model('users',{
     lastName :{
         type : String
     },
-    username : {
+    email : {
 	   type : String
+    },
+    user_type: {
+        type: String
     },
     password : {
         type : String
@@ -50,5 +55,5 @@ var users = mongoose.model('users',{
         type : String
     }
 });
-
 module.exports = {users};
+
