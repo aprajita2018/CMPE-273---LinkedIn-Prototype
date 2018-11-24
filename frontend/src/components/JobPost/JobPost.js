@@ -1026,8 +1026,11 @@ return(
 
        <div>
           <NavBar /> 
+          
         {showinit}
-        
+        <br/> 
+          <br/> 
+          <br/>  
       {showStepper}
       {showfirst}
 
