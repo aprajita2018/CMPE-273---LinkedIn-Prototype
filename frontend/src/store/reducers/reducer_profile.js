@@ -1,5 +1,6 @@
 
 const initialStore = {
+    image : null,
     name: null,
     education: null,
     headline: null,
@@ -40,6 +41,7 @@ const reducer_profile = (state = initialStore, action) => {
         console.log("Enterting Reducer_Profile");
         return {
             ...state,
+            image : action.payload.image, 
             firstName: action.payload.firstName,
             lastName: action.payload.lastName,
             education: action.payload.education,
@@ -93,7 +95,9 @@ const reducer_profile = (state = initialStore, action) => {
 
 
     if (action.type === "EDITINTRO" && action.payload.updated == true) {
-        var firstName, lastName, headline, location, current_position, industry, contact;
+        var image, firstName, lastName, headline, location, current_position, industry, contact;
+        if(action.payload.image)
+            image = action.payload.image; 
         if (action.payload.firstName)
             firstName = action.payload.firstName;
         else
@@ -130,6 +134,7 @@ const reducer_profile = (state = initialStore, action) => {
             contact = state.contact;
         return {
             ...state,
+            image : image, 
             firstName: firstName,
             lastName: lastName,
             headline: headline,
@@ -324,6 +329,15 @@ const reducer_profile = (state = initialStore, action) => {
                ...state,
              modal_edit_experience: !state.modal_edit_experience
            }
+        }
+
+        if(action.type === "UPLOADIMAGE" ){
+  
+            return {
+                ...state,
+                image : action.payload
+            
+            }
         }
 
 
