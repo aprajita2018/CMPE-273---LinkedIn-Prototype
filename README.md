@@ -11,13 +11,13 @@ Please Use axios-setup.js file for all your axios calls:
 
 It Looks like this:
 
-import axios from 'axios';
+                import axios from 'axios';
 
-const instance = axios.create({
-    baseURL: `${process.env.REACT_APP_SERV_URL}`
-});
+                const instance = axios.create({
+                    baseURL: `${process.env.REACT_APP_SERV_URL}`
+                 });
 
-export default instance;
+                export default instance;
 
 To make axios call simply use it like this:
 Example from Job Post Action: 
