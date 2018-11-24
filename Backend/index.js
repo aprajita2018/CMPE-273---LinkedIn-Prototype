@@ -75,6 +75,7 @@ var logout                = require('./routes/logout');
 var jobupdate             = require ('./routes/jobupdate');
 var postjob               = require('./routes/postjob');
 var profile               = require('./routes/profile');
+var uploadphotos          = require('./routes/uploadphotos');
 
 // routing to different routes
 app.use('/login', loginRouter);
@@ -83,7 +84,7 @@ app.use('/logout', logout);
 app.use('/jobupdate', jobupdate);
 app.use('/postjob', postjob);
 app.use('/profile',profile);
-
+app.use('/uploadphotos',uploadphotos);
 
 
 //Protected authenticated route with JWT
