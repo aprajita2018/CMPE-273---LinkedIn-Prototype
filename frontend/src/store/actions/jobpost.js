@@ -132,8 +132,7 @@ export const jobresetErrors = () => {
         type: actionTypes.POST_JOB_RESET_ERRORS,
         
         errorFlag : false,
-        //waiting for login module
-        //successFlag: false,
+        successFlag: false,
         draftSuccessFlag: false,
         draftFailFlag : false
     };

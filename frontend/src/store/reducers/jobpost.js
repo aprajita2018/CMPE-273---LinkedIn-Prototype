@@ -27,25 +27,9 @@ const initialState ={
   successFlag: false,
   draftSuccessFlag: false,
   draftFailFlag : false,
-  //waiting for login module to make change
-  username : 'Recruiter',
+  
 }
 
-
-
-
-
-
-
-//TO Do after Login Module
-
-// const unauthRedirectJobPost = (state ,action) => {
-//     return updateObject (state,{
-        
-//         unAuthRedirect : action.unAuthRedirect,
-    
-//     })
-// }
 
 const showInit = (state ,action) => {
     return updateObject (state,{
@@ -200,8 +184,7 @@ const jobpostFail = (state ,action) => {
 const jobResetErrors = (state ,action) => {
     return updateObject (state,{
         errorFlag : action.errorFlag,
-        // TO DO after Login Module
-        //successFlag: action.successFlag,
+        successFlag: action.successFlag,
         draftSuccessFlag: action.draftSuccessFlag,
        draftFailFlag : action.draftFailFlag
     })
@@ -241,7 +224,7 @@ const getinitdataSuccess = (state ,action) => {
 const getinitdataFail = (state ,action) => {
     return updateObject (state,{
         errorFlag : action.errorFlag,
-        //successFlag: action.successFlag,
+        successFlag: action.successFlag,
         draftSuccessFlag: action.draftSuccessFlag,
        draftFailFlag : action.draftFailFlag
     })
