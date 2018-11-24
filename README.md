@@ -6,6 +6,7 @@ There is .env at frontend root folder which has the backend server address:
 
 REACT_APP_SERV_URL='http://localhost:3001'
 
+By doing this,at the time of deployment we would need to change the URL here once rather than changing at different places.Deployment would be easier.
 
 Please Use axios-setup.js file for all your axios calls:
 
@@ -36,7 +37,7 @@ In the Backend and Kafka Backed there is db folder where mongoose configs are st
 SQL is not used at the moment but pool.js available for future use in Backend
 
 
-To Run Job Post Module create the following kafka topics:
+To Run create the following kafka topics:
 1. jobpost
 2. getjobpost
 3. response_topic
