@@ -11,8 +11,8 @@ import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Glyphicon, Nav } from "react-bootstrap";
 import ProfileContact from './ProfileContact';
 import NavBar from '../NavBar/NavBar';
-//import BACKEND_HOST from '.../store/actions/host_config';
-import {BACKEND_HOST} from '../host_config';
+import {BACKEND_HOST} from '../../store/actions/host_config';
+//import {BACKEND_HOST} from '../host_config';
 class Profile extends Component {
 
     constructor(props) {
