@@ -1072,10 +1072,9 @@ return {
     successPost: state.jobpost.successFlag,
     draftSuccessFlag: state.jobpost.draftSuccessFlag,
     draftFailFlag : state.jobpost.draftFailFlag,
-
-    // user : state.login.user,
+    token : state.user.token,
     // isLoggedIn : state.login.isLoggedIn,
-    // username : state.login.username,
+    username : state.user.user.email,
     // unAuthRedirect : state.login.unAuthRedirect
 };
 };
