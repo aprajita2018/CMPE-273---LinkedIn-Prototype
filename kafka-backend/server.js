@@ -3,6 +3,7 @@ var connection =  new require('./kafka/Connection');
 var getjobpost = require('./services/getjobpost.js');
 var jobpost = require('./services/jobpost.js');
 var GetProfile = require('./services/getprofile.js');
+var createUser = require('./services/createuser');
 
 function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
@@ -38,4 +39,6 @@ console.log("Kafka Backend");
 handleTopicRequest("jobpost",jobpost);
 handleTopicRequest("getjobpost",getjobpost);
 handleTopicRequest("getprofile",GetProfile);
+handleTopicRequest("createuser", createUser);
+
  
