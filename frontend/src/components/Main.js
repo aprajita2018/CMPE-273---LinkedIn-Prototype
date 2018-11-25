@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LandingPage from './LandingPage/LandingPage';
 import JobPost from './JobPost/JobPost';
+import JobStats from './JobStats/JobStats';
 
 import Profile from './Profile/Profile';
 import ProfileContact from './Profile/ProfileContact';
@@ -16,6 +17,7 @@ const Main = () => (
             <Route path ="/profile" component={Profile} />
             <Route path="/profile/contact-information" component={ProfileContact} />
             <Route path="/profile/edit-intro" component={ProfileEditIntro} />
+            <Route path="/JobStats" component={JobStats} />
             {/* </Switch> */}
     </div>
     </BrowserRouter>
