@@ -64,7 +64,7 @@ router.get('/:username', function (req, res) {
 router.get('/experience/:username', function (req, res) {
     console.log("Profile Get request");
     console.log(req.params.username);
-    users.findOne({ username: req.params.username }, { experience: 1 }, function (err, user) {
+    users.findOne({ email: req.params.username }, { experience: 1 }, function (err, user) {
 
         if (err) {
             console.log(err);
@@ -89,7 +89,7 @@ router.get('/experience/:username', function (req, res) {
 router.get('/education/:username', function (req, res) {
     console.log("Profile Get request");
     console.log(req.params.username);
-    users.findOne({ username: req.params.username }, { education: 1 }, function (err, user) {
+    users.findOne({ email: req.params.username }, { education: 1 }, function (err, user) {
 
         if (err) {
             console.log(err);
@@ -112,14 +112,14 @@ router.get('/education/:username', function (req, res) {
 
 router.post('/education', function (req, res) {
 
-    users.updateOne({ username: req.body.username }, { $addToSet: { education: { school: req.body.school, degree: req.body.degree, field: req.body.field, fromYear: req.body.fromYear, toYear: req.body.toYear } } }, function (err, response) {
+    users.updateOne({ email: req.body.username }, { $addToSet: { education: { school: req.body.school, degree: req.body.degree, field: req.body.field, fromYear: req.body.fromYear, toYear: req.body.toYear } } }, function (err, response) {
 
         if (err) {
             console.log(err);
 
         }
         else if (response) {
-            console.log("Profile Updated");
+            console.log("Profile Updated - Education - " + req.body.username);
             res.end("Updated");
         }
         else {
@@ -135,14 +135,14 @@ router.post('/education', function (req, res) {
 
 router.post('/experience', function (req, res) {
 
-    users.updateOne({ username: req.body.username }, { $addToSet: { experience: { title: req.body.title, company: req.body.company, location: req.body.location, fromMonth: req.body.fromMonth, fromYear: req.body.fromYear, toMonth: req.body.toMonth, toYear: req.body.toYear } } }, function (err, response) {
+    users.updateOne({ email: req.body.username }, { $addToSet: { experience: { title: req.body.title, company: req.body.company, location: req.body.location, fromMonth: req.body.fromMonth, fromYear: req.body.fromYear, toMonth: req.body.toMonth, toYear: req.body.toYear } } }, function (err, response) {
 
         if (err) {
             console.log(err);
 
         }
         else if (response) {
-            console.log("Profile Updated");
+            console.log("Profile Updated - Experience - " + req.body.username);
             res.end("Updated");
         }
         else {
@@ -173,19 +173,21 @@ router.put('/intro', function (req, res) {
         updatedIntro.location = req.body.location;
     if (req.body.current_position)
         updatedIntro.current_position = req.body.current_position;
+    if (req.body.headline)
+        updatedIntro.headline = req.body.headline;
 
     console.log(updatedIntro.current_position);
     updatedIntro = { $set: updatedIntro };  
    
 
-    users.updateOne({ username: req.body.username }, updatedIntro, function (err, response) {
+    users.updateOne({ email: req.body.username }, updatedIntro, function (err, response) {
 
         if (err) {
             console.log(err);
 
         }
         else if (response) {
-            console.log("Profile Updated");
+            console.log("Profile Updated - intro - " + req.body.username);
             console.log(response);
             console.log("UI: ", updatedIntro);
             //  console.log(response);
@@ -223,14 +225,14 @@ router.put('/education', function (req, res) {
 
     updatedEducation = { $set:  updatedEducation };
      
-    users.updateOne({ username: req.body.username, "education._id" :req.body.id  }, updatedEducation, function (err, response) {
+    users.updateOne({ email: req.body.username, "education._id" :req.body.id  }, updatedEducation, function (err, response) {
         if (err) {
             console.log(err);
         }
         else if (response) {
             req.body.updated = true;
       
-          console.log("Updated");
+          console.log("Updated Education - " + req.body.username);
           res.end("Updated");
         }
         else {
@@ -268,14 +270,14 @@ router.put('/experience', function (req, res) {
 
     updatedExperience = { $set:  updatedExperience };
      
-    users.updateOne({ username: req.body.username, "experience._id" :req.body.id  }, updatedExperience, function (err, response) {
+    users.updateOne({ email: req.body.username, "experience._id" :req.body.id  }, updatedExperience, function (err, response) {
         if (err) {
             console.log(err);
         }
         else if (response) {
             req.body.updated = true;
       
-          console.log("Updated");
+          console.log("Updated Experience - " + req.body.username);
           res.end("Updated");
         }
         else {
@@ -318,7 +320,7 @@ router.delete('/experience', function (req, res) {
   updatedExperience["experience"] = updatedExpID;
   updatedExperience = {$pull : updatedExperience};
   console.log(updatedExperience);
-    users.updateOne({username : req.body.username, "experience._id" : req.body.id },{ $pull: { "experience" : {"experience._id" : req.body.id} }  , function (err, response){
+    users.updateOne({email : req.body.username, "experience._id" : req.body.id },{ $pull: { "experience" : {"experience._id" : req.body.id} }  , function (err, response){
             console.log("Enterting Update");
            
             if(err)

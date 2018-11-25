@@ -9,7 +9,7 @@ function handle_request(msg, callback){
 
     console.log("Inside getprofile kafka backend");
     console.log("Profile Information: ", msg);
-    users.findOne({ username: msg.username }, function (err, user) {
+    users.findOne({ email: msg.username }, function (err, user) {
         console.log("Finding user");
         if (err) {
             console.log(err);

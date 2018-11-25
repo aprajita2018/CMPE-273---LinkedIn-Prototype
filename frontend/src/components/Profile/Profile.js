@@ -12,7 +12,7 @@ import { Glyphicon, Nav } from "react-bootstrap";
 import ProfileContact from './ProfileContact';
 import NavBar from '../NavBar/NavBar';
 import {BACKEND_HOST} from '../../store/actions/host_config';
-//import {BACKEND_HOST} from '../host_config';
+
 class Profile extends Component {
 
     constructor(props) {
@@ -46,7 +46,7 @@ class Profile extends Component {
 
     editIntro(values) {
         console.log("Enterting edit intro");
-        values.username = "applicant1@mail.com";
+        values.username = this.props.email;
 
         const image  = this.props.image;
         console.log(image);
@@ -55,7 +55,7 @@ class Profile extends Component {
         values.image = formData;    
          
         const data = {
-            username : 'applicant1@mail.com' 
+            username : this.props.email 
         }
 
         console.log(formData);
@@ -73,18 +73,18 @@ class Profile extends Component {
     edit_education_toggle(selected) {
         console.log("Toggle Education Modal");
         var education = "";
-        if (selected.target.name == "edit") {
+        if (selected.target.name === "edit") {
 
-            if (selected.target.value != "" && selected.target.value != null)
+            if (selected.target.value !== "" && selected.target.value !== null)
                 education = JSON.parse(selected.target.value);
 
             this.props.editEduValues(education);
         }
 
-        if (selected.target.name == "delete") {
+        if (selected.target.name === "delete") {
             const data = {
                 id: selected.target.id,
-                username: "applicant1@mail.com"
+                username: this.props.email
             }
             this.props.deleteEducation(data);
         }
@@ -96,18 +96,18 @@ class Profile extends Component {
     edit_experience_toggle(selected) {
         console.log("Toggle Experience Modal");
         var experience = "";
-        if (selected.target.name == "edit") {
-            if (selected.target.value != "" && selected.target.value != null) {
+        if (selected.target.name === "edit") {
+            if (selected.target.value !== "" && selected.target.value !== null) {
                 experience = JSON.parse(selected.target.value);
             }
 
             this.props.editExpValues(experience);
         }
 
-        if (selected.target.name == "delete") {
+        if (selected.target.name === "delete") {
             const data = {
                 id: selected.target.id,
-                username: "applicant1@mail.com"
+                username: this.props.email
             }
             this.props.deleteExperience(data);
 
@@ -124,18 +124,18 @@ class Profile extends Component {
 
     componentWillMount() {
         console.log("Will Mount Profile");
-        this.props.getprofile("applicant1@mail.com");
+        this.props.getprofile(this.props.email);
     }
 
     addEducation(values) {
         console.log("Enterting add education");
-        values.username = "applicant1@mail.com";
+        values.username = this.props.email;
         this.props.addEducation(values);
     }
 
     addExperience(values) {
         console.log("Enterting add experience");
-        values.username = "applicant1@mail.com";
+        values.username = this.props.email;
         this.props.addExperience(values);
     }
 
@@ -149,17 +149,17 @@ class Profile extends Component {
 
         const data = {
             id: this.props.edit_edu_id,
-            username: "applicant1@mail.com"
+            username: this.props.email
         }
-        if (values.target.school.value != "")
+        if (values.target.school.value !== "")
             data['school'] = values.target.school.value;
-        if (values.target.degree.value != "")
+        if (values.target.degree.value !== "")
             data['degree'] = values.target.degree.value;
-        if (values.target.field.value != "")
+        if (values.target.field.value !== "")
             data['field'] = values.target.field.value;
-        if (values.target.fromYear.value != "")
+        if (values.target.fromYear.value !== "")
             data['fromYear'] = values.target.fromYear.value;
-        if (values.target.toYear.value != "")
+        if (values.target.toYear.value !== "")
             data['toYear'] = values.target.toYear.value;
         console.log("Entering Edit Education Function");
         // this.props.resetForm("edit_education_form");
@@ -173,21 +173,21 @@ class Profile extends Component {
 
         const data = {
             id: this.props.edit_exp_id,
-            username: "applicant1@mail.com"
+            username: this.props.email
         }
-        if (values.target.title.value != "")
+        if (values.target.title.value !== "")
             data['title'] = values.target.title.value;
-        if (values.target.company.value != "")
+        if (values.target.company.value !== "")
             data['company'] = values.target.company.value;
-        if (values.target.location.value != "")
+        if (values.target.location.value !== "")
             data['location'] = values.target.location.value;
-        if (values.target.fromMonth.value != "")
+        if (values.target.fromMonth.value !== "")
             data['fromMonth'] = values.target.fromMonth.value;
-        if (values.target.toMonth.value != "")
+        if (values.target.toMonth.value !== "")
             data['toMonth'] = values.target.toMonth.value;
-        if (values.target.fromYear.value != "")
+        if (values.target.fromYear.value !== "")
             data['fromYear'] = values.target.fromYear.value;
-        if (values.target.toYear.value != "")
+        if (values.target.toYear.value !== "")
             data['toYear'] = values.target.toYear.value;
 
         //this.props.resetForm("edit_experience_form");
@@ -210,6 +210,10 @@ class Profile extends Component {
     }
 
     render() {
+        let redirectNotLoggedIn = null;
+        if(this.props.token === "")
+            redirectNotLoggedIn = <Redirect to="/" />;
+
         console.log("Inside Profile Render");
         const { handleSubmit } = this.props;
         const closeEditEducation = <button className="close" onClick={this.edit_education_toggle}>&times;</button>;
@@ -330,8 +334,10 @@ class Profile extends Component {
           redirectModal = <Redirect to="/profile" />
         console.log(this.props.modal_contact);
 
+        
         return (
-            <div>
+            <div> 
+                {redirectNotLoggedIn}
                 <NavBar />
                 <div className="container">
                     <div className="signup-form">
@@ -341,8 +347,8 @@ class Profile extends Component {
 
                                     <div className="row">
                                         <div className="col-sm-4">
-                                        <img width={'100em'} height={'100em'} src={image} />
-                                            <h5><b>{firstName}{" "}{lastName}</b></h5>
+                                        <img width={'100em'} height={'100em'} src={image} alt="profile" />
+                                            <h5><b>{this.props.name}</b></h5>
                                             <h6>{headline}</h6>
                                             <h6>{location}</h6>
 
@@ -694,9 +700,14 @@ class Profile extends Component {
 
 
 const mapStateToProps = state => {
-console.log(state);
+//console.log(state);
 
     return {
+        email: state.user.user.email,
+        user_type: state.user.user_type,
+        name: state.user.name,
+        token: state.user.token,
+
         image : state.reducer_profile.image, 
         firstName: state.reducer_profile.firstName,
         lastName: state.reducer_profile.lastName,
@@ -741,7 +752,7 @@ const mapDispatchStateToProps = dispatch => {
     return {
         getprofile: (username) => {
             console.log("Getting Profile");
-            axios.get(BACKEND_HOST + '/profile/' + username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/' + username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE", payload: response.data, statusCode: response.status })
                 })
@@ -761,7 +772,7 @@ const mapDispatchStateToProps = dispatch => {
                     dispatch({ type: "ADDEDUCATION", payload: response.data });
 
                 })
-            axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status })
@@ -776,7 +787,7 @@ const mapDispatchStateToProps = dispatch => {
                     dispatch({ type: "ADDEXPERIENCE", payload: response.data });
 
                 })
-            axios.get(BACKEND_HOST + '/profile/experience/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/experience/' + values.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })
@@ -793,7 +804,7 @@ const mapDispatchStateToProps = dispatch => {
                     });
                 })
 
-            axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "Bearer" + localStorage.getItem("jwt_token") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status });
                 })
@@ -820,7 +831,7 @@ const mapDispatchStateToProps = dispatch => {
                     });
                 })
 
-            axios.get(BACKEND_HOST + '/profile/experience/' + values.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/experience/' + values.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })
                 });
@@ -840,7 +851,7 @@ const mapDispatchStateToProps = dispatch => {
                     });
                 })
 
-            axios.get(BACKEND_HOST + '/profile/education/' + value.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/education/' + value.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status })
@@ -856,7 +867,7 @@ const mapDispatchStateToProps = dispatch => {
                     });
                 })
 
-            axios.get(BACKEND_HOST + '/profile/experience/' + value.username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
+            axios.get(BACKEND_HOST + '/profile/experience/' + value.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })

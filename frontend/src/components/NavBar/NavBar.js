@@ -130,7 +130,7 @@ class NavBar extends Component {
                                             <div className='dropdown-item' >
                                                 <span><img src='img/JaneDoe.png' alt='profile pic' height='60' width='60' /></span>
                                                 <div className='navbar-profile-name'>{this.props.name}</div>
-                                                <div className='navbar-profile-title'>Title</div>
+                                                <div className='navbar-profile-title'>{this.props.user.headline || ''}</div>
                                                 <br/>
                                                 <Link to="/profile"><span className='text-info'>View Profile</span></Link>                                 
 
