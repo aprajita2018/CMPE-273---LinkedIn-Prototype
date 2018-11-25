@@ -5,7 +5,7 @@ import  './JobPost.css';
 //import cookie from 'react-cookies';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
-//import {Redirect} from 'react-router';
+import {Redirect} from 'react-router';
 import Stepper from 'react-stepper-horizontal';
 import Select from 'react-select';
 //import Slider, { Range } from 'rc-slider'
@@ -678,8 +678,15 @@ render(){
     let showInputError = null;
     let draftsaveSuccess =null;
     let draftsaveFail =null;
+    let redirectVar = null;
       
-       
+    if(!this.props.token){
+        
+        redirectVar = <Redirect to= "/"/>
+    }
+    
+
+
     if(this.props.successPost){
         showSuccess = <div className="alert alert-success" role="alert">
     <h2>Job Post Successful</h2>
@@ -1026,7 +1033,7 @@ return(
 
        <div>
           <NavBar /> 
-          
+          {redirectVar}
         {showinit}
         <br/> 
           <br/> 
