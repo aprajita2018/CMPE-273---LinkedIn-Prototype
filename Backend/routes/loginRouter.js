@@ -31,10 +31,8 @@ router.post('*', (req, res, next) =>{
                         status: "SUCCESS",
                         token: token,
                         user:{
-                            id: userinfo._id,
                             name: userinfo.firstName + ' ' + userinfo.lastName,
-                            user_type: userinfo.user_type,
-                            email: userinfo.email,
+                            ...userinfo._doc,
                         }
                     });
                 }
