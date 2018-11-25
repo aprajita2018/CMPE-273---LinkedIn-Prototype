@@ -19,6 +19,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     jobpost : jobpostReducer,
     reducer_profile: reducer_profile,
+    reducer_mingraph : reducer_mingraph,
     form: formReducer
 
 });
