@@ -27,11 +27,14 @@ class LandingPage extends Component{
     }
     onSubmit(e) {
         e.preventDefault();
+
         const values = {
             ...this.state,
             user_type: document.getElementsByName('user_type')[0].checked?'applicant':'recruiter'
         };
+
         this.props.signup(values, (res) => {
+
             if(res.status === "SUCCESS"){
                 console.log("Successfully created user!");
                 document.getElementById("success_text").innerHTML = res.message;
@@ -50,18 +53,22 @@ class LandingPage extends Component{
             }
         });
     }
+
     render(){
+
         return(
             <div>
                 <NavBar />
+
                 <header className="masthead d-flex">
                     <div className="container my-auto bg-transparent">
                         <div className="row">
                             <div className='col-md-6 offset-md-3 col-lg-4 offset-lg-4 d-flex justify-content-center p-0 bg-white'>
+                                
+                                {/* Signup Form */}
                                 <form id='regForm' onSubmit={this.onSubmit} className="w-100">
 
                                     <h4 className='text-center mt-3'>Be great at what you do</h4>
-                                    {/* <h5 className='font-weight-light text-center '>Get started - it's free</h5>                                      */}
                                     <h5 className='text-center mb-3'><small>Get started - it's free</small></h5>
 
                                     <div className='bg-light mx-0 p-2'>
@@ -102,26 +109,16 @@ class LandingPage extends Component{
                                         <p className='font-weight-light text-center'>
                                             <small>By clicking Join now, you agree to the LinkedIn <br/> User Agreement, Privacy Policy, and Cookie Policy.</small>
                                         </p>
+
                                         <div className='my-2'>
                                             <button type='submit' className='btn btn-primary btn-sm w-100'>Join Now</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
-                            {/* <div className="container">
-                                <Footer/>
-                            </div> */}
                         </div>
                     </div>
                 </header>
-                {/* <div id="d-flex-inline mx-auto">
-                    <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
-                        <p id="alert_text"></p>
-                    </div>
-                    <div id="success_snackbar" className="alert alert-success snackbar" role="alert" style={{display: 'none'}}>
-                        <p id="success_text"></p>
-                    </div>
-                </div> */}
             </div>
         );
     }

@@ -17,17 +17,16 @@ class Profile extends Component {
 
     constructor(props) {
         super(props);
-        this.contact_toggle = this.contact_toggle.bind(this);
-        this.add_education_toggle = this.add_education_toggle.bind(this);
-        this.add_experience_toggle = this.add_experience_toggle.bind(this);
-        this.edit_intro_toggle = this.edit_intro_toggle.bind(this);
-        this.edit_education_toggle = this.edit_education_toggle.bind(this);
-        this.edit_experience_toggle = this.edit_experience_toggle.bind(this);
-        this.editEducation = this.editEducation.bind(this);
-        this.editExperience = this.editExperience.bind(this);
-       
-    }
 
+        this.contact_toggle         = this.contact_toggle.bind(this);
+        this.add_education_toggle   = this.add_education_toggle.bind(this);
+        this.add_experience_toggle  = this.add_experience_toggle.bind(this);
+        this.edit_intro_toggle      = this.edit_intro_toggle.bind(this);
+        this.edit_education_toggle  = this.edit_education_toggle.bind(this);
+        this.edit_experience_toggle = this.edit_experience_toggle.bind(this);
+        this.editEducation          = this.editEducation.bind(this);
+        this.editExperience         = this.editExperience.bind(this);       
+    }
 
     contact_toggle() {
         this.props.toggleContact();
@@ -64,10 +63,7 @@ class Profile extends Component {
         .then(() => {
             axios.post('http://localhost:3001/uploadphotos', formData)
             .then(() => {  this.props.editIntro(values); });
-        });
-          
-
-       
+        });          
     }
 
     edit_education_toggle(selected) {
@@ -92,7 +88,6 @@ class Profile extends Component {
         this.props.toggleEditEducation();
     }
 
-
     edit_experience_toggle(selected) {
         console.log("Toggle Experience Modal");
         var experience = "";
@@ -114,13 +109,10 @@ class Profile extends Component {
         }
         this.props.toggleEditExperience();
     }
-    onChangeimage = (e) => {
-      
-           var values = e.target.files;
-       
-         this.props.uploadimage(values);
-     
-       }
+    onChangeimage = (e) => {      
+        var values = e.target.files;   
+        this.props.uploadimage(values);     
+    }
 
     componentWillMount() {
         console.log("Will Mount Profile");
@@ -139,14 +131,9 @@ class Profile extends Component {
         this.props.addExperience(values);
     }
 
-
-
-
     editEducation = (values) => {
         const resetForm = this.props;
-
         values.preventDefault();
-
         const data = {
             id: this.props.edit_edu_id,
             username: this.props.email
@@ -168,7 +155,6 @@ class Profile extends Component {
 
     editExperience = (values) => {
         const resetForm = this.props;
-
         values.preventDefault();
 
         const data = {
@@ -244,7 +230,6 @@ class Profile extends Component {
         if (this.props.education) {
             education = this.props.education.map(user_education => {
 
-
                 const EditEducationButton = <button id={user_education._id} name="edit" value={JSON.stringify(user_education)} className="btn btn-link float-right" onClick={this.edit_education_toggle}>Edit</button>;
                 return (
                     <div>
@@ -261,9 +246,7 @@ class Profile extends Component {
                         </div>
                     </div>
                 )
-            }
-
-            )
+            })
         }
         else
             education = "";
@@ -289,9 +272,7 @@ class Profile extends Component {
                         </div>
                     </div>
                 )
-            }
-
-            )
+            })
         }
 
         else
@@ -351,7 +332,6 @@ class Profile extends Component {
                                             <h5><b>{this.props.name}</b></h5>
                                             <h6>{headline}</h6>
                                             <h6>{location}</h6>
-
                                             <h6>{current_position}</h6>
                                             <h6>{industry}</h6>
                                         </div>
@@ -441,7 +421,6 @@ class Profile extends Component {
                                             <input className="float-right btn btn-link" /*onClick={this.toggle}*/ value="See connections"></input>
                                         </div>
                                     </div>
-
                                 </div>
 
                                 <div className="bordered-div">
@@ -449,7 +428,6 @@ class Profile extends Component {
                                     <div className="row">
                                         <div className="col-sm-6">
                                             <h5>Experience</h5>
-
                                         </div>
                                         <div className="col-sm-6">
                                             <h5>{addExperienceButton}</h5>
@@ -508,7 +486,6 @@ class Profile extends Component {
                                                         <button type="submit" onClick={this.add_experience_toggle} className="btn btn-primary">Save</button>
                                                     </form>
                                                 </ModalBody>
-
                                             </Modal>
                                         </div>
                                     </div>
@@ -520,28 +497,28 @@ class Profile extends Component {
 
                                             <form id={this.props.edit_exp_id} name={"edit_experience_form"} onSubmit={this.editExperience.bind(this)} >
                                                 Title
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_exp_title}
                                                     name="title"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
                                                 Company
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_exp_company}
                                                     name="company"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
                                                 Location
-                                                        <Field
+                                                <Field
                                                     placeholder={this.props.edit_exp_location}
                                                     name="location"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
                                                 From
-                                                        <Field
+                                                <Field
                                                     placeholder={this.props.edit_exp_fromMonth}
                                                     name="fromMonth"
                                                     type="text"
@@ -556,7 +533,7 @@ class Profile extends Component {
                                                     component={this.renderField}
                                                 />
                                                 To
-                                                        <Field
+                                                <Field
                                                     placeholder={this.props.edit_exp_toMonth}
                                                     name="toMonth"
                                                     type="text"
@@ -569,22 +546,17 @@ class Profile extends Component {
                                                     component={this.renderField}
                                                 />
                                                 <button type="button" id={this.props.edit_exp_id} name="delete" onClick={this.edit_experience_toggle} className="btn btn-primary">Delete</button>
-
-
                                                 <button type="submit" name="save" onClick={this.edit_experience_toggle} className="float-right btn btn-primary">Save</button>
                                             </form>
                                         </ModalBody>
-
                                     </Modal>
                                 </div>
-                                <div className="bordered-div">
 
+                                <div className="bordered-div">
                                     {redirectVar}
                                     <div className="row">
-
                                         <div className="col-sm-6">
                                             <h5>Education</h5>
-
                                         </div>
 
                                         <div className="col-sm-6">
@@ -629,12 +601,9 @@ class Profile extends Component {
                                                         <button type="submit" onClick={this.add_education_toggle} className="btn btn-primary">Save</button>
                                                     </form>
                                                 </ModalBody>
-
                                             </Modal>
-
                                         </div>
                                     </div>
-
 
                                     <div>{education}</div>
 
@@ -644,28 +613,28 @@ class Profile extends Component {
 
                                             <form id={this.props.edit_edu_id} name={"edit_education_form"} onSubmit={this.editEducation.bind(this)} >
                                                 School
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_edu_school}
                                                     name="school"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
                                                 Degree
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_edu_degree}
                                                     name="degree"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
                                                 Field
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_edu_field}
                                                     name="field"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
                                                 fromYear
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_edu_fromYear}
                                                     name="fromYear"
                                                     type="text"
@@ -673,20 +642,18 @@ class Profile extends Component {
                                                 />
 
                                                 toYear
-<Field
+                                                <Field
                                                     placeholder={this.props.edit_edu_toYear}
                                                     name="toYear"
                                                     type="text"
                                                     component={this.renderField}
                                                 />
 
-
                                                 <button type="button" id={this.props.edit_edu_id} name="delete" onClick={this.edit_education_toggle} className="btn btn-primary">Delete</button>
 
                                                 <button type="submit" name="save" onClick={this.edit_education_toggle} className="float-right btn btn-primary">Save</button>
                                             </form>
                                         </ModalBody>
-
                                     </Modal>
                                 </div>
                             </div>
@@ -700,48 +667,47 @@ class Profile extends Component {
 
 
 const mapStateToProps = state => {
-//console.log(state);
 
     return {
-        email: state.user.user.email,
-        user_type: state.user.user_type,
-        name: state.user.name,
-        token: state.user.token,
+        email           : state.user.user.email,
+        user_type       : state.user.user_type,
+        name            : state.user.name,
+        token           : state.user.token,
 
-        image : state.reducer_profile.image, 
-        firstName: state.reducer_profile.firstName,
-        lastName: state.reducer_profile.lastName,
-        headline: state.reducer_profile.headline,
-        location: state.reducer_profile.location,
+        image           : state.reducer_profile.image, 
+        firstName       : state.reducer_profile.firstName,
+        lastName        : state.reducer_profile.lastName,
+        headline        : state.reducer_profile.headline,
+        location        : state.reducer_profile.location,
         current_position: state.reducer_profile.current_position,
-        education: state.reducer_profile.education,
-        experience: state.reducer_profile.experience,
-        industry: state.reducer_profile.industry,
-        contact: state.reducer_profile.contact,
-        education_id: state.reducer_profile.education_id,
-        updated: state.reducer_profile.updated,
+        education       : state.reducer_profile.education,
+        experience      : state.reducer_profile.experience,
+        industry        : state.reducer_profile.industry,
+        contact         : state.reducer_profile.contact,
+        education_id    : state.reducer_profile.education_id,
+        updated         : state.reducer_profile.updated,
 
-        edit_edu_id: state.reducer_profile.edit_edu_id,
-        edit_edu_school: state.reducer_profile.edit_edu_school,
-        edit_edu_degree: state.reducer_profile.edit_edu_degree,
-        edit_edu_field: state.reducer_profile.edit_edu_field,
+        edit_edu_id     : state.reducer_profile.edit_edu_id,
+        edit_edu_school : state.reducer_profile.edit_edu_school,
+        edit_edu_degree : state.reducer_profile.edit_edu_degree,
+        edit_edu_field  : state.reducer_profile.edit_edu_field,
         edit_edu_fromYear: state.reducer_profile.edit_edu_fromYear,
-        edit_edu_toYear: state.reducer_profile.edit_edu_toYear,
+        edit_edu_toYear : state.reducer_profile.edit_edu_toYear,
 
 
-        edit_exp_id: state.reducer_profile.edit_exp_id,
-        edit_exp_title: state.reducer_profile.edit_exp_title,
-        edit_exp_company: state.reducer_profile.edit_exp_company,
-        edit_exp_location: state.reducer_profile.edit_exp_location,
-        edit_exp_fromYear: state.reducer_profile.edit_exp_fromYear,
-        edit_exp_toYear: state.reducer_profile.edit_exp_toYear,
-        edit_exp_fromMonth: state.reducer_profile.edit_exp_fromMonth,
-        edit_exp_toMonth: state.reducer_profile.edit_exp_Month,
+        edit_exp_id         : state.reducer_profile.edit_exp_id,
+        edit_exp_title      : state.reducer_profile.edit_exp_title,
+        edit_exp_company    : state.reducer_profile.edit_exp_company,
+        edit_exp_location   : state.reducer_profile.edit_exp_location,
+        edit_exp_fromYear   : state.reducer_profile.edit_exp_fromYear,
+        edit_exp_toYear     : state.reducer_profile.edit_exp_toYear,
+        edit_exp_fromMonth  : state.reducer_profile.edit_exp_fromMonth,
+        edit_exp_toMonth    : state.reducer_profile.edit_exp_Month,
 
-        modal_contact: state.reducer_profile.modal_contact,
-        modal_add_education: state.reducer_profile.modal_add_education,
+        modal_contact       : state.reducer_profile.modal_contact,
+        modal_add_education : state.reducer_profile.modal_add_education,
         modal_add_experience: state.reducer_profile.modal_add_experience,
-        modal_edit_intro: state.reducer_profile.modal_edit_intro,
+        modal_edit_intro    : state.reducer_profile.modal_edit_intro,
         modal_edit_education: state.reducer_profile.modal_edit_education,
         modal_edit_experience: state.reducer_profile.modal_edit_experience,
 
@@ -750,12 +716,15 @@ const mapStateToProps = state => {
 const mapDispatchStateToProps = dispatch => {
 
     return {
+
         getprofile: (username) => {
+
             console.log("Getting Profile");
+
             axios.get(BACKEND_HOST + '/profile/' + username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
                     dispatch({ type: "GETPROFILE", payload: response.data, statusCode: response.status })
-                })
+            })
         },
         /*  postprofile: (values) => {
               axios.post(BACKEND_HOST + '/profile', values)
@@ -764,23 +733,29 @@ const mapDispatchStateToProps = dispatch => {
                       dispatch({ type: "POSTPROFILE", payload: response.data })
                   })
           },*/
+
         addEducation: (values) => {
+
+            console.log('Adding Education');
 
             axios.post(BACKEND_HOST + '/profile/education', values)
                 .then((response) => {
                     console.log("Dispacting ADDEDUCATION");
                     dispatch({ type: "ADDEDUCATION", payload: response.data });
 
-                })
+            })
+
             axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status })
-                })
+            })
 
         },
 
         addExperience: (values) => {
+
+            console.log('Adding Experience');
 
             axios.post(BACKEND_HOST + '/profile/experience', values)
                 .then((response) => {
@@ -794,9 +769,10 @@ const mapDispatchStateToProps = dispatch => {
                 })
         },
 
-
-
         editEducation: (values) => {
+
+            console.log('Editing Education');
+
             axios.put(BACKEND_HOST + '/profile/education', values)
                 .then((response) => {
                     dispatch({
@@ -823,6 +799,8 @@ const mapDispatchStateToProps = dispatch => {
         },
 
         editExperience: (values) => {
+            
+            console.log('Editing Experience');
 
             axios.put(BACKEND_HOST + '/profile/experience', values)
                 .then((response) => {
@@ -875,7 +853,6 @@ const mapDispatchStateToProps = dispatch => {
         },
 
         resetupdated: () => {
-
             dispatch({ type: "RESETUPDATED" })
         },
 
@@ -883,29 +860,39 @@ const mapDispatchStateToProps = dispatch => {
             console.log("Dispatching Show Modal");
             dispatch({ type: "SHOW_MODAL" })
         },
+
         resetForm: (value) => {
             dispatch(reset(value));
         },
+
         toggleContact: () => {
             dispatch({ type: "TOGGLE_CONTACT" });
         },
+
         toggleEditIntro: () => {
             dispatch({ type: "TOGGLE_EDIT_INTRO" });
         },
+
         toggleAddEducation: () => {
             dispatch({ type: "TOGGLE_ADD_EDUCATION" });
         },
+
         toggleEditEducation: () => {
             dispatch({ type: "TOGGLE_EDIT_EDUCATION" });
         },
+
         toggleAddExperience: () => {
             dispatch({ type: "TOGGLE_ADD_EXPERIENCE" });
         },
+
         toggleEditExperience: () => {
             dispatch({ type: "TOGGLE_EDIT_EXPERIENCE" });
         },
+
         editIntro: (values) => {
+            console.log('Editing Intro');
             console.log("Dispatching Action EI");
+
             axios.put(BACKEND_HOST + '/profile/intro', values)
                 .then((response) => {
                     console.log("Response", response.data);
@@ -914,6 +901,7 @@ const mapDispatchStateToProps = dispatch => {
                     });
                 })
         },
+
         uploadimage : (values) =>{
            
             dispatch({type:"UPLOADIMAGE",payload: values})
@@ -929,16 +917,11 @@ function validate(values) {
     if (!values.school) {
         errors.school = "Enter School";
     }
-
-
     return errors;
 }
-
-
 
 export default reduxForm({
     validate,
     form: "ProfileForm",
     reducer: "ProfileReducer"
 })(connect(mapStateToProps, mapDispatchStateToProps)(Profile));
-

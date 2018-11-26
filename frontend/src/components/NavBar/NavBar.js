@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {login, logout} from '../../store/actions/useraction';
 
 class NavBar extends Component {
+
     constructor(props){
         super(props);
         this.state = {
@@ -48,6 +49,7 @@ class NavBar extends Component {
 
         this.props.login(values, (res) => {
             console.log(res);
+
             if(res.status === "SUCCESS"){
                 this.setState({
                     isLoggedIn: true,
@@ -90,6 +92,7 @@ class NavBar extends Component {
                 <nav className ="navbar navbar-expand-sm" id="mainNav" >
                     <div className="container">
                         <div className="d-flex w-100">
+
                             {/* Landing Page Navbar */}
                             <div className='navbar-brand' style={{display: this.state.isLoggedIn? 'none': 'flex'}}>
                                 <img alt="LinkedIn" src="img/navbarLogo.png" className="align-self-center" height="30px"/>
@@ -149,6 +152,8 @@ class NavBar extends Component {
                         </div>
                     </div>                    
                 </nav>
+
+                {/* snackbar div */}
                 <div id="d-flex-inline mx-auto">
                     <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
                         <p id="alert_text"></p>
