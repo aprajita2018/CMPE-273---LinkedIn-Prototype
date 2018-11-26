@@ -43,4 +43,5 @@ body{
     line-height: 1.0;
     padding-bottom: 2px;
     font-weight: bold;
+    z-index: 2000;
 }
