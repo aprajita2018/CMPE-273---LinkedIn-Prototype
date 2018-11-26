@@ -1,10 +1,11 @@
-var connection =  new require('./kafka/Connection');
+var connection  =  new require('./kafka/Connection');
 
-var getjobpost = require('./services/getjobpost.js');
-var jobpost = require('./services/jobpost.js');
-var GetProfile = require('./services/getprofile.js');
-var createUser = require('./services/createuser');
+var getjobpost  = require('./services/getjobpost.js');
+var jobpost     = require('./services/jobpost.js');
+var GetProfile  = require('./services/getprofile.js');
+var createUser  = require('./services/createuser');
 var GetMinGraph = require('./services/getmingraph.js');
+var loginUser   = require('./services/loginuser');
 
 function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
@@ -42,4 +43,5 @@ handleTopicRequest("getjobpost",getjobpost);
 handleTopicRequest("getprofile",GetProfile);
 handleTopicRequest("createuser", createUser);
 handleTopicRequest("getmingraph",GetMinGraph);
+handleTopicRequest("loginuser",loginUser);
  
