@@ -4,7 +4,9 @@ import './JobStats.css';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { Bar, Pie } from 'react-chartjs-2';
+import axios from 'axios';
 import { BACKEND_HOST } from '../../store/actions/host_config';
+import NavBar from '../NavBar/NavBar';
 
 const Bardata = {
   labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
@@ -108,7 +110,7 @@ class JobStats extends Component {
 
     return (
       <div>
-
+        <NavBar />
         <div className="form-row">
           <div className="form-group col-md-4" style={{ textAlign: 'center'/*, margin:'30px'*/ }}>
             <h4>Application Count per month</h4>
