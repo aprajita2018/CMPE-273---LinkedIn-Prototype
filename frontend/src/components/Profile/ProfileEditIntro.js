@@ -106,36 +106,40 @@ class Profile extends Component {
                 <ModalBody>
 
                     <form name={"edit_intro_form"} onSubmit={handleSubmit(this.editIntro.bind(this))} >
-                        {/*   <input type="file" name="images" onChange={this.onChangeimages} />
+                {/*     <input type="file" name="images" onChange={this.onChangeimages} />
                                                        Image
-                                                       <Field
-                                                            name="photo"
-                                                            type="file"
-                                                            component={this.renderField}
-                                                        /> */}
+                        <Field
+                            name="photo"
+                            type="file"
+                            component={this.renderField}
+                        /> */}
+
                         First Name
-                                                        <Field
+                        <Field
                             placeholder={firstName}
                             name="firstName"
                             type="text"
                             component={this.renderField}
                         />
+
                         Last Name
-                                                        <Field
+                        <Field
                             placeholder={lastName}
                             name="lastName"
                             type="text"
                             component={this.renderField}
                         />
+
                         Headline
-                                                        <Field
+                        <Field
                             placeholder={headline}
                             name="headline"
                             type="text"
                             component={this.renderField}
                         />
+
                         Current Position
-                                                        <Field
+                        <Field
                             placeholder={current_position}
                             name="current_position"
                             type="text"
@@ -143,7 +147,7 @@ class Profile extends Component {
                         />
 
                         Industry
-                                                        <Field
+                        <Field
                             placeholder={industry}
                             name="industry"
                             type="text"
@@ -151,7 +155,7 @@ class Profile extends Component {
                         />
 
                         Contact Information
-                                                        <Field
+                        <Field
                             placeholder={contact}
                             name="contact"
                             type="text"
@@ -159,7 +163,7 @@ class Profile extends Component {
                         />
 
                         Country/Region
-                                                        <Field
+                        <Field
                             placeholder={location}
                             name="location"
                             type="text"
@@ -169,36 +173,30 @@ class Profile extends Component {
                         <button type="submit" onClick={this.edit_intro_toggle} className="btn btn-primary">Save</button>
                     </form>
                 </ModalBody>
-
             </Modal>
-
-        )
-    }
+        )}
 }
 
 const mapStateToProps = state => {
 
 
     return {
-        firstName: state.reducer_profile.firstName,
-        lastName: state.reducer_profile.lastName,
-        headline: state.reducer_profile.headline,
-        location: state.reducer_profile.location,
+        firstName       : state.reducer_profile.firstName,
+        lastName        : state.reducer_profile.lastName,
+        headline        : state.reducer_profile.headline,
+        location        : state.reducer_profile.location,
         current_position: state.reducer_profile.current_position,
-        education: state.reducer_profile.education,
-        experience: state.reducer_profile.experience,
-        industry: state.reducer_profile.industry,
-
+        education       : state.reducer_profile.education,
+        experience      : state.reducer_profile.experience,
+        industry        : state.reducer_profile.industry,
         modal_edit_intro: state.reducer_profile.modal_edit_intro,
-
     }
 }
 const mapDispatchStateToProps = dispatch => {
 
     return {
-
-
         editIntro: (values) => {
+            console.log('Editing Intro');
             console.log("Dispatching Action EI");
             axios.put('http://localhost:3001/profile/intro', values)
                 .then((response) => {
@@ -222,11 +220,8 @@ function validate(values) {
     if (!values.school) {
         errors.school = "Enter School";
     }
-
-
     return errors;
 }
-
 
 
 export default reduxForm({
@@ -234,4 +229,3 @@ export default reduxForm({
     form: "ProfileForm",
     reducer: "ProfileReducer"
 })(connect(mapStateToProps, mapDispatchStateToProps)(Profile));
-

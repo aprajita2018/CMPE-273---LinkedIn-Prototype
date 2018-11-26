@@ -15,7 +15,9 @@ module.exports = function (passport) {
     };
    
     passport.use(new JwtStrategy(opts, (jwt_payload, done) => {
+
         console.log(jwt_payload._doc);
+        
         User.getUserByEmail(jwt_payload._doc._email, jwt_payload._doc._user_type, (err, user) =>{
             if(err){
                 return done(err,false);

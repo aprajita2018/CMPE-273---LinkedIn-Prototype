@@ -46,7 +46,6 @@ function handle_request(msg, callback){
                 }
                 else{
                     console.log("Wrong Password!");
-                    // res.status(200).send({success: false, status: "ERROR", message: 'Wrong Password!'});
                     res.code    = '200';
                     res.success = false;
                     res.status  = 'ERROR';
