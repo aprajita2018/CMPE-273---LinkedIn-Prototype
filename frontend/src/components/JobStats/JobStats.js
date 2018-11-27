@@ -187,7 +187,7 @@ const mapStateToProps = state => {
     name: state.user.name,
     token: state.user.token,
 
-    mingraphjobs: state.reducer_graph.mingraphjobs
+    mingraphjobs: state.reducer_mingraph.mingraphjobs
 
   };
 };

@@ -12,7 +12,7 @@ var kafka = require('../kafka/client');
 //Getting User Profile
 router.get('/:username', function (req, res) {
 
-
+    
     kafka.make_request('getprofile',req.params, function(err,response){
         
         if (err){
