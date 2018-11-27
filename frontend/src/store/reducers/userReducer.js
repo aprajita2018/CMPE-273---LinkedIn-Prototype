@@ -1,13 +1,15 @@
 import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER} from '../actions/actionTypes';
 
 const initialState = {
-  user: {},
-  token: "",
-  name: "",
+  user  : {},
+  token : "",
+  name  : "",
 };
 
 export default function(state = initialState, action) {
+
     switch (action.type) {
+      
       case LOGIN_USER:
         return {
           ...state,

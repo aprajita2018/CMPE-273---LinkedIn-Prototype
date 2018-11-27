@@ -1,7 +1,7 @@
-var {users} = require('../models/user');
-var { mongoose } = require('../db/mongoose');
-var bcrypt = require('bcrypt');
-const saltRounds = 12;
+var {users}         = require('../models/user');
+var { mongoose }    = require('../db/mongoose');
+var bcrypt          = require('bcrypt');
+const saltRounds    = 12;
 
 
 function handle_request(msg, callback){
@@ -9,21 +9,21 @@ function handle_request(msg, callback){
     console.log('Inside handle_request for createuser topic.');
     console.log('Sign Up user information: ' + JSON.stringify(msg));
 
-    var res = {}
-    var email = msg.email;
-    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    var res     = {}
+    var email   = msg.email;
+    var re      = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
    
     if(!re.test(String(email).toLowerCase())){
 
-        res.code = '200';
-        res.status = 'ERROR';
+        res.code    = '200';
+        res.status  = 'ERROR';
         res.message = 'Invalid Email Format';
         callback(null, res);
     }
     else if(msg.firstname === "" || msg.lastname === "" || msg.password === ""){
 
-        res.code = '200';
-        res.status = 'ERROR';
+        res.code    = '200';
+        res.status  = 'ERROR';
         res.message = 'All input fields are required.';
         callback(null, res);
     }
@@ -35,12 +35,12 @@ function handle_request(msg, callback){
             if(!userinfo){
 
                 var newUser = {
-                    user_type: msg.user_type,
-                    firstName: msg.firstname,
-                    lastName: msg.lastname,
-                    email: msg.email,
-                    password: msg.password,
-                    joined_date: new Date().toISOString(),
+                    user_type   : msg.user_type,
+                    firstName   : msg.firstname,
+                    lastName    : msg.lastname,
+                    email       : msg.email,
+                    password    : msg.password,
+                    joined_date : new Date().toISOString(),
                 };
             
                 console.log(newUser);
@@ -58,16 +58,16 @@ function handle_request(msg, callback){
                             console.log("Inside create query of createuser request.!");
                             if(err){
 
-                                res.code = '200';
-                                res.status = 'ERROR';
+                                res.code    = '200';
+                                res.status  = 'ERROR';
                                 res.message = 'Could not create the user. Please try again later.';
                                 callback(null, res);
                             }
                             else{
 
                                 console.log("Successfuly created the user in db!");
-                                res.code = '200';
-                                res.status = 'SUCCESS';
+                                res.code    = '200';
+                                res.status  = 'SUCCESS';
                                 res.message = 'User successfully created. Please sign in to continue.';
                                 callback(null, res);
                             }; 
@@ -78,8 +78,8 @@ function handle_request(msg, callback){
             else{
 
                 console.log("User already exists. Did not create a new user " + email);
-                res.code = '200';
-                res.status = 'ERROR';
+                res.code    = '200';
+                res.status  = 'ERROR';
                 res.message = 'Account already exists with this email. Please sign in to continue.';
                 callback(null, res);
             }

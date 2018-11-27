@@ -5,6 +5,7 @@ import {connect} from 'react-redux';
 import {login, logout} from '../../store/actions/useraction';
 
 class NavBar extends Component {
+
     constructor(props){
         super(props);
         this.state = {
@@ -48,6 +49,7 @@ class NavBar extends Component {
 
         this.props.login(values, (res) => {
             console.log(res);
+
             if(res.status === "SUCCESS"){
                 this.setState({
                     isLoggedIn: true,
@@ -83,13 +85,14 @@ class NavBar extends Component {
         }
         else if(this.state.logoutRedirect){
             redirectVar = <Redirect to="/" />
-        }
+        } 
         return(
             <div>
                 {redirectVar}
                 <nav className ="navbar navbar-expand-sm" id="mainNav" >
                     <div className="container">
                         <div className="d-flex w-100">
+
                             {/* Landing Page Navbar */}
                             <div className='navbar-brand' style={{display: this.state.isLoggedIn? 'none': 'flex'}}>
                                 <img alt="LinkedIn" src="img/navbarLogo.png" className="align-self-center" height="30px"/>
@@ -141,11 +144,16 @@ class NavBar extends Component {
                                     <li className='nav-item nav-link py-0 mx-4' style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
                                         <Link to="/jobpost"><span className='icon-text'><i className="fas fa-file-alt fa-2x"></i><br/>Post Jobs</span></Link>                                 
                                     </li>
+                                    <li className='nav-item nav-link py-0 mx-4' style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
+                                        <Link to="/JobStats"><span className='icon-text'><i className="fas fa-chart-line fa-2x"></i><br/>Dashboard</span></Link>                                 
+                                    </li>
                                 </ul>
                             </div>
                         </div>
                     </div>                    
                 </nav>
+
+                {/* snackbar div */}
                 <div id="d-flex-inline mx-auto">
                     <div id="alert_snackbar" className="alert alert-danger snackbar" role="alert" style={{display: 'none'}}>
                         <p id="alert_text"></p>
@@ -162,7 +170,7 @@ class NavBar extends Component {
 
 const mapStateToProps = state => {
     return{
-        // token: state.login.token,
+        token: state.user.token,
         user: state.user.user,
         name: state.user.name,
         user_type: state.user.user_type
