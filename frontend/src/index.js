@@ -9,6 +9,7 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import jobpostReducer from './store/reducers/jobpost';
 import reducer_profile from './store/reducers/reducer_profile';
+import reducer_graph from './store/reducers/reducer_graph';
 import { reducer as formReducer } from "redux-form";
 import userReducer from './store/reducers/userReducer';
 
@@ -19,7 +20,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     jobpost : jobpostReducer,
     reducer_profile: reducer_profile,
-    reducer_mingraph : reducer_mingraph,
+    reducer_graph : reducer_graph,
     form: formReducer
 
 });
