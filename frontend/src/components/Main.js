@@ -3,11 +3,16 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LandingPage from './LandingPage/LandingPage';
 import JobPost from './JobPost/JobPost';
 import JobStats from './JobStats/JobStats';
-import SavesGraph from './JobStats/SavesGraph';
-import TraceGraph from './JobStats/TraceGraph';
+import Search from './Search/Search';
 import Profile from './Profile/Profile';
 import ProfileContact from './Profile/ProfileContact';
 import ProfileEditIntro from './Profile/ProfileEditIntro';
+import Jobcard from './Cards/Jobcard';
+import Carddrawer from './CardDrawer/Carddrawer';
+import Jobopen from './Jobopen/Jobopen';
+import NormalApply from './Apply/NormalApply';
+import EasyApply from './Apply/EasyApply';
+import Connections from "./Connections/Connections";
 
 const Main = () => (
     <BrowserRouter>
@@ -19,8 +24,10 @@ const Main = () => (
             <Route path="/profile/contact-information" component={ProfileContact} />
             <Route path="/profile/edit-intro" component={ProfileEditIntro} />
             <Route path="/JobStats" component={JobStats} />
-            <Route path ="/savesgraph" component={SavesGraph} />
-            <Route path ="/tracegraph" component={TraceGraph} />
+            <Route path="/drawer" component={Carddrawer}/>
+            <Route path="/normal" component={NormalApply}/>
+            <Route path="/search" component={Search}/>
+	    <Route path="/connections" exact component={Connections} />
             {/* </Switch> */}
     </div>
     </BrowserRouter>

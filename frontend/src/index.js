@@ -9,10 +9,9 @@ import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
 import jobpostReducer from './store/reducers/jobpost';
 import reducer_profile from './store/reducers/reducer_profile';
-import reducer_graph from './store/reducers/reducer_graph';
 import { reducer as formReducer } from "redux-form";
 import userReducer from './store/reducers/userReducer';
-//import reducer_graph from './store/reducers/reducer_graph';
+import reducer_mingraph from './store/reducers/reducer_mingraph';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,7 +20,7 @@ const rootReducer = combineReducers({
     user: userReducer,
     jobpost : jobpostReducer,
     reducer_profile: reducer_profile,
-    reducer_graph : reducer_graph,
+    reducer_mingraph : reducer_mingraph,
     form: formReducer
 
 });

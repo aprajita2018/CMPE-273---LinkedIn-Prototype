@@ -12,6 +12,7 @@ import { Glyphicon, Nav } from "react-bootstrap";
 import ProfileContact from './ProfileContact';
 import NavBar from '../NavBar/NavBar';
 import {BACKEND_HOST} from '../../store/actions/host_config';
+import Search from '../Search/Search';
 
 class Profile extends Component {
 
@@ -69,7 +70,7 @@ class Profile extends Component {
     edit_education_toggle(selected) {
         console.log("Toggle Education Modal");
         var education = "";
-        if (selected.target.name === "edit") {
+        if (selected.target.name === "edit") { 
 
             if (selected.target.value !== "" && selected.target.value !== null)
                 education = JSON.parse(selected.target.value);
@@ -201,6 +202,7 @@ class Profile extends Component {
             redirectNotLoggedIn = <Redirect to="/" />;
 
         console.log("Inside Profile Render");
+        console.log(this.props);
         const { handleSubmit } = this.props;
         const closeEditEducation = <button className="close" onClick={this.edit_education_toggle}>&times;</button>;
         const closeEditExperience = <button className="close" onClick={this.edit_experience_toggle}>&times;</button>;
@@ -320,6 +322,7 @@ class Profile extends Component {
             <div> 
                 {redirectNotLoggedIn}
                 <NavBar />
+               
                 <div className="container">
                     <div className="signup-form">
                         <div className="main-div">

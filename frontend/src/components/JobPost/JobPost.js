@@ -682,7 +682,7 @@ render(){
       
     if(!this.props.token){
         
-        redirectVar = <Redirect to= "/"/>
+        // redirectVar = <Redirect to= "/"/>
     }
     
 
