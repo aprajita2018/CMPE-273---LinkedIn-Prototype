@@ -3,7 +3,8 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import LandingPage from './LandingPage/LandingPage';
 import JobPost from './JobPost/JobPost';
 import JobStats from './JobStats/JobStats';
-
+import SavesGraph from './JobStats/SavesGraph';
+import TraceGraph from './JobStats/TraceGraph';
 import Profile from './Profile/Profile';
 import ProfileContact from './Profile/ProfileContact';
 import ProfileEditIntro from './Profile/ProfileEditIntro';
@@ -18,6 +19,8 @@ const Main = () => (
             <Route path="/profile/contact-information" component={ProfileContact} />
             <Route path="/profile/edit-intro" component={ProfileEditIntro} />
             <Route path="/JobStats" component={JobStats} />
+            <Route path ="/savesgraph" component={SavesGraph} />
+            <Route path ="/tracegraph" component={TraceGraph} />
             {/* </Switch> */}
     </div>
     </BrowserRouter>
