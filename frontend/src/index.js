@@ -12,6 +12,7 @@ import reducer_profile from './store/reducers/reducer_profile';
 import reducer_graph from './store/reducers/reducer_graph';
 import { reducer as formReducer } from "redux-form";
 import userReducer from './store/reducers/userReducer';
+import reducer_mingraph from './store/reducers/reducer_mingraph';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
