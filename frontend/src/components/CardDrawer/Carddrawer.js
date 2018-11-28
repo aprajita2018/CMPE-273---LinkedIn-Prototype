@@ -8,7 +8,7 @@ import { Card } from '@material-ui/core';
 import Jobcard from '../Cards/Jobcard';
 import Jobopen from '../Jobopen/Jobopen';
 import Search from '../Search/Search';
-
+import NavBar from '../NavBar/NavBar';
 
 class Carddrawer extends Component{
     
@@ -128,11 +128,12 @@ class Carddrawer extends Component{
       
         return(
             <div>
+                <NavBar />
             {jobs}
                  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="#">
+                {/* <a class="navbar-brand" href="#">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" height="30" width="30" hspace="20" class="d-inline-block align-top" alt="" />
-                </a>
+                </a> */}
                 <div class="col">
                     <input type="text" class="form-control" name="FirstName" placeholder="Job Description"
                         value={this.state.jobdesc}
