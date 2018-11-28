@@ -27,7 +27,7 @@ const Main = () => (
             <Route path="/drawer" component={Carddrawer}/>
             <Route path="/normal" component={NormalApply}/>
             <Route path="/search" component={Search}/>
-	    <Route path="/connections" exact component={Connections} />
+	        <Route path="/connections" exact component={Connections} />
             {/* </Switch> */}
     </div>
     </BrowserRouter>

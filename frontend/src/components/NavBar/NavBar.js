@@ -116,7 +116,7 @@ class NavBar extends Component {
                             <div className='align-self-center align-items-end ml-auto' style={{display: this.state.isLoggedIn? 'flex': 'none'}}>
                                 <ul className='navbar-nav' style={{display: this.state.isLoggedIn? 'flex': 'none'}}>
                                     <li className='nav-item nav-link mx-4 py-0'>
-                                        <Link to="/"><span className='icon-text'><i className="fas fa-user-friends fa-2x"></i><br/>My Network</span></Link>                                 
+                                        <Link to="/connections"><span className='icon-text'><i className="fas fa-user-friends fa-2x"></i><br/>My Network</span></Link>                                 
                                     </li>
                                     <li className='nav-item nav-link mx-4 py-0'>
                                         <Link to="/drawer"><span className='icon-text'><i className="fas fa-briefcase fa-2x"></i><br/>Jobs</span></Link>                                 
