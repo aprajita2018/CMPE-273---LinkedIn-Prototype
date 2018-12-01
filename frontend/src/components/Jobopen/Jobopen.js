@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import {Route} from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
@@ -14,6 +15,7 @@ import SimpleModal from '../SimpleModal/SimpleModal';
 import Jobcard from '../Cards/Jobcard';
 import EasyApply from '../Apply/EasyApply';
 import NormalApply from '../Apply/NormalApply';
+import {Redirect} from 'react-router';
 
 const styles = theme => ({
     
@@ -63,9 +65,17 @@ class Jobopen
               poststatus:'',
               jobdes:'',
               senlevel:'',
+              jobid:'',
+              _id:'',
+              source:'',
+              recruiterid:'',
+              authFlag:false,
+              alldata:'',
+
 
 
         }
+        this.applyJob = this.applyJob.bind(this);
        
     }
    
@@ -91,12 +101,42 @@ componentDidUpdate() {
     this.state.jobdes=this.props.props.jobdes;
     this.state.easy_apply=this.props.props.easyapply;
     this.state.senlevel=this.props.props.senlevel;
+    this.state.jobid=this.props.props.jobid;
+    this.state._id=this.props.props._id;
+    this.state.source=this.props.props.source;
+    this.state.recruiterid=this.props.props.username;
    
     
 }
 
 }
+applyJob = (e) => {
+  // const url = "https://www.facebook.com/";
+  // window.open(url, '_blank');
+  console.log("in submit")
+  //console.log(this.state)
 
+  const data = {
+    easy_apply: this.state.easy_apply,   
+    jobtitle:this.state.jobtitle,
+    company:this.state.company,
+    address:this.state.address,
+    poststatus:this.state.poststatus,
+    jobdes:this.state.jobdes,
+    senlevel:this.state.senlevel,
+    jobid:this.state.jobid,
+    _id:this.state._id,
+    source:this.state.source,
+    recruiterid:this.state.recruiterid,
+     
+  };
+  this.setState({
+    authFlag:true,
+    alldata:data
+  })
+
+
+}
 
 
 handleToggleModal() {
@@ -111,6 +151,7 @@ handleToggleModal() {
   
 
     render(){
+     
       
      console.log(this.state.easy_apply)
   const { classes, theme } = this.props;
@@ -121,15 +162,31 @@ handleToggleModal() {
     link=  <button
     type="button"
   className={classes.modalButton}
-  
+   
     onClick={() => this.handleToggleModal()}><i class="fa fa-linkedin-square" aria-hidden="true"></i>Easy Apply</button>
 
   }
   else
   {
-    link=<Route render={({ history}) => (
-          <button    type="button"    className={classes.modalButton}    onClick={() => { history.push('/normal') }}> <i class="fa fa-linkedin-square" aria-hidden="true"></i> Apply</button>
-      )} />
+    link=
+          <button    type="button"    className={classes.modalButton}   onClick={ this.applyJob}> <i class="fa fa-linkedin-square" aria-hidden="true"></i> Apply</button>
+      
+  }
+
+  let redirectVar = null;
+  if(this.state.authFlag){
+   console.log(this.state.alldata)
+     
+     if(this.state.authFlag===true){
+         return(
+      
+             redirectVar = <Redirect to={{
+              pathname: '/normal',
+              state: { profile: this.state.alldata }
+             }
+           } /> 
+          ) 
+     }
   }
 
   return (
@@ -176,7 +233,7 @@ handleToggleModal() {
           {link}
           {showModal &&
           <SimpleModal onCloseRequest={() => this.handleToggleModal()}>
-              <EasyApply></EasyApply>
+              <EasyApply props={this.state}></EasyApply>
           </SimpleModal>}
                  
             </div>

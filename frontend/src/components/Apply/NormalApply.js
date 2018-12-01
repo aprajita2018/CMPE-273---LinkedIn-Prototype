@@ -12,18 +12,132 @@ class NormalApply extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            
+            jobtitle:'',
+            company:'',
+            address:'',
+            poststatus:'',
+            jobdes:'',
+            senlevel:'',
+            jobid:'',
+            _id:'',
+            source:'',
+            firstname: '',
+            lastname: '',
+            phoneno : '', 
+            email : '',
+            easy_apply:'',
+            recruiterid:'',
+            applicantaddress:'',
+            applicantdisability:'',
+            applicantcity:'',
+            gender:'',
+            hearabout:'',
+            applicantzipcode:'',
+            applicantstate:'',
+            applicantrace:'',
+            hasError: false,
+           
+
+
+
+
+
+
+
+      }
 
         this.applyJob = this.applyJob.bind(this);
+        this.handleChange = this.handleChange.bind(this);
     }
 
     applyJob = (e) => {
-        const url = "https://www.facebook.com/";
-        window.open(url, '_blank');
+        // const url = "https://www.facebook.com/";
+        // window.open(url, '_blank');
+        console.log(this.state)
+        const data = {
+            jobtitle:this.state.jobtitle,
+            company:this.state.company,
+            address:this.state.address,
+            poststatus:this.state.poststatus,
+            jobdes:this.state.jobdes,
+            senlevel:this.state.senlevel,
+            jobid:this.state.jobid,
+            _id:this.state._id,
+            source:this.state.source,
+            firstname: this.state.firstname,
+            lastname: this.state.lastname,
+            phoneno : this.state.phoneno, 
+            email : this.state.email,
+            easy_apply:this.state.easy_apply,
+            recruiterid:this.state.recruiterid,
+            applicantaddress:this.state.applicantaddress,
+            applicantdisability:this.state.applicantdisability,
+            applicantcity:this.state.applicantcity,
+            gender:this.state.gender,
+            hearabout:this.state.hearabout,
+            applicantzipcode:this.state.applicantzipcode,
+            applicantstate:this.state.applicantstate,
+            applicantrace:this.state.applicantrace,
+
+        }
+        axios.defaults.withCredentials = true;
+        console.log(data);
+        axios.post('http://localhost:3001/applyjob',data)
+            .then(response => {
+                console.log("Status Code : ",response.status);
+                if(response.status === 200){
+                    console.log("success")
+                    // window.location = '/ownerlogin'
+                }else{
+                   console.log("error")
+                }
+            });
+
     }
+
+    handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+    };
+
+    componentDidMount(){
+        console.log("in normal apply")
+        console.log(this.props)
+        this.setState({
+            jobtitle:this.props.location.state.profile.jobtitle,
+            company:this.props.location.state.profile.company,
+            address:this.props.location.state.profile.address,
+            poststatus:this.props.location.state.profile.poststatus,
+            jobdes:this.props.location.state.profile.jobdes,
+            easy_apply:this.props.location.state.profile.easy_apply,
+            senlevel:this.props.location.state.profile.senlevel,
+            jobid:this.props.location.state.profile.jobid,
+            _id:this.props.location.state.profile._id,
+            source:this.props.location.state.profile.source,
+            recruiterid:this.props.location.state.profile.recruiterid,
+        })
+    }
+
+    componentDidCatch(error, info) {
+        // Display fallback UI
+        this.setState({ hasError: true });
+        // You can also log the error to an error reporting service
+     
+
+      }
+   
 
 
     render() {
         const { applyJob } = this.props;
+        if(this.state.hasError)
+        {
+            return <h1>Error: </h1>;
+        }
+        else{
         return (
 
             <div>
@@ -33,9 +147,10 @@ class NormalApply extends Component {
                         <form>
                             <div class="form-row">
                                 <div class="col">
-                                    <b><h2>Job Position - ID</h2></b>
-                                    <h4>Company Name</h4>
-                                    Location
+                                    <b><h4>Job Position - {this.state.jobid}</h4></b>
+                                    <h3>{this.state.company}</h3>
+                                    <h3>{this.state.address}</h3>
+                                  
                                 </div>
                                 <div class="col">
                                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" height="100" width="100"></img>
@@ -55,27 +170,38 @@ class NormalApply extends Component {
                             <div class="form-row">
                                 <div class="col">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" name="FirstName" placeholder="First name" />
+                                    <input type="text" class="form-control" name="FirstName" placeholder="First name" onChange={this.handleChange('firstname')}/>
                                 </div>
                                 <div class="col">
                                     <label for="firstName">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last name" />
+                                    <input type="text" class="form-control" placeholder="Last name" onChange={this.handleChange('lastname')}/>
+                                </div>
+                            </div>
+                            <br />
+                            <div class="form-row">
+                                <div class="col">
+                                    <label for="firstName">Email ID</label>
+                                    <input type="text" class="form-control" name="email" placeholder="First name" onChange={this.handleChange('email')}/>
+                                </div>
+                                <div class="col">
+                                    <label for="firstName">Phone Number</label>
+                                    <input type="text" class="form-control" placeholder="Phone Number" onChange={this.handleChange('phoneno')}/>
                                 </div>
                             </div>
                             <br />
                             <div class="form-group">
                                 <label for="inputAddress">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" />
+                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" onChange={this.handleChange('applicantaddress')} />
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" id="inputCity" />
+                                    <input type="text" class="form-control" id="inputCity" onChange={this.handleChange('applicantcity')}/>
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputState">State</label>
-                                    <select id="inputState" class="form-control">
+                                    <select id="inputState" class="form-control" onChange={this.handleChange('applicantstate')}>
                                         <option selected>Choose...</option>
                                         <option>AL</option>
                                         <option>AK</option>
@@ -91,7 +217,7 @@ class NormalApply extends Component {
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="inputZip">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip" />
+                                    <input type="text" class="form-control" id="inputZip" onChange={this.handleChange('applicantzipcode')}/>
                                 </div>
                             </div>
                         </form>
@@ -110,7 +236,7 @@ class NormalApply extends Component {
                         <th />
                         <div class="form-group">
                             <label for="inputState">How Did You Hear About Us?:</label>
-                            <select id="inputState" class="form-control">
+                            <select id="inputState" class="form-control" onChange={this.handleChange('hearabout')}>
                                 <option selected>Choose...</option>
                                 <option>Career Fair</option>
                                 <option>University Recruiting</option>
@@ -131,7 +257,7 @@ class NormalApply extends Component {
                             <div class="col">
 
                                 <b>Gender:</b>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" class="form-control" onChange={this.handleChange('gender')}>
                                     <option selected>Choose...</option>
                                     <option>Male</option>
                                     <option>Female</option>
@@ -141,7 +267,7 @@ class NormalApply extends Component {
                             </div>
                             <div class="col">
                                 <b>Please Identify your race:</b>
-                                <select id="inputState" class="form-control">
+                                <select id="inputState" class="form-control" onChange={this.handleChange('applicantrace')}>
                                     <option selected>Choose...</option>
                                     <option>American Indian</option>
                                     <option>Asian</option>
@@ -160,7 +286,7 @@ class NormalApply extends Component {
                                     You are considered to have a disability if you have a physical or mental impairment or medical condition that substantially limits a major life activity, or if you have a history or record of such an impairment or medical condition.</p>
                             </h5>
                             <b>Disability Status:</b>
-                            <select id="inputState" class="form-control">
+                            <select id="inputState" class="form-control" onChange={this.handleChange('applicantdisability')}>
                                 <option selected>Choose...</option>
                                 <option>Yes, I have a disability</option>
                                 <option>No, I do not have a disability</option>
@@ -182,6 +308,7 @@ class NormalApply extends Component {
             </div>
         )
     }
+}
 }
 
 function validate(values) {
