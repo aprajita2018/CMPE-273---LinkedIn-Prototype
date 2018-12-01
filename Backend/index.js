@@ -16,6 +16,9 @@ var config = require('./settings');
 const uuidv4 = require('uuid/v4');
 const path = require('path');
 const fs = require('fs');
+var redis = require('redis');
+var client = redis.createClient();
+var mysql =require("mysql");
 
 const storage = multer.diskStorage({
     destination: (req, file, cb) => {
@@ -29,9 +32,22 @@ const storage = multer.diskStorage({
   });
   
 const upload = multer({ storage });
-
+//mysl connection here u will have the sql server connection
 var mysql = require('mysql');
-
+var con =mysql.createConnection({
+    host: 'projectli-instance.cz8fkapsud6o.us-east-2.rds.amazonaws.com',
+    user: "admin",
+    password: "admin123",
+    database: "projectli"
+});
+con.connect(function(err){
+    if(err) throw err;
+    console.log("connected");
+})
+//redis connection
+// client.on('connect', function() {
+//     console.log('Redis client connected');
+// });
 //use cors to allow cross origin resource sharing
 app.use(cors({ origin: 'http://localhost:3000', credentials: true }));
 
@@ -78,6 +94,7 @@ var profile               = require('./routes/profile');
 var uploadphotos          = require('./routes/uploadphotos');
 var mingraph              = require('./routes/mingraph');
 var searchjob              = require('./routes/searchjob');
+var applyjob              = require('./routes/applyjob');
 
 // routing to different routes
 app.use('/login', loginRouter);
@@ -89,12 +106,63 @@ app.use('/profile',profile);
 app.use('/uploadphotos',uploadphotos);
 app.use('/mingraph',mingraph);
 app.use('/searchjob',searchjob);
+app.use('/applyjob',applyjob);
 
 
 //Protected authenticated route with JWT
 app.get('/protectedRoute', requireAuth, function (request, response) {
     response.send('Your User id is: ' + request.user.firstname + ', username is: ' + request.user.username + '.');
 }); 
+
+// app.get('/test', function(req, res){  //any other route to test
+
+//     var query = con.query('SELECT distinct(recruiterid) FROM tracking)',function(err,rows){ //Here will br the query
+//         if(err)
+//           console.log("Error Selecting : %s ",err );
+    
+//         console.log(rows);
+//         var string=JSON.stringify(rows);
+//         //console.log('>> string: ', string );
+//         var json =  JSON.parse(string);
+//        // console.log('>> json: ', json);
+//         console.log('>> user.name: ', json[0].cou);
+//        var result =json[0].cou;
+//     //res.send(result);
+
+
+//     // client.exists('count1', function(err, reply) {
+//     // if (reply === 1) {
+//     //     console.log('exists');
+// 	// client.get('count1', function (error, result) {
+// 	//     if (error) {
+// 	// 	console.log(error);
+// 	// 	throw error;
+// 	//     }
+// 	//     console.log('GET result ->' + result);
+//     // });
+   
+//     // } else {
+// 	// console.log('doesn\'t exist');
+//     // var query = con.query('SELECT count(jobid)as cou FROM tracking',function(err,rows){ //Here will br the query
+//     //     if(err)
+//     //       console.log("Error Selecting : %s ",err );
+    
+//     //     console.log(rows);
+//     //     var string=JSON.stringify(rows);
+//     //     //console.log('>> string: ', string );
+//     //     var json =  JSON.parse(string);
+//     //    // console.log('>> json: ', json);
+//     //     console.log('>> user.name: ', json[0].cou);
+//     //    var result =json[0].cou;
+//     //    client.set('count1', result, redis.print); 
+//     //   });
+//     // }
+   
+//  });
+
+
+ 
+//  })
 
 
 //start your server on port 3001

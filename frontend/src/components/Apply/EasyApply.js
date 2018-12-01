@@ -12,17 +12,97 @@ class EasyApply extends Component {
 
     constructor(props) {
         super(props);
+        this.state = {
+            
+            jobtitle:'',
+            company:'',
+            address:'',
+            poststatus:'',
+            jobdes:'',
+            senlevel:'',
+            jobid:'',
+            _id:'',
+            source:'',
+            firstname: '',
+            lastname: '',
+            phoneno : '', 
+            email : '',
+            easy_apply:'',
+            recruiterid:'',
+           
 
+
+
+
+      }
+        this.handleChange = this.handleChange.bind(this);
         this.applyJob = this.applyJob.bind(this);
     }
 
     applyJob = (e) => {
-        const url = "https://www.facebook.com/";
-        window.open(url, '_blank');
+        // const url = "https://www.facebook.com/";
+        // window.open(url, '_blank');
+        console.log("in submit")
+        console.log(this.state)
+
+        const data = {
+            firstname: this.state.firstname,
+            lastname:this.state.lastname,
+            phoneno : this.state.phoneno, 
+            recruiterid:this.state.recruiterid,
+            email : this.state.email,
+            jobtitle:this.props.props.jobtitle,
+            company:this.props.props.company,
+            address:this.props.props.address,
+            poststatus:this.props.props.poststatus,
+            jobdes:this.props.props.jobdes,
+            easy_apply:this.props.props.easy_apply,
+            senlevel:this.props.props.senlevel,
+            jobid:this.props.props.jobid,
+            _id:this.props.props._id,
+            source:this.props.props.source,
+        }
+    
+        axios.defaults.withCredentials = true;
+        console.log(data);
+        axios.post('http://localhost:3001/applyjob',data)
+            .then(response => {
+                console.log("Status Code : ",response.status);
+                if(response.status === 200){
+                    console.log("success")
+                    // window.location = '/ownerlogin'
+                }else{
+                   console.log("error")
+                }
+            });
+
     }
+
+    handleChange = name => event => {
+        this.setState({
+          [name]: event.target.value,
+        });
+    };
 
     cancelApplication = (e) => {
 
+    }
+    componentDidMount(){
+        console.log("in easy apply")
+        console.log(this.props)
+        this.setState({
+            jobtitle:this.props.props.jobtitle,
+            company:this.props.props.company,
+            address:this.props.props.address,
+            poststatus:this.props.props.poststatus,
+            jobdes:this.props.props.jobdes,
+            easy_apply:this.props.props.easy_apply,
+            senlevel:this.props.props.senlevel,
+            jobid:this.props.props.jobid,
+            _id:this.props.props._id,
+            source:this.props.props.source,
+            recruiterid:this.props.props.recruiterid,
+        })
     }
    
 
@@ -37,15 +117,15 @@ class EasyApply extends Component {
                         <form>
                             <div class="form-row">
                                 <div class="col">
-                                    <b><h3>Apply to Job Position - ID</h3></b>
-                                    <h4>Company Name</h4>
-                                    Location
+                                    <b><h5>Apply to Job Position - {this.state.jobid}</h5></b>
+                                    <h3>{this.state.company}</h3>
+                                    <h3>{this.state.address}</h3>
                                 </div>
                             </div>
 
                             <br />
 
-                            <div class="form-row">
+                            {/* <div class="form-row">
                                 <div class="col">
                                     <h4>
                                         <label for="firstName">FirstName LastName</label>
@@ -53,20 +133,17 @@ class EasyApply extends Component {
 
                                     <button type="button" class="btn btn-primary">View Profile</button>
                                 </div>
-                            </div>
-
-                            <br />
-
+                            </div> */}
 
                             <b>Apply for this Job:</b><br /><br />
                             <div class="form-row">
                                 <div class="col">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" name="FirstName" placeholder="First name" />
+                                    <input type="text" class="form-control" name="FirstName" placeholder="First name" onChange={this.handleChange('firstname')} />
                                 </div>
                                 <div class="col">
                                     <label for="firstName">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last name" />
+                                    <input type="text" class="form-control" placeholder="Last name" onChange={this.handleChange('lastname')} />
                                 </div>
                             </div>
                             <br />
@@ -74,11 +151,11 @@ class EasyApply extends Component {
                             <div class="form-row">
                                 <div class="col">
                                     <label for="firstName">Email</label>
-                                    <input type="text" class="form-control" name="FirstName" placeholder="Email" />
+                                    <input type="text" class="form-control" name="FirstName" placeholder="Email"  onChange={this.handleChange('email')}/>
                                 </div>
                                 <div class="col">
                                     <label for="firstName">Phone</label>
-                                    <input type="text" class="form-control" placeholder="Phone" />
+                                    <input type="text" class="form-control" placeholder="Phone" onChange={this.handleChange('phoneno')}/>
                                 </div>
                             </div>
 
@@ -107,7 +184,7 @@ class EasyApply extends Component {
                                     <button
                                         type="button"
                                         class="btn btn-danger btn-lg"
-                                        onClick={this.applyJob}>
+                                        onClick={this.cancelApplication}>
                                         Cancel
                                     </button></object>
                                 </center>
@@ -118,7 +195,8 @@ class EasyApply extends Component {
                                     <button
                                         type="button"
                                         class="btn btn-primary btn-lg btn-block"
-                                        onClick={this.cancelApplication}>
+                                        
+                                        onClick={this.applyJob}>
                                         Submit Application
                                     </button>
                                 </center>

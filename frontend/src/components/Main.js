@@ -13,6 +13,8 @@ import Jobopen from './Jobopen/Jobopen';
 import NormalApply from './Apply/NormalApply';
 import EasyApply from './Apply/EasyApply';
 import Connections from "./Connections/Connections";
+import test from "./Test/test";
+
 
 const Main = () => (
     <BrowserRouter>
@@ -28,6 +30,7 @@ const Main = () => (
             <Route path="/normal" component={NormalApply}/>
             <Route path="/search" component={Search}/>
 	    <Route path="/connections" exact component={Connections} />
+        <Route path="/test" component={test}/>
             {/* </Switch> */}
     </div>
     </BrowserRouter>

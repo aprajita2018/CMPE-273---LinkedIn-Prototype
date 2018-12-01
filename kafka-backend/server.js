@@ -7,6 +7,7 @@ var createUser  = require('./services/createuser');
 var GetMinGraph = require('./services/getmingraph.js');
 var loginUser   = require('./services/loginuser');
 var getjobs   = require('./services/getjobs');
+var applyjob   = require('./services/applyjob');
 
 function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
@@ -46,4 +47,5 @@ handleTopicRequest("createuser", createUser);
 handleTopicRequest("getmingraph",GetMinGraph);
 handleTopicRequest("loginuser",loginUser);
 handleTopicRequest("getjobs",getjobs);
+handleTopicRequest("applyjob",applyjob);
  

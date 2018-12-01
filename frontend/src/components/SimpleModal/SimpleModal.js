@@ -106,6 +106,7 @@ class SimpleModal extends Component {
   componentDidMount() {
     
     document.addEventListener('click', this.handleOutsideClick, false);
+    //console.log(this.props)
   }
 
   // Remove listeners immediately before a component is unmounted and destroyed.

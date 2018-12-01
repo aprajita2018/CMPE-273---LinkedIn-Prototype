@@ -83,7 +83,7 @@ routeToJob =(e) =>  {
      //console.log(this.props.props)
     const { classes, theme } = this.props;
     let easyapply = null;
-    if(this.state.easy_apply==true){
+    if(this.state.easy_apply=="true"){
       easyapply="Easy Apply"
     }
     else
@@ -95,12 +95,12 @@ routeToJob =(e) =>  {
     
     
      <Card className={classes.card} onClick={this.routeToJob}>
-     <CardMedia
+     {/* <CardMedia
         className={classes.cover}
         image="https://www.arabianbusiness.com/sites/default/files/styles/full_img/public/images/2017/01/17/apple-logo-rainbow.jpg"
         title="Property"
 
-      />
+      /> */}
       
       <div className={classes.details}>
   
@@ -108,10 +108,10 @@ routeToJob =(e) =>  {
       
         
           <Typography gutterBottom component="h3" variant="heading" className={classes.title}>
-          {this.props.props.jobtitle}<Icon class="fa fa-thumbs-up" aria-hidden="true" style={{
+          {this.props.props.jobtitle}&nbsp;&nbsp;<Icon class="fa fa-thumbs-up" aria-hidden="true" style={{
                 position: 'absolute',
-                right: 15,
-                top: 15,
+                right: 10,
+                top: 10,
                 
           }}></Icon>
           {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
