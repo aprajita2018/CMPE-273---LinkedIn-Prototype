@@ -18,7 +18,12 @@ function handle_request(msg, callback){
         if(err) throw err;
         if(!userinfo){
             console.log("User not found");
-            res.status(200).send({success: false, status: "ERROR", message:"User not found"});
+            // res.status(200).send({success: false, status: "ERROR", message:"User not found"});
+            res.code    = '200';
+            res.status  = 'ERROR';
+            res.success =  false;
+            res.message =  'User not found'; 
+            callback(null, res);
         }
         else{
            
@@ -39,8 +44,10 @@ function handle_request(msg, callback){
                     res.success =  true;
                     res.token   =  token;
                     res.user    =  {
-                        name: userinfo.firstName + ' ' + userinfo.lastName,
-                            ...userinfo._doc,
+                            name       : userinfo.firstName + ' ' + userinfo.lastName,
+                            email      : userinfo.email,
+                            user_type  : userinfo.user_type,
+                            headline   : userinfo.headline,
                     } 
                     callback(null, res);
                 }

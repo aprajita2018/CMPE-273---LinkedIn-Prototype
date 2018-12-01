@@ -13,10 +13,12 @@ export default function(state = initialState, action) {
       case LOGIN_USER:
         return {
           ...state,
-          token: action.payload.token,  //Adding token to application state store
-          user: action.payload.user,     //Adding user object to store
-          name: action.payload.user.name,
-          user_type: action.payload.user.user_type
+          token   : action.payload.token,  //Adding token to application state store
+          user    : action.payload.user,     //Adding user object to store
+          name    : action.payload.user.name,
+          user_type: action.payload.user.user_type,
+          email   : action.payload.user.email,
+          headline: action.payload.user.headline,
         }
 
       case SIGNUP_USER:
