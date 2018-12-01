@@ -13,15 +13,21 @@ h2 a{color:#fff; font-weight:bold;} */
 .search-box{width:95%; margin:0 auto 80px; box-shadow:12px 12px 0 rgba(0,0,0,0.1); }
 .listing-block{background:#fff; height:600px; padding-top:20px; overflow-y:scroll;}
 
-  font-size: 1.6rem;
-  font-weight: 550;
-  font-family: initial;
-
-  overflow: hidden;
-  outline-width: 2px;
-
-  position: relative;
-}
+.map-box{background-color:#fff;  height:600px; padding-top:20px; overflow-y:scroll; }
+.save-button{background-color: transparent;  border: 0; border-radius: 1px;    box-sizing: content-box;    color: #0073b1;    cursor: pointer;    display: inline-block;
+    
+    font-size: 1.6rem;
+    font-weight: 550;
+    font-family: initial;
+    
+    overflow: hidden;
+    outline-width: 2px;
+   
+    position: relative;
+   
+    
+  
+   }
 
 .apply-div {
   background: #ffffff none repeat scroll 0 0;
