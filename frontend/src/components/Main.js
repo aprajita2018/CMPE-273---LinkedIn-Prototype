@@ -14,6 +14,7 @@ import NormalApply from './Apply/NormalApply';
 import EasyApply from './Apply/EasyApply';
 import Connections from "./Connections/Connections";
 import test from "./Test/test";
+import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
 
 
 const Main = () => (
@@ -31,6 +32,7 @@ const Main = () => (
             <Route path="/search" component={Search}/>
 	    <Route path="/connections" exact component={Connections} />
         <Route path="/test" component={test}/>
+        {/* <Route path="/recruterapplyfind" component={RecruterApplyFind}/> */}
             {/* </Switch> */}
     </div>
     </BrowserRouter>

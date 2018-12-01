@@ -4,8 +4,9 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
+import './drawer.css';
 
-import '../../drawer.css'
+import isNil from 'lodash/fp/isNil';
 
 class EasyApply extends Component {
 
@@ -29,7 +30,8 @@ class EasyApply extends Component {
             email : '',
             easy_apply:'',
             recruiterid:'',
-           
+            successPost:false,
+            failPost:false
 
 
 
@@ -70,9 +72,16 @@ class EasyApply extends Component {
                 console.log("Status Code : ",response.status);
                 if(response.status === 200){
                     console.log("success")
+                    this.setState({
+                        successPost:true,
+                    })
                     // window.location = '/ownerlogin'
                 }else{
                    console.log("error")
+
+                   this.setState({
+                    failPost:true,
+                })
                 }
             });
 
@@ -84,9 +93,10 @@ class EasyApply extends Component {
         });
     };
 
-    cancelApplication = (e) => {
-
-    }
+    cancelApplication(e) {
+        
+        console.log("in here")
+      }
     componentDidMount(){
         console.log("in easy apply")
         console.log(this.props)
@@ -107,7 +117,21 @@ class EasyApply extends Component {
    
 
     render() {
-        const { applyJob } = this.props;
+        const { applyJob,   } = this.props;
+        let showSuccess = null;
+        let showError = null;
+        if(this.state.successPost){
+            showSuccess = <div className="alert alert-success" role="alert">
+        <h4>Apply Successful</h4>
+        
+          </div>
+        }
+        if(this.state.failPost){
+            showError = <div className="alert-danger">
+        <h4>Application failed, Try Again Later !!</h4>
+        
+          </div>
+        }
         return (
 
             <div>
@@ -178,7 +202,7 @@ class EasyApply extends Component {
                         <br />
 
                         <div class="form-row">
-                            <div class="col">
+                            {/* <div class="col">
                                 <center>
                                     <object align="right">
                                     <button
@@ -189,7 +213,7 @@ class EasyApply extends Component {
                                     </button></object>
                                 </center>
 
-                            </div>
+                            </div> */}
                             <div class="col">
                                 <center>
                                     <button
@@ -200,8 +224,12 @@ class EasyApply extends Component {
                                         Submit Application
                                     </button>
                                 </center>
-
+                                {showSuccess}
+                                {showError}
+                                <br/>
+                               
                             </div>
+                            
                         </div>
 
                     </div>

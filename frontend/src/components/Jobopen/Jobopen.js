@@ -9,7 +9,7 @@ import CardMedia from '@material-ui/core/CardMedia';
 import CardActions from '@material-ui/core/CardActions';
 import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
-import '../../drawer.css'
+
 import { TextField, CardActionArea, Icon, Paper, Divider, Grid } from '@material-ui/core';
 import SimpleModal from '../SimpleModal/SimpleModal';
 import Jobcard from '../Cards/Jobcard';
@@ -69,12 +69,13 @@ class Jobopen
               _id:'',
               source:'',
               recruiterid:'',
-              authFlag:false,
+              
               alldata:'',
 
 
 
         }
+       
         this.applyJob = this.applyJob.bind(this);
        
     }
@@ -131,9 +132,12 @@ applyJob = (e) => {
      
   };
   this.setState({
-    authFlag:true,
+    
     alldata:data
   })
+  localStorage.setItem("pageData", JSON.stringify(data))
+  
+  window.open('/normal', "_blank");
 
 
 }
@@ -173,21 +177,7 @@ handleToggleModal() {
       
   }
 
-  let redirectVar = null;
-  if(this.state.authFlag){
-   console.log(this.state.alldata)
-     
-     if(this.state.authFlag===true){
-         return(
-      
-             redirectVar = <Redirect to={{
-              pathname: '/normal',
-              state: { profile: this.state.alldata }
-             }
-           } /> 
-          ) 
-     }
-  }
+
 
   return (
     <div>
@@ -261,7 +251,7 @@ handleToggleModal() {
           </Typography> 
   
          </div>
-    
+        
     
       </Paper>
       
