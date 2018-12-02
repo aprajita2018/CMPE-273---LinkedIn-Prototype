@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import PeopleSearch from '../Search/PeopleSearch';
 import ApplicantCard from '../Cards/ApplicantCard';
-import PersonProfile from '../Jobopen/PersonProfile';
+import PersonProfile from '../Jobopen/ApplicantProfile';
 import Navbar from '../NavBar/NavBar';
 
 class PeopleDrawer extends Component {
