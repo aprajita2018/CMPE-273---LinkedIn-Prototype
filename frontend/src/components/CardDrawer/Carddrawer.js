@@ -132,6 +132,7 @@ class Carddrawer extends Component{
                 {/* <a class="navbar-brand" href="#">
                     <img src="https://upload.wikimedia.org/wikipedia/commons/c/ca/LinkedIn_logo_initials.png" height="30" width="30" hspace="20" class="d-inline-block align-top" alt="" />
                 </a> */}
+                
                 <div class="col">
                     <input type="text" class="form-control" name="FirstName" placeholder="Job Description"
                         value={this.state.jobdesc}
@@ -149,8 +150,8 @@ class Carddrawer extends Component{
                         <select id="inputState" class="form-control"
                             value={this.state.jobtype}
                             onChange={this.handleChange('jobtype')}>
-                            <option selected>Job Type:</option>
-                            <option>Internship</option>
+                            <option selected >Job Type:</option>
+                            <option >Internship</option>
                             <option>Co-op</option>
                             <option>Full-time</option>
                             <option>Contractor</option>
@@ -163,13 +164,13 @@ class Carddrawer extends Component{
                             value={this.state.jobapplytype}
                             onChange={this.handleChange('jobapplytype')}>
                             <option selected>LinkedIn Features</option>
-                            <option>Normal Apply</option>
-                            <option>Easy Apply</option>
+                            <option value="false">Normal Apply</option>
+                            <option value="true">Easy Apply</option>
                         </select>
                   
                 </div>
                 <button class="btn btn-primary my-2 my-lg-0" type="submit" onClick={this.searchJob}>Search</button>
-
+                
             </nav>
             <section class="search-box">
             <div class="clearfix"></div>
