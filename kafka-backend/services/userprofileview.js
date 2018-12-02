@@ -13,10 +13,10 @@ var mysql = require('mysql');
 // })
 
 var dbconnection = mysql.createConnection({
-    host: 'localhost',
-    user: 'root',
-    password: '',
-    database: 'linkedin'
+    host: 'projectli-instance.cz8fkapsud6o.us-east-2.rds.amazonaws.com',
+    user: "admin",
+    password: "admin123",
+    database: "projectli"
 })
 
 dbconnection.connect(function (err) {
