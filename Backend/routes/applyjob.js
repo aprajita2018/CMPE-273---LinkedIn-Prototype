@@ -15,14 +15,24 @@ router.post('*', (req,res) => {
             console.log(result);
             if(err){
                 console.log('Inside err of kafka.make_request.');
-                res.json({
+                res.status(404).json({
                     status:"error",
                     msg:"System Error, Try Again."
                 })
             }
             else if(result){
                 console.log('Response from kafka-backend: ' + JSON.stringify(result));
-                res.status(200).send(JSON.stringify(result));
+                console.log(result.code)
+                if(result.code==200)
+                {
+                    res.status(200).send(JSON.stringify(result));
+                }
+                else{
+                    console.log(result.code)
+                    res.status(404).send({statusCode:result.code,status:"error",
+                    msg:"System Error, Try Again."});
+                }
+               
             }       
         });
     });

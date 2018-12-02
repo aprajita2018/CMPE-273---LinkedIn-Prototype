@@ -88,10 +88,10 @@ class NormalApply extends Component {
 
         }
         axios.defaults.withCredentials = true;
-        console.log(data);
+       // console.log(data);
         axios.post('http://localhost:3001/applyjob',data)
             .then(response => {
-                console.log("Status Code : ",response.status);
+                console.log("Status Code : ",response);
                 if(response.status === 200){
                     console.log("success")
                     this.setState({
@@ -107,6 +107,8 @@ class NormalApply extends Component {
                    })
                 }
             });
+
+            
            
 
     }
@@ -120,10 +122,14 @@ class NormalApply extends Component {
     componentDidMount(){
         console.log("in normal apply")
         console.log(this.props)
-        var datanew=JSON.parse(localStorage.pageData);
+        if (localStorage.getItem("pageData") !== null) {
+            var datanew=JSON.parse(localStorage.pageData);
+          }
+      
 
         //console.log(datanew)
-
+          if(datanew!==undefined)
+          {
         this.setState({
             jobtitle:datanew.jobtitle,
             company:datanew.company,
@@ -138,6 +144,7 @@ class NormalApply extends Component {
             recruiterid:datanew.recruiterid,
         })
         localStorage.removeItem("pageData");
+    }
     }
 
     componentDidCatch(error, info) {
@@ -199,38 +206,38 @@ class NormalApply extends Component {
                             <div class="form-row">
                                 <div class="col">
                                     <label for="firstName">First Name</label>
-                                    <input type="text" class="form-control" name="FirstName" placeholder="First name" onChange={this.handleChange('firstname')}/>
+                                    <input type="text" class="form-control" name="FirstName" placeholder="First name" onChange={this.handleChange('firstname')} />
                                 </div>
                                 <div class="col">
                                     <label for="firstName">Last Name</label>
-                                    <input type="text" class="form-control" placeholder="Last name" onChange={this.handleChange('lastname')}/>
+                                    <input type="text" class="form-control" placeholder="Last name" onChange={this.handleChange('lastname')} />
                                 </div>
                             </div>
                             <br />
                             <div class="form-row">
                                 <div class="col">
                                     <label for="firstName">Email ID</label>
-                                    <input type="text" class="form-control" name="email" placeholder="First name" onChange={this.handleChange('email')}/>
+                                    <input type="text" class="form-control" name="email" placeholder="First name" onChange={this.handleChange('email')} />
                                 </div>
                                 <div class="col">
                                     <label for="firstName">Phone Number</label>
-                                    <input type="text" class="form-control" placeholder="Phone Number" onChange={this.handleChange('phoneno')}/>
+                                    <input type="text" class="form-control" placeholder="Phone Number" onChange={this.handleChange('phoneno')} />
                                 </div>
                             </div>
                             <br />
                             <div class="form-group">
                                 <label for="inputAddress">Address</label>
-                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" onChange={this.handleChange('applicantaddress')} />
+                                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St" onChange={this.handleChange('applicantaddress')}  />
                             </div>
 
                             <div class="form-row">
                                 <div class="form-group col-md-6">
                                     <label for="inputCity">City</label>
-                                    <input type="text" class="form-control" id="inputCity" onChange={this.handleChange('applicantcity')}/>
+                                    <input type="text" class="form-control" id="inputCity" onChange={this.handleChange('applicantcity')} />
                                 </div>
                                 <div class="form-group col-md-4">
                                     <label for="inputState">State</label>
-                                    <select id="inputState" class="form-control" onChange={this.handleChange('applicantstate')}>
+                                    <select id="inputState" class="form-control" onChange={this.handleChange('applicantstate')} >
                                         <option selected>Choose...</option>
                                         <option>AL</option>
                                         <option>AK</option>
@@ -246,7 +253,7 @@ class NormalApply extends Component {
                                 </div>
                                 <div class="form-group col-md-2">
                                     <label for="inputZip">Zip</label>
-                                    <input type="text" class="form-control" id="inputZip" onChange={this.handleChange('applicantzipcode')}/>
+                                    <input type="text" class="form-control" id="inputZip" onChange={this.handleChange('applicantzipcode')} />
                                 </div>
                             </div>
                         </form>
@@ -265,7 +272,7 @@ class NormalApply extends Component {
                         <th />
                         <div class="form-group">
                             <label for="inputState">How Did You Hear About Us?:</label>
-                            <select id="inputState" class="form-control" onChange={this.handleChange('hearabout')}>
+                            <select id="inputState" class="form-control" onChange={this.handleChange('hearabout')} >
                                 <option selected>Choose...</option>
                                 <option>Career Fair</option>
                                 <option>University Recruiting</option>
@@ -286,7 +293,7 @@ class NormalApply extends Component {
                             <div class="col">
 
                                 <b>Gender:</b>
-                                <select id="inputState" class="form-control" onChange={this.handleChange('gender')}>
+                                <select id="inputState" class="form-control" onChange={this.handleChange('gender')} >
                                     <option selected>Choose...</option>
                                     <option>Male</option>
                                     <option>Female</option>
@@ -296,7 +303,7 @@ class NormalApply extends Component {
                             </div>
                             <div class="col">
                                 <b>Please Identify your race:</b>
-                                <select id="inputState" class="form-control" onChange={this.handleChange('applicantrace')}>
+                                <select id="inputState" class="form-control" onChange={this.handleChange('applicantrace')} >
                                     <option selected>Choose...</option>
                                     <option>American Indian</option>
                                     <option>Asian</option>
@@ -315,7 +322,7 @@ class NormalApply extends Component {
                                     You are considered to have a disability if you have a physical or mental impairment or medical condition that substantially limits a major life activity, or if you have a history or record of such an impairment or medical condition.</p>
                             </h5>
                             <b>Disability Status:</b>
-                            <select id="inputState" class="form-control" onChange={this.handleChange('applicantdisability')}>
+                            <select id="inputState" class="form-control" onChange={this.handleChange('applicantdisability')} >
                                 <option selected>Choose...</option>
                                 <option>Yes, I have a disability</option>
                                 <option>No, I do not have a disability</option>
