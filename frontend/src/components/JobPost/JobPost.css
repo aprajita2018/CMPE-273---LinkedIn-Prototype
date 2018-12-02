@@ -34,7 +34,10 @@
 .panel-containers{
     margin-top: 20px;
     min-width : 800px;
-    min-height : 95vh; 
+    max-width : 1300px;
+    min-height : 160vh; 
+    /* max-height : 115vh; */
+    
     background-color:#f7f7f8;
     margin:30px;
 
