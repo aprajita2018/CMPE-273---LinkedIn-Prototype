@@ -122,12 +122,15 @@ class NormalApply extends Component {
 
     onChangeResume = (e) => {
         e.preventDefault();
+        console.log("Changing Resume in Props 1 - NA");
+        console.log(e.target.files);
         this.props.uploadresume(e.target.files);
     }
 
     submitResume = (e) => {
         e.preventDefault();
-
+        console.log("Submitting Resume");
+        console.log(this.props.uploadedResume);
         var resume = this.props.uploadedResume;
         let formData = new FormData();
 
@@ -389,6 +392,8 @@ function validate(values) {
 
 
 const mapStateToProps = state => {
+    console.log("Mapping State To Props - NA");
+    console.log(state.reducer.uploadedResume);
     return {
         email: state.user.user.email,
         user_type       : state.user.user_type,
@@ -403,6 +408,7 @@ const mapDispatchStateToProps = dispatch => {
     return {
 
         uploadresume: (value) => {
+            console.log("Uploading Resume To Props 2");
             dispatch({ type: "UPLOADRESUME", payload: value });
         }
 
