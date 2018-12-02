@@ -1,14 +1,12 @@
 var mysql = require('mysql');
 var pool = mysql.createPool({
-    connectionLimit: 100,
+    multipleStatements: true,
+    connectionLimit: 200,
     port: '3306',
-    host: 'localhost',
+    host: 'projectli-instance.cz8fkapsud6o.us-east-2.rds.amazonaws.com',
     user: "admin",
-    password: "admin",
-    database : "xxxxxx"
+    password: "admin123",
+    database : "projectli"
 })
-
-
-
 
 module.exports = pool;

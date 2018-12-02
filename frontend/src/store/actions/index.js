@@ -16,3 +16,8 @@ export{
     getinitdata,
 
 } from './jobpost'
+export{
+    
+    getgraphdata,
+
+} from './jobstats'

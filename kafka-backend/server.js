@@ -9,6 +9,7 @@ var loginUser   = require('./services/loginuser');
 var getjobs   = require('./services/getjobs');
 var applyjob   = require('./services/applyjob');
 var getalljobsforrecruiter = require('./services/getalljobsforrecruiter');
+var graphdata   = require('./services/graphdata');
 
 function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
@@ -50,4 +51,5 @@ handleTopicRequest("loginuser",loginUser);
 handleTopicRequest("getjobs",getjobs);
 handleTopicRequest("applyjob",applyjob);
 handleTopicRequest("getalljobsforrecruiter",getalljobsforrecruiter);
+handleTopicRequest("graphdata",graphdata);
  
