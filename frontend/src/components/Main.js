@@ -14,11 +14,8 @@ import NormalApply from './Apply/NormalApply';
 import EasyApply from './Apply/EasyApply';
 import Connections from "./Connections/Connections";
 import test from "./Test/test";
-<<<<<<< HEAD
 import RecruiterJobs from "./RecruiterJobs/RecruiterJobs";
-=======
 import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
->>>>>>> e6ab495e372e524ce6ad0d29e91fc1dd16967434
 
 
 const Main = () => (
