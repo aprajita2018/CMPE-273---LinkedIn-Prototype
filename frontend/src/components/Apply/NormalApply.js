@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import '../../App.css';
-import '../../drawer.css'
+
+import './drawer.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
@@ -38,6 +39,10 @@ class NormalApply extends Component {
             applicantstate:'',
             applicantrace:'',
             hasError: false,
+            successPost:false,
+            failPost:false
+
+
            
 
 
@@ -89,11 +94,20 @@ class NormalApply extends Component {
                 console.log("Status Code : ",response.status);
                 if(response.status === 200){
                     console.log("success")
+                    this.setState({
+                        successPost:true,
+                    })
+                    
                     // window.location = '/ownerlogin'
                 }else{
                    console.log("error")
+                  
+                   this.setState({
+                       failPost:true,
+                   })
                 }
             });
+           
 
     }
 
@@ -106,19 +120,24 @@ class NormalApply extends Component {
     componentDidMount(){
         console.log("in normal apply")
         console.log(this.props)
+        var datanew=JSON.parse(localStorage.pageData);
+
+        //console.log(datanew)
+
         this.setState({
-            jobtitle:this.props.location.state.profile.jobtitle,
-            company:this.props.location.state.profile.company,
-            address:this.props.location.state.profile.address,
-            poststatus:this.props.location.state.profile.poststatus,
-            jobdes:this.props.location.state.profile.jobdes,
-            easy_apply:this.props.location.state.profile.easy_apply,
-            senlevel:this.props.location.state.profile.senlevel,
-            jobid:this.props.location.state.profile.jobid,
-            _id:this.props.location.state.profile._id,
-            source:this.props.location.state.profile.source,
-            recruiterid:this.props.location.state.profile.recruiterid,
+            jobtitle:datanew.jobtitle,
+            company:datanew.company,
+            address:datanew.address,
+            poststatus:datanew.poststatus,
+            jobdes:datanew.jobdes,
+            easy_apply:datanew.easy_apply,
+            senlevel:datanew.senlevel,
+            jobid:datanew.jobid,
+            _id:datanew._id,
+            source:datanew.source,
+            recruiterid:datanew.recruiterid,
         })
+        localStorage.removeItem("pageData");
     }
 
     componentDidCatch(error, info) {
@@ -133,17 +152,27 @@ class NormalApply extends Component {
 
     render() {
         const { applyJob } = this.props;
-        if(this.state.hasError)
-        {
-            return <h1>Error: </h1>;
+        let showSuccess = null;
+        let showError = null;
+        if(this.state.successPost){
+            showSuccess = <div className="alert alert-success" role="alert">
+        <h4>Apply Successful</h4>
+      
+          </div>
         }
+        if(this.state.failPost){
+            showError = <div className="alert-danger">
+        <h4>Application failed, Try Again Later !!</h4>
+          </div>
+        }
+       
         else{
         return (
 
             <div>
                 <div className="container">
                     <div className="apply-div">
-
+                    
                         <form>
                             <div class="form-row">
                                 <div class="col">
@@ -295,15 +324,22 @@ class NormalApply extends Component {
 
                         </div>
                         <br />
+                        
                         <button
+                            disabled={this.state.successPost}
                             type="button"
                             class="btn btn-primary btn-lg btn-block"
                             onClick={this.applyJob}>
                             Submit Application
                         </button>
-
+                        <br/>
+                        {showSuccess}
+                        {showError}
+                       
+                        <br/>
 
                     </div>
+                    
                 </div>
             </div>
         )

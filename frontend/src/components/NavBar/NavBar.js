@@ -144,6 +144,9 @@ class NavBar extends Component {
                                     <li className='nav-item nav-link py-0 mx-4' style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
                                         <Link to="/jobpost"><span className='icon-text'><i className="fas fa-file-alt fa-2x"></i><br/>Post Jobs</span></Link>                                 
                                     </li>
+                                    {/* <li className='nav-item nav-link py-0 mx-4' style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
+                                        <Link to="/recruterapplyfind"><span className='icon-text'><i className="fas fa-business-time fa-2x"></i><br/>View Applications</span></Link>                                 
+                                    </li> */}
                                     <li className='nav-item nav-link py-0 mx-4' style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
                                         <Link to="/JobStats"><span className='icon-text'><i className="fas fa-chart-line fa-2x"></i><br/>Dashboard</span></Link>                                 
                                     </li>

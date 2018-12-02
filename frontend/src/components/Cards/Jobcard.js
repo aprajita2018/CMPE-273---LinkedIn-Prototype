@@ -10,7 +10,7 @@ import Button from '@material-ui/core/Button';
 import Typography from '@material-ui/core/Typography';
 import axios from 'axios';
 import Jobopen from '../Jobopen/Jobopen'
-import '../../drawer.css'
+
 //import cookie from 'react-cookies';
 import { TextField, CardActionArea, Icon } from '@material-ui/core';
 const styles = theme => ({
@@ -82,8 +82,9 @@ routeToJob =(e) =>  {
       
      //console.log(this.props.props)
     const { classes, theme } = this.props;
+    
     let easyapply = null;
-    if(this.state.easy_apply=="true"){
+    if(this.props.props.easyapply=="true"){
       easyapply="Easy Apply"
     }
     else

@@ -14,7 +14,11 @@ import NormalApply from './Apply/NormalApply';
 import EasyApply from './Apply/EasyApply';
 import Connections from "./Connections/Connections";
 import test from "./Test/test";
+<<<<<<< HEAD
 import RecruiterJobs from "./RecruiterJobs/RecruiterJobs";
+=======
+import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
+>>>>>>> e6ab495e372e524ce6ad0d29e91fc1dd16967434
 
 
 const Main = () => (
@@ -33,6 +37,7 @@ const Main = () => (
 	        <Route path="/connections" exact component={Connections} />
             <Route path="/recruiterjobs" exact component={RecruiterJobs} />
             <Route path="/test" component={test}/>
+        {/* <Route path="/recruterapplyfind" component={RecruterApplyFind}/> */}
             {/* </Switch> */}
     </div>
     </BrowserRouter>
