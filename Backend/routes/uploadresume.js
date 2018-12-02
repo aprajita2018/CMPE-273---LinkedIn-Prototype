@@ -6,6 +6,7 @@ var express = require('express');
 var router = express.Router();
 const fs = require('fs');
 const path = require('path');
+
 var AWS = require('aws-sdk');
 AWS.config.update({"accessKeyId": "AKIAISHXQVRQVMLKEUEA", "secretAccessKey": "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", "region": "us-east-2" })
 
@@ -16,60 +17,45 @@ const storage = multer.diskStorage({
         callback(null, './uploads');
     },
     filename: (req, file, callback) => {
-        
+        console.log(req.params);
            counter++;
-        const newFilename = req.params.username + '_photo.jpg';
+        const newFilename = req.params.username + '_resume.pdf';
         callback(null, newFilename);
     },
 });
 const upload = multer({ storage });
 
 
-router.post('/setname', (req, res) => {
-    filename = req.body.filename;
-    console.log("Setting name: ", filename);
-    res.end();
-})
 
-router.post('/:username', upload.array("images[]", 10), (req, res) => {
+router.post('/:username', upload.array("resume", 10), (req, res) => {
     console.log("Uploading Multiple Files");
     console.log(req.params);
-    try
-   {
-       console.log(req.body);
-       console.log("Trying to put the object");
-       
-        var bucket = new AWS.S3();
-        //bucket.config =   AWS.config.loadFromPath('../aws-config/config');
-        var file = req.params.username +'_photo.jpg';
-        var fileLocation = path.join(__dirname, '/../uploads', file);
-        var img; var base64img;
-        img = fs.readFileSync(fileLocation);
-        base64img = new Buffer(img).toString('base64');
-        
-        bucket.upload({
-            Bucket : 'projectli-bucket',
-            Key : req.params.username+'_photo.jpg',
-            Body : img,
-          //  ContentEncoding: 'base64', 
-           // Metadata: {
-            //    'Content-Type': 'image/jpeg'
-            //}
-        },function (response) {
-            console.log(response);
+    try{
 
-        });
     
-    
-    }
-    catch(err){
-        console.log(err);
-    };
+    var bucket = new AWS.S3();
+     var file = req.params.username +'_resume.pdf';
+    var fileLocation = path.join(__dirname, '/../uploads', file);
+    var pdf = fs.readFileSync(fileLocation);
+   
+    bucket.upload({
+        Bucket : 'projectli-bucket',
+        Key : req.params.username+'_resume.pdf',
+        Body : pdf
+    },function (response) {
+        console.log(response);
 
+    });
+
+
+}
+catch(err){
+    console.log(err);
+};
    try
    {
         var image;
-     var file = req.params.username +'_photo.jpg';
+     var file = req.params.username +'_resume.pdf';
      var fileLocation = path.join(__dirname, '/../uploads', file);
      var img; var base64img;
      img = fs.readFileSync(fileLocation);

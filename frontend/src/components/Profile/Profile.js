@@ -5,33 +5,58 @@ import { Redirect } from 'react-router';
 import { Field, reduxForm, reset } from "redux-form";
 import { connect } from "react-redux";
 import _ from "lodash";
-import { Link } from 'react-router-dom';
-import { Alert } from 'reactstrap';
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import { Glyphicon, Nav } from "react-bootstrap";
-import ProfileContact from './ProfileContact';
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { BACKEND_HOST } from '../../store/actions/host_config';
 import NavBar from '../NavBar/NavBar';
-import {BACKEND_HOST} from '../../store/actions/host_config';
-import Search from '../Search/Search';
 
 class Profile extends Component {
 
     constructor(props) {
         super(props);
-
         this.contact_toggle         = this.contact_toggle.bind(this);
-        this.add_education_toggle   = this.add_education_toggle.bind(this);
-        this.add_experience_toggle  = this.add_experience_toggle.bind(this);
-        this.edit_intro_toggle      = this.edit_intro_toggle.bind(this);
-        this.edit_education_toggle  = this.edit_education_toggle.bind(this);
+        this.add_education_toggle = this.add_education_toggle.bind(this);
+        this.add_experience_toggle = this.add_experience_toggle.bind(this);
+        this.add_skills_toggle = this.add_skills_toggle.bind(this);
+        this.edit_intro_toggle = this.edit_intro_toggle.bind(this);
+        this.edit_education_toggle = this.edit_education_toggle.bind(this);
         this.edit_experience_toggle = this.edit_experience_toggle.bind(this);
-        this.editEducation          = this.editEducation.bind(this);
-        this.editExperience         = this.editExperience.bind(this);       
+        this.editEducation = this.editEducation.bind(this);
+        this.editExperience = this.editExperience.bind(this);
+        this.deleteSkill = this.deleteSkill.bind(this);
+
+    }
+
+    componentWillMount() {
+        this.props.getprofile(this.props.email);
+    }
+    onChangeimages = (e) => {
+        this.props.uploadimages(e.target.files);
+    }
+
+
+    onChangeresume = (e) => {
+        e.preventDefault();
+        this.props.uploadresume(e.target.files);
+    }
+
+
+    submitResume = (e) => {
+        e.preventDefault();
+
+        var resume = this.props.uploadedResume;
+        let formData = new FormData();
+
+        for (var i = 0; i < resume.length; i++) {
+            formData.append("resume", resume[i]);
+        }
+
+        axios.post(BACKEND_HOST + '/uploadresume/' + this.props.email, formData);
     }
 
     contact_toggle() {
         this.props.toggleContact();
     }
+
 
     add_education_toggle() {
         this.props.toggleAddEducation();
@@ -40,37 +65,35 @@ class Profile extends Component {
         this.props.toggleAddExperience();
     }
 
+    add_skills_toggle() {
+        this.props.toggleAddSkills();
+    }
+
     edit_intro_toggle() {
         this.props.toggleEditIntro();
     }
 
     editIntro(values) {
-        console.log("Enterting edit intro");
-        values.username = this.props.email;
-
-        const image  = this.props.image;
-        console.log(image);
+        var image = this.props.uploadedImage;
         let formData = new FormData();
-        formData.append('image',image);
-        values.image = formData;    
-         
-        const data = {
-            username : this.props.email 
+        if (image != null) {
+            for (var i = 0; i < image.length; i++) {
+                formData.append("images[]", image[i]);
+            }
+
         }
-
-        console.log(formData);
-
-        axios.post('http://localhost:3001/uploadphotos/setname',data )
-        .then(() => {
-            axios.post('http://localhost:3001/uploadphotos', formData)
-            .then(() => {  this.props.editIntro(values); });
-        });          
+        const data = {
+            username: this.props.email,
+            formData: formData,
+            values: values
+        }
+        this.props.editPhoto(data);
+        this.props.editIntro(data);
     }
 
     edit_education_toggle(selected) {
-        console.log("Toggle Education Modal");
         var education = "";
-        if (selected.target.name === "edit") { 
+        if (selected.target.name === "edit") {
 
             if (selected.target.value !== "" && selected.target.value !== null)
                 education = JSON.parse(selected.target.value);
@@ -81,7 +104,7 @@ class Profile extends Component {
         if (selected.target.name === "delete") {
             const data = {
                 id: selected.target.id,
-                username: this.props.email
+                username: this.props.email //this.props.email 
             }
             this.props.deleteEducation(data);
         }
@@ -96,44 +119,45 @@ class Profile extends Component {
             if (selected.target.value !== "" && selected.target.value !== null) {
                 experience = JSON.parse(selected.target.value);
             }
-
             this.props.editExpValues(experience);
         }
 
         if (selected.target.name === "delete") {
             const data = {
                 id: selected.target.id,
-                username: this.props.email
+                username: this.props.email //this.props.email
             }
             this.props.deleteExperience(data);
 
         }
         this.props.toggleEditExperience();
     }
-    onChangeimage = (e) => {      
-        var values = e.target.files;   
-        this.props.uploadimage(values);     
-    }
 
-    componentWillMount() {
-        console.log("Will Mount Profile");
-        this.props.getprofile(this.props.email);
+    deleteSkill = (e) => {
+        e.preventDefault();
+        const data = {
+            username: this.props.email, //this.props.email
+            skill: e.target.value
+        }
+        this.props.deleteSkill(data);
     }
-
     addEducation(values) {
-        console.log("Enterting add education");
         values.username = this.props.email;
         this.props.addEducation(values);
     }
 
     addExperience(values) {
-        console.log("Enterting add experience");
         values.username = this.props.email;
         this.props.addExperience(values);
     }
 
+    addSkills(values) {
+        values.username = this.props.email;
+        this.props.addSkills(values);
+    }
+
+
     editEducation = (values) => {
-        const resetForm = this.props;
         values.preventDefault();
         const data = {
             id: this.props.edit_edu_id,
@@ -149,18 +173,15 @@ class Profile extends Component {
             data['fromYear'] = values.target.fromYear.value;
         if (values.target.toYear.value !== "")
             data['toYear'] = values.target.toYear.value;
-        console.log("Entering Edit Education Function");
-        // this.props.resetForm("edit_education_form");
+
         this.props.editEducation(data);
     }
 
     editExperience = (values) => {
-        const resetForm = this.props;
         values.preventDefault();
-
         const data = {
             id: this.props.edit_exp_id,
-            username: this.props.email
+            username: this.props.email /*this.props.email*/
         }
         if (values.target.title.value !== "")
             data['title'] = values.target.title.value;
@@ -176,11 +197,8 @@ class Profile extends Component {
             data['fromYear'] = values.target.fromYear.value;
         if (values.target.toYear.value !== "")
             data['toYear'] = values.target.toYear.value;
-
-        //this.props.resetForm("edit_experience_form");
         this.props.editExperience(data);
     }
-
 
     renderField(field) {
         const { meta: { touched, error } } = field;
@@ -188,27 +206,30 @@ class Profile extends Component {
 
         return (
             <div className={className}>
-                <input className="form-control" initialValue={field.initialValue} hidden={field.hidden} label={field.label} pattern={field.pattern} value="" placeholder={field.placeholder} type={field.type} {...field.input} />
+                <input className="form-control" initialValue={field.initialValue} hidden={field.hidden} label={field.label} pattern={field.pattern} value="" placeholder={field.placeholder} type={field.type} onChange={field.onChange} {...field.input} />
                 <div className="text-help">
                     {touched ? error : ""}
                 </div>
             </div>
         );
-    }
+    } city
 
     render() {
         let redirectNotLoggedIn = null;
-        if(this.props.token === "")
+        if (this.props.token === "")
             redirectNotLoggedIn = <Redirect to="/" />;
 
-        console.log("Inside Profile Render");
-        console.log(this.props);
         const { handleSubmit } = this.props;
         const closeEditEducation = <button className="close" onClick={this.edit_education_toggle}>&times;</button>;
         const closeEditExperience = <button className="close" onClick={this.edit_experience_toggle}>&times;</button>;
-        var image, firstName, lastName, headline, location, education, experience, contact, current_position, industry;
-        if(this.props.image)
-        image = 'data:image/jpg;base64, ' + this.props.image;
+
+        var firstName, lastName, headline, location, education, experience, contact, current_position, industry, profile_summary, skills, address, city, userstate, zipcode;
+
+        var imageView = null;
+
+        if (this.props.image)
+            imageView = 'data:image/jpg;base64, ' + this.props.image;
+
         if (this.props.firstName)
             firstName = this.props.firstName;
         else
@@ -229,6 +250,46 @@ class Profile extends Component {
         else
             location = "";
 
+        if (this.props.city)
+            city = this.props.city;
+        else
+            city = "";
+        if (this.props.address)
+            address = this.props.address;
+        else
+            address = "";
+        if (this.props.userstate)
+            userstate = this.props.userstate;
+        else
+            userstate = "";
+        if (this.props.zipcode)
+            zipcode = this.props.zipcode;
+        else
+            zipcode = "";
+        if (this.props.profile_summary)
+            profile_summary = this.props.profile_summary;
+        else
+            profile_summary = "";
+
+        if (this.props.skills) {
+            skills = this.props.skills.map(user_skill => {
+                return (
+                    <div>
+                        <div className="row">
+                            <div className="col-sm-10">
+                                <p><b>{user_skill}</b></p>
+                            </div>
+                            <div className="col-sm-2">
+                                <p> <button className="btn btn-link" value={user_skill} onClick={this.deleteSkill}>Delete</button>  </p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            })
+
+        }
+        else
+            skills = "";
         if (this.props.education) {
             education = this.props.education.map(user_education => {
 
@@ -253,7 +314,6 @@ class Profile extends Component {
         else
             education = "";
 
-
         if (this.props.experience) {
             experience = this.props.experience.map(user_experience => {
                 const EditExperienceButton = <button id={user_experience._id} name="edit" value={JSON.stringify(user_experience)} className="btn btn-link float-right" onClick={this.edit_experience_toggle}>Edit</button>;
@@ -272,8 +332,7 @@ class Profile extends Component {
 
                             </div>
                         </div>
-                    </div>
-                )
+                    </div>)
             })
         }
 
@@ -293,12 +352,15 @@ class Profile extends Component {
             industry = this.props.industry;
         else
             industry = "";
-        const closeContact = <button className="close" onClick={this.contact_toggle}>&times;</button>;
+
         const closeAddEducation = <button className="close" onClick={this.add_education_toggle}>&times;</button>;
         const closeAddExperience = <button className="close" onClick={this.add_experience_toggle}>&times;</button>;
+        const closeAddSkills = <button className="close" onClick={this.add_skills_toggle}>&times;</button>;
 
         const addEducationButton = <button className="btn btn-link float-right" onClick={this.add_education_toggle}>+</button>;
         const addExperienceButton = <button className="btn btn-link float-right" onClick={this.add_experience_toggle}>+</button>;
+        const addSkillsButton = <button className="btn btn-link float-right" onClick={this.add_skills_toggle}>+</button>;
+
 
         const EditIntroButton = <button className="btn btn-link float-right" onClick={this.edit_intro_toggle}>Edit</button>;
         const closeEditIntro = <button className="close" onClick={this.edit_intro_toggle}>&times;</button>;
@@ -311,54 +373,51 @@ class Profile extends Component {
 
         if (this.props.modal_contact)
             redirectModal = <Redirect to="/profile/contact-information" />
-     //   else if (this.props.modal_edit_intro)
-      //      redirectModal = <Redirect to="/profile/edit-intro" />
+
+        else if (this.props.modal_add_skills)
+            redirectModal = <Redirect to="/profile/add-skills" />
         else
-          redirectModal = <Redirect to="/profile" />
-        console.log(this.props.modal_contact);
+            redirectModal = <Redirect to="/profile" />
 
-        
         return (
-            <div> 
+            <div>
                 {redirectNotLoggedIn}
-                <NavBar />
-               
+                {<NavBar />}
+
                 <div className="container">
-                    <div className="signup-form">
-                        <div className="main-div">
-                            <div className="panel">
-                                <div className="bordered-div">
 
-                                    <div className="row">
-                                        <div className="col-sm-4">
-                                        <img width={'100em'} height={'100em'} src={image} alt="profile" />
-                                            <h5><b>{this.props.name}</b></h5>
-                                            <h6>{headline}</h6>
-                                            <h6>{location}</h6>
-                                            <h6>{current_position}</h6>
-                                            <h6>{industry}</h6>
-                                        </div>
+                    <div className="main-div">
+                        <div className="panel">
+                            <div className="bordered-div">
+                                <div className="row">
+                                    <img width={'200em'} height={'200em'} src={imageView} />
+                                </div>
+                                <div className="row">
+                                    <div className="col-sm-4">
+                                        <h5><b>{this.props.firstName} {" "} {this.props.lastName}</b></h5>
+                                        <h6>{headline}</h6>
+                                        <h6>{location}</h6>
+                                        <h6>{address} {" "}{city}{" "} {userstate}{" "} {zipcode}</h6>
+                                        <h6>{current_position}</h6>
+                                        <h6>{industry}</h6>
+                                    </div>
 
-                                        <div className="col-sm-4">
-                                        </div>
+                                    <div className="col-sm-4">
+                                    </div>
 
-                                        <div className="col-sm-4">
+                                    <div className="col-sm-4">
+                                        <div>
                                             <h5>{EditIntroButton}</h5>
                                             <Modal isOpen={this.props.modal_edit_intro} toggle={this.edit_intro_toggle} >
                                                 <ModalHeader toggle={this.edit_intro_toggle} close={closeEditIntro}>Edit intro</ModalHeader>
                                                 <ModalBody>
 
-                                                    <form name={"edit_intro_form"} enctype="multipart/form-data"  onSubmit={handleSubmit(this.editIntro.bind(this))} >
-                                                        {/*   <input type="file" name="images" onChange={this.onChangeimages} />
-                                                       Image
-                                                       <Field
-                                                            name="photo"
-                                                            type="file"
-                                                            component={this.renderField}
-                                                        /> */}
-                                                           Upload Profile Image
-                                                        <input type="file" name="image"  onChange={this.onChangeimage} />
-                                  
+                                                    <form name={"edit_intro_form"} enctype="multipart/form-data" onSubmit={handleSubmit(this.editIntro.bind(this))} >
+                                                        <div>
+                                                            Upload Profile Photo
+                                                    <input type="file" multiple name="images" onChange={this.onChangeimages} />
+                                                        </div>
+
                                                         First Name
                                                         <Field
                                                             placeholder={firstName}
@@ -404,11 +463,46 @@ class Profile extends Component {
                                                             component={this.renderField}
                                                         />
 
-                                                        Country/Region
+                                                        Location
                                                         <Field
                                                             placeholder={location}
                                                             name="location"
                                                             type="text"
+                                                            component={this.renderField}
+                                                        />
+                                                         Address
+                                                        <Field
+                                                            placeholder={address}
+                                                            name="address"
+                                                            type="text"
+                                                            component={this.renderField}
+                                                        />
+                                                         City
+                                                        <Field
+                                                            placeholder={city}
+                                                            name="city"
+                                                            type="text"
+                                                            component={this.renderField}
+                                                        />
+                                                         State
+                                                        <Field
+                                                            placeholder={userstate}
+                                                            name="userstate"
+                                                            type="text"
+                                                            component={this.renderField}
+                                                        />
+                                                         ZipCode
+                                                        <Field
+                                                            placeholder={zipcode}
+                                                            name="zipcode"
+                                                            type="text"
+                                                            component={this.renderField}
+                                                        />
+                                                        Profile Summary
+                                                        <Field
+                                                            placeholder={profile_summary}
+                                                            name="profile_summary"
+                                                            type="textarea"
                                                             component={this.renderField}
                                                         />
                                                         {/* <button onClick= /*{this.submitUpdate} {handleSubmit(this.submitUpdate.bind(this))} className="btn btn-primary">Update</button> */}
@@ -417,302 +511,344 @@ class Profile extends Component {
                                                 </ModalBody>
 
                                             </Modal>
-
+                                        </div>
+                                        <div>
                                             <input className="float-right btn btn-link" onClick={this.contact_toggle} value="See contact info"></input>
                                             {redirectModal}
-
+                                        </div>
+                                        <div>
                                             <input className="float-right btn btn-link" /*onClick={this.toggle}*/ value="See connections"></input>
                                         </div>
                                     </div>
+
                                 </div>
-
-                                <div className="bordered-div">
-                                    {redirectVar}
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <h5>Experience</h5>
-                                        </div>
-                                        <div className="col-sm-6">
-                                            <h5>{addExperienceButton}</h5>
-                                            <Modal isOpen={this.props.modal_add_experience} toggle={this.add_experience_toggle} >
-                                                <ModalHeader toggle={this.add_experience_toggle} close={closeAddExperience}>Add Experience</ModalHeader>
-                                                <ModalBody>
-
-                                                    <form name={"add_experience_form"} onSubmit={handleSubmit(this.addExperience.bind(this))} >
-                                                        Title
-                                                        <Field
-                                                            name="title"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        Company
-                                                        <Field
-                                                            name="company"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        Location
-                                                        <Field
-                                                            name="location"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        From
-                                                        <Field
-                                                            placeholder="Month"
-                                                            name="fromMonth"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-
-                                                        <Field
-                                                            placeholder="Year"
-                                                            name="fromYear"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        To
-                                                        <Field
-                                                            placeholder="Month"
-                                                            name="toMonth"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        <Field
-                                                            placeholder="Year"
-                                                            name="toYear"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-
-                                                        {/* <button onClick= /*{this.submitUpdate} {handleSubmit(this.submitUpdate.bind(this))} className="btn btn-primary">Update</button> */}
-                                                        <button type="submit" onClick={this.add_experience_toggle} className="btn btn-primary">Save</button>
-                                                    </form>
-                                                </ModalBody>
-                                            </Modal>
-                                        </div>
+                                <div className="row">
+                                    <div className="col-sm-8">
+                                        {this.props.profile_summary}
                                     </div>
-                                    <div>{experience}</div>
-
-                                    <Modal isOpen={this.props.modal_edit_experience} toggle={this.edit_experience_toggle} >
-                                        <ModalHeader toggle={this.edit_experience_toggle} close={closeEditExperience}>Edit experience</ModalHeader>
-                                        <ModalBody>
-
-                                            <form id={this.props.edit_exp_id} name={"edit_experience_form"} onSubmit={this.editExperience.bind(this)} >
-                                                Title
-                                                <Field
-                                                    placeholder={this.props.edit_exp_title}
-                                                    name="title"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                Company
-                                                <Field
-                                                    placeholder={this.props.edit_exp_company}
-                                                    name="company"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                Location
-                                                <Field
-                                                    placeholder={this.props.edit_exp_location}
-                                                    name="location"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                From
-                                                <Field
-                                                    placeholder={this.props.edit_exp_fromMonth}
-                                                    name="fromMonth"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-
-
-                                                <Field
-                                                    placeholder={this.props.edit_exp_fromYear}
-                                                    name="fromYear"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                To
-                                                <Field
-                                                    placeholder={this.props.edit_exp_toMonth}
-                                                    name="toMonth"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                <Field
-                                                    placeholder={this.props.edit_exp_toYear}
-                                                    name="toYear"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                <button type="button" id={this.props.edit_exp_id} name="delete" onClick={this.edit_experience_toggle} className="btn btn-primary">Delete</button>
-                                                <button type="submit" name="save" onClick={this.edit_experience_toggle} className="float-right btn btn-primary">Save</button>
-                                            </form>
-                                        </ModalBody>
-                                    </Modal>
                                 </div>
 
-                                <div className="bordered-div">
-                                    {redirectVar}
-                                    <div className="row">
-                                        <div className="col-sm-6">
-                                            <h5>Education</h5>
-                                        </div>
+                            </div>
 
-                                        <div className="col-sm-6">
-                                            <h5>{addEducationButton}</h5>
-                                            <Modal isOpen={this.props.modal_add_education} toggle={this.add_education_toggle} >
-                                                <ModalHeader toggle={this.add_education_toggle} close={closeAddEducation}>Add Education</ModalHeader>
-                                                <ModalBody>
+                            <div className="bordered-div">
+                                {redirectVar}
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <h5>Experience</h5>
+                                    </div>
+                                    <div className="col-sm-6">
+                                        <h5>{addExperienceButton}</h5>
+                                        <Modal isOpen={this.props.modal_add_experience} toggle={this.add_experience_toggle} >
+                                            <ModalHeader toggle={this.add_experience_toggle} close={closeAddExperience}>Add Experience</ModalHeader>
+                                            <ModalBody>
 
-                                                    <form name={"add_education_form"} onSubmit={handleSubmit(this.addEducation.bind(this))} >
-                                                        School
+                                                <form name={"add_experience_form"} onSubmit={handleSubmit(this.addExperience.bind(this))} >
+                                                    Title
                                                         <Field
-                                                            name="school"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        Degree
+                                                        name="title"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    Company
                                                         <Field
-                                                            name="degree"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        Field of Study
+                                                        name="company"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    Location
                                                         <Field
-                                                            name="field"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        From Year
+                                                        name="location"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    From
                                                         <Field
-                                                            name="fromYear"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
-                                                        To Year
-                                                        <Field
-                                                            name="toYear"
-                                                            type="text"
-                                                            component={this.renderField}
-                                                        />
+                                                        placeholder="Month"
+                                                        name="fromMonth"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
 
-                                                        {/* <button onClick= /*{this.submitUpdate} {handleSubmit(this.submitUpdate.bind(this))} className="btn btn-primary">Update</button> */}
-                                                        <button type="submit" onClick={this.add_education_toggle} className="btn btn-primary">Save</button>
-                                                    </form>
-                                                </ModalBody>
-                                            </Modal>
-                                        </div>
+                                                    <Field
+                                                        placeholder="Year"
+                                                        name="fromYear"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    To
+                                                        <Field
+                                                        placeholder="Month"
+                                                        name="toMonth"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    <Field
+                                                        placeholder="Year"
+                                                        name="toYear"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+
+                                                    {/* <button onClick= /*{this.submitUpdate} {handleSubmit(this.submitUpdate.bind(this))} className="btn btn-primary">Update</button> */}
+                                                    <button type="submit" onClick={this.add_experience_toggle} className="btn btn-primary">Save</button>
+                                                </form>
+                                            </ModalBody>
+                                        </Modal>
+                                    </div>
+                                </div>
+                                <div>{experience}</div>
+
+                                <Modal isOpen={this.props.modal_edit_experience} toggle={this.edit_experience_toggle} >
+                                    <ModalHeader toggle={this.edit_experience_toggle} close={closeEditExperience}>Edit experience</ModalHeader>
+                                    <ModalBody>
+
+                                        <form id={this.props.edit_exp_id} name={"edit_experience_form"} onSubmit={this.editExperience.bind(this)} >
+                                            Title
+                                                <Field
+                                                placeholder={this.props.edit_exp_title}
+                                                name="title"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            Company
+                                                <Field
+                                                placeholder={this.props.edit_exp_company}
+                                                name="company"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            Location
+                                                <Field
+                                                placeholder={this.props.edit_exp_location}
+                                                name="location"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            From
+                                                <Field
+                                                placeholder={this.props.edit_exp_fromMonth}
+                                                name="fromMonth"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+
+
+                                            <Field
+                                                placeholder={this.props.edit_exp_fromYear}
+                                                name="fromYear"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            To
+                                                <Field
+                                                placeholder={this.props.edit_exp_toMonth}
+                                                name="toMonth"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            <Field
+                                                placeholder={this.props.edit_exp_toYear}
+                                                name="toYear"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            <button type="button" id={this.props.edit_exp_id} name="delete" onClick={this.edit_experience_toggle} className="btn btn-primary">Delete</button>
+                                            <button type="submit" name="save" onClick={this.edit_experience_toggle} className="float-right btn btn-primary">Save</button>
+                                        </form>
+                                    </ModalBody>
+                                </Modal>
+                            </div>
+
+                            <div className="bordered-div">
+                                {redirectVar}
+                                <div className="row">
+                                    <div className="col-sm-6">
+                                        <h5>Education</h5>
                                     </div>
 
-                                    <div>{education}</div>
+                                    <div className="col-sm-6">
+                                        <h5>{addEducationButton}</h5>
+                                        <Modal isOpen={this.props.modal_add_education} toggle={this.add_education_toggle} >
+                                            <ModalHeader toggle={this.add_education_toggle} close={closeAddEducation}>Add Education</ModalHeader>
+                                            <ModalBody>
 
-                                    <Modal isOpen={this.props.modal_edit_education} toggle={this.edit_education_toggle} >
-                                        <ModalHeader toggle={this.edit_education_toggle} close={closeEditEducation}>Edit education</ModalHeader>
-                                        <ModalBody>
+                                                <form name={"add_education_form"} onSubmit={handleSubmit(this.addEducation.bind(this))} >
+                                                    School
+                                                        <Field
+                                                        name="school"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    Degree
+                                                        <Field
+                                                        name="degree"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    Field of Study
+                                                        <Field
+                                                        name="field"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    From Year
+                                                        <Field
+                                                        name="fromYear"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
+                                                    To Year
+                                                        <Field
+                                                        name="toYear"
+                                                        type="text"
+                                                        component={this.renderField}
+                                                    />
 
-                                            <form id={this.props.edit_edu_id} name={"edit_education_form"} onSubmit={this.editEducation.bind(this)} >
-                                                School
-                                                <Field
-                                                    placeholder={this.props.edit_edu_school}
-                                                    name="school"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                Degree
-                                                <Field
-                                                    placeholder={this.props.edit_edu_degree}
-                                                    name="degree"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                Field
-                                                <Field
-                                                    placeholder={this.props.edit_edu_field}
-                                                    name="field"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-                                                fromYear
-                                                <Field
-                                                    placeholder={this.props.edit_edu_fromYear}
-                                                    name="fromYear"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-
-                                                toYear
-                                                <Field
-                                                    placeholder={this.props.edit_edu_toYear}
-                                                    name="toYear"
-                                                    type="text"
-                                                    component={this.renderField}
-                                                />
-
-                                                <button type="button" id={this.props.edit_edu_id} name="delete" onClick={this.edit_education_toggle} className="btn btn-primary">Delete</button>
-
-                                                <button type="submit" name="save" onClick={this.edit_education_toggle} className="float-right btn btn-primary">Save</button>
-                                            </form>
-                                        </ModalBody>
-                                    </Modal>
+                                                    {/* <button onClick= /*{this.submitUpdate} {handleSubmit(this.submitUpdate.bind(this))} className="btn btn-primary">Update</button> */}
+                                                    <button type="submit" onClick={this.add_education_toggle} className="btn btn-primary">Save</button>
+                                                </form>
+                                            </ModalBody>
+                                        </Modal>
+                                    </div>
                                 </div>
+
+                                <div>{education}</div>
+
+                                <Modal isOpen={this.props.modal_edit_education} toggle={this.edit_education_toggle} >
+                                    <ModalHeader toggle={this.edit_education_toggle} close={closeEditEducation}>Edit education</ModalHeader>
+                                    <ModalBody>
+
+                                        <form id={this.props.edit_edu_id} name={"edit_education_form"} onSubmit={this.editEducation.bind(this)} >
+                                            School
+                                                <Field
+                                                placeholder={this.props.edit_edu_school}
+                                                name="school"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            Degree
+                                                <Field
+                                                placeholder={this.props.edit_edu_degree}
+                                                name="degree"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            Field
+                                                <Field
+                                                placeholder={this.props.edit_edu_field}
+                                                name="field"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+                                            fromYear
+                                                <Field
+                                                placeholder={this.props.edit_edu_fromYear}
+                                                name="fromYear"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+
+                                            toYear
+                                                <Field
+                                                placeholder={this.props.edit_edu_toYear}
+                                                name="toYear"
+                                                type="text"
+                                                component={this.renderField}
+                                            />
+
+                                            <button type="button" id={this.props.edit_edu_id} name="delete" onClick={this.edit_education_toggle} className="btn btn-primary">Delete</button>
+
+                                            <button type="submit" name="save" onClick={this.edit_education_toggle} className="float-right btn btn-primary">Save</button>
+                                        </form>
+                                    </ModalBody>
+                                </Modal>
                             </div>
                         </div>
+                        <div className="bordered-div">
+                            <div className="row">
+                                <div className="col-sm-6">
+                                    <h5>Skills</h5>
+                                </div>
+                                <div className="col-sm-6">
+                                    <h5>{addSkillsButton}</h5>
+                                    {redirectModal}
+
+                                </div>
+                            </div>
+                            <div>{skills}</div>
+                        </div>
                     </div>
-                </div >
+
+                    <div className="bordered-div">
+                        <h5>Add Resume</h5>
+                        <form onSubmit={this.submitResume}>
+                            <input type="file" multiple name="resume" onChange={this.onChangeresume} />
+                            <button type="submit" className="btn btn-primary">Add</button>
+                        </form>
+                    </div>
+
+                </div>
+
             </div >
+
         );
     }
 }
 
 
 const mapStateToProps = state => {
-
     return {
-        email           : state.user.user.email,
+        email: state.user.user.email,
         user_type       : state.user.user_type,
         name            : state.user.name,
         token           : state.user.token,
 
-        image           : state.reducer_profile.image, 
-        firstName       : state.reducer_profile.firstName,
-        lastName        : state.reducer_profile.lastName,
-        headline        : state.reducer_profile.headline,
-        location        : state.reducer_profile.location,
+        image: state.reducer_profile.image,
+        firstName: state.reducer_profile.firstName,
+        lastName: state.reducer_profile.lastName,
+        headline: state.reducer_profile.headline,
+        location: state.reducer_profile.location,
         current_position: state.reducer_profile.current_position,
-        education       : state.reducer_profile.education,
-        experience      : state.reducer_profile.experience,
-        industry        : state.reducer_profile.industry,
-        contact         : state.reducer_profile.contact,
-        education_id    : state.reducer_profile.education_id,
-        updated         : state.reducer_profile.updated,
+        education: state.reducer_profile.education,
+        experience: state.reducer_profile.experience,
+        industry: state.reducer_profile.industry,
+        address: state.reducer_profile.address,
+        city: state.reducer_profile.city,
+        userstate: state.reducer_profile.userstate,
+        zipcode: state.reducer_profile.zipcode,
+        contact: state.reducer_profile.contact,
+        profile_summary: state.reducer_profile.profile_summary,
+        education_id: state.reducer_profile.education_id,
+        skills: state.reducer_profile.skills,
+        updated: state.reducer_profile.updated,
 
-        edit_edu_id     : state.reducer_profile.edit_edu_id,
-        edit_edu_school : state.reducer_profile.edit_edu_school,
-        edit_edu_degree : state.reducer_profile.edit_edu_degree,
-        edit_edu_field  : state.reducer_profile.edit_edu_field,
+        edit_edu_id: state.reducer_profile.edit_edu_id,
+        edit_edu_school: state.reducer_profile.edit_edu_school,
+        edit_edu_degree: state.reducer_profile.edit_edu_degree,
+        edit_edu_field: state.reducer_profile.edit_edu_field,
         edit_edu_fromYear: state.reducer_profile.edit_edu_fromYear,
-        edit_edu_toYear : state.reducer_profile.edit_edu_toYear,
+        edit_edu_toYear: state.reducer_profile.edit_edu_toYear,
 
 
-        edit_exp_id         : state.reducer_profile.edit_exp_id,
-        edit_exp_title      : state.reducer_profile.edit_exp_title,
-        edit_exp_company    : state.reducer_profile.edit_exp_company,
-        edit_exp_location   : state.reducer_profile.edit_exp_location,
-        edit_exp_fromYear   : state.reducer_profile.edit_exp_fromYear,
-        edit_exp_toYear     : state.reducer_profile.edit_exp_toYear,
-        edit_exp_fromMonth  : state.reducer_profile.edit_exp_fromMonth,
-        edit_exp_toMonth    : state.reducer_profile.edit_exp_Month,
+        edit_exp_id: state.reducer_profile.edit_exp_id,
+        edit_exp_title: state.reducer_profile.edit_exp_title,
+        edit_exp_company: state.reducer_profile.edit_exp_company,
+        edit_exp_location: state.reducer_profile.edit_exp_location,
+        edit_exp_fromYear: state.reducer_profile.edit_exp_fromYear,
+        edit_exp_toYear: state.reducer_profile.edit_exp_toYear,
+        edit_exp_fromMonth: state.reducer_profile.edit_exp_fromMonth,
+        edit_exp_toMonth: state.reducer_profile.edit_exp_Month,
 
-        modal_contact       : state.reducer_profile.modal_contact,
-        modal_add_education : state.reducer_profile.modal_add_education,
+        modal_contact: state.reducer_profile.modal_contact,
+        modal_add_education: state.reducer_profile.modal_add_education,
         modal_add_experience: state.reducer_profile.modal_add_experience,
-        modal_edit_intro    : state.reducer_profile.modal_edit_intro,
+        modal_add_skills: state.reducer_profile.modal_add_skills,
+        modal_edit_intro: state.reducer_profile.modal_edit_intro,
         modal_edit_education: state.reducer_profile.modal_edit_education,
         modal_edit_experience: state.reducer_profile.modal_edit_experience,
+
+        uploadedImage: state.reducer_profile.uploadedImage,
+        uploadedResume: state.reducer_profile.uploadedResume
 
     }
 }
@@ -721,45 +857,29 @@ const mapDispatchStateToProps = dispatch => {
     return {
 
         getprofile: (username) => {
-
-            console.log("Getting Profile");
-
-            axios.get(BACKEND_HOST + '/profile/' + username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
+            axios.get(BACKEND_HOST + '/profile/' + username/*, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } }*/)
                 .then((response) => {
+                    console.log("Response: ", response);
                     dispatch({ type: "GETPROFILE", payload: response.data, statusCode: response.status })
-            })
+                })
         },
-        /*  postprofile: (values) => {
-              axios.post(BACKEND_HOST + '/profile', values)
-                  .then((response) => {
-  
-                      dispatch({ type: "POSTPROFILE", payload: response.data })
-                  })
-          },*/
 
         addEducation: (values) => {
-
-            console.log('Adding Education');
-
             axios.post(BACKEND_HOST + '/profile/education', values)
                 .then((response) => {
                     console.log("Dispacting ADDEDUCATION");
                     dispatch({ type: "ADDEDUCATION", payload: response.data });
-
-            })
+                })
 
             axios.get(BACKEND_HOST + '/profile/education/' + values.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
                 .then((response) => {
 
                     dispatch({ type: "GETPROFILE_EDUCATION", payload: response.data, statusCode: response.status })
-            })
+                })
 
         },
 
         addExperience: (values) => {
-
-            console.log('Adding Experience');
-
             axios.post(BACKEND_HOST + '/profile/experience', values)
                 .then((response) => {
                     dispatch({ type: "ADDEXPERIENCE", payload: response.data });
@@ -772,10 +892,21 @@ const mapDispatchStateToProps = dispatch => {
                 })
         },
 
+
+        addSkills: (values) => {
+            axios.post(BACKEND_HOST + '/profile/skills', values)
+                .then((response) => {
+                    dispatch({ type: "ADDSKILLS", payload: response.data });
+
+                })
+            axios.get(BACKEND_HOST + '/profile/skills/' + values.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
+                .then((response) => {
+
+                    dispatch({ type: "GETPROFILE_SKILLS", payload: response.data, statusCode: response.status })
+                })
+        },
+
         editEducation: (values) => {
-
-            console.log('Editing Education');
-
             axios.put(BACKEND_HOST + '/profile/education', values)
                 .then((response) => {
                     dispatch({
@@ -802,12 +933,13 @@ const mapDispatchStateToProps = dispatch => {
         },
 
         editExperience: (values) => {
-            
+
             console.log('Editing Experience');
 
             axios.put(BACKEND_HOST + '/profile/experience', values)
                 .then((response) => {
                     dispatch({
+
                         type: "EDITEXPERIENCE", payload: response.data
                     });
                 })
@@ -854,24 +986,9 @@ const mapDispatchStateToProps = dispatch => {
                     dispatch({ type: "GETPROFILE_EXPERIENCE", payload: response.data, statusCode: response.status })
                 })
         },
-
-        resetupdated: () => {
-            dispatch({ type: "RESETUPDATED" })
-        },
-
-        showmodal: () => {
-            console.log("Dispatching Show Modal");
-            dispatch({ type: "SHOW_MODAL" })
-        },
-
-        resetForm: (value) => {
-            dispatch(reset(value));
-        },
-
         toggleContact: () => {
             dispatch({ type: "TOGGLE_CONTACT" });
         },
-
         toggleEditIntro: () => {
             dispatch({ type: "TOGGLE_EDIT_INTRO" });
         },
@@ -887,16 +1004,19 @@ const mapDispatchStateToProps = dispatch => {
         toggleAddExperience: () => {
             dispatch({ type: "TOGGLE_ADD_EXPERIENCE" });
         },
-
         toggleEditExperience: () => {
             dispatch({ type: "TOGGLE_EDIT_EXPERIENCE" });
         },
 
-        editIntro: (values) => {
-            console.log('Editing Intro');
-            console.log("Dispatching Action EI");
+        toggleAddSkills: () => {
+            dispatch({ type: "TOGGLE_ADD_SKILLS" });
+        },
 
-            axios.put(BACKEND_HOST + '/profile/intro', values)
+
+        editIntro: (data) => {
+            console.log('Editing Intro');
+
+            axios.put(BACKEND_HOST + '/profile/intro/' + data.username, data.values)
                 .then((response) => {
                     console.log("Response", response.data);
                     dispatch({
@@ -905,10 +1025,47 @@ const mapDispatchStateToProps = dispatch => {
                 })
         },
 
-        uploadimage : (values) =>{
-           
-            dispatch({type:"UPLOADIMAGE",payload: values})
+
+        addSkillToProp: (values) => {
+            values.preventDefault();
+            console.log("Adding To Prop: ", values.target.value);
+            dispatch({ type: "ADDSKILLTOPROP", payload: values.target.value })
         },
+        addSkillToTemp: (values) => {
+            values.preventDefault();
+            console.log("Adding To Temp: ", values.target.value);
+            dispatch({ type: "ADDSKILLTOTEMP", payload: values.target.value })
+        },
+        deleteSkill: (value) => {
+            axios.delete(BACKEND_HOST + '/profile/skill', { data: value })
+                .then((response) => {
+                    dispatch({
+                        type: "DELETE_SKILLS", payload: response.data
+                    });
+                })
+
+            axios.get(BACKEND_HOST + '/profile/skills/' + value.username, { headers: { authorization: "Bearer " + localStorage.getItem("jwt_token") } })
+                .then((response) => {
+
+                    dispatch({ type: "GETPROFILE_SKILLS", payload: response.data, statusCode: response.status })
+                })
+        },
+
+        uploadimages: (value) => {
+            dispatch({ type: "UPLOADIMAGE", payload: value });
+        },
+        uploadresume: (value) => {
+            dispatch({ type: "UPLOADRESUME", payload: value });
+        },
+
+        editPhoto: (value) => {
+            axios.post(BACKEND_HOST + '/uploadphotos/' + value.username, value.formData)
+                .then((response) => {
+                    console.log(response);
+                    dispatch({ type: "EDITPHOTO", payload: response.data })
+                })
+
+        }
 
     }
 }
