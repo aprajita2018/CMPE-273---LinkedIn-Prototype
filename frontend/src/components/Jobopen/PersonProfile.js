@@ -67,34 +67,39 @@ class PersonProfile extends Component {
 
         console.log(this.state);
 
+        let showit=null;
+        if(this.state.firstName!=='')
+        {
+        showit=<div class="card">
+        <div class="card-body">
+            <h4 class="card-title">{this.state.firstName} {this.state.lastName}</h4>
+            <h5 class="card-subtitle mb-2">{this.state.headline}</h5>
+            <h6 class="card-subtitle mb-2 text-muted">{this.state.email}</h6>
+            <h6 class="card-subtitle mb-2 text-muted">{this.state.contact}</h6>
+            <h6 class="card-subtitle mb-2">{this.state.location}</h6>
+            <h6 class="card-subtitle mb-2">{this.state.industry}</h6>
+            <div class="card">
+                <div class="card-header">
+                    Experience
+                </div>
+                <div class="card-body">
+                {eachexperience}
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-header">
+                    Education
+                </div>
+                <div class="card-body">
+                {eacheducation}
+                </div>
+            </div>
+        </div>
+    </div>
+        }
         return (
             <div>
-                <div class="card">
-                    <div class="card-body">
-                        <h4 class="card-title">{this.state.firstName} {this.state.lastName}</h4>
-                        <h5 class="card-subtitle mb-2">{this.state.headline}</h5>
-                        <h6 class="card-subtitle mb-2 text-muted">{this.state.email}</h6>
-                        <h6 class="card-subtitle mb-2 text-muted">{this.state.contact}</h6>
-                        <h6 class="card-subtitle mb-2">{this.state.location}</h6>
-                        <h6 class="card-subtitle mb-2">{this.state.industry}</h6>
-                        <div class="card">
-                            <div class="card-header">
-                                Experience
-                            </div>
-                            <div class="card-body">
-                            {eachexperience}
-                            </div>
-                        </div>
-                        <div class="card">
-                            <div class="card-header">
-                                Education
-                            </div>
-                            <div class="card-body">
-                            {eacheducation}
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {showit}
             </div>
         )
     }

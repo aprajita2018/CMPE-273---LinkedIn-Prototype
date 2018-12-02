@@ -69,7 +69,11 @@ class Jobopen
               _id:'',
               source:'',
               recruiterid:'',
-              
+              edulevel:'',
+              industry:'',
+              jobfunc:'',
+              skills:'',
+              emplevel:'',
               alldata:'',
 
 
@@ -106,6 +110,11 @@ componentDidUpdate() {
     this.state._id=this.props.props._id;
     this.state.source=this.props.props.source;
     this.state.recruiterid=this.props.props.username;
+    this.state.edulevel=this.props.props.edulevel;
+    this.state.industry=this.props.props.industry;
+    this.state.jobfunc=this.props.props.jobfunc;
+    this.state.skills=this.props.props.skills;
+    this.state.emplevel=this.props.props.emplevel;
    
     
 }
@@ -157,7 +166,7 @@ handleToggleModal() {
     render(){
      
       
-     console.log(this.state.easy_apply)
+    //  console.log(this.state.easy_apply)
   const { classes, theme } = this.props;
   const { showModal } = this.state;
  
@@ -176,6 +185,24 @@ handleToggleModal() {
           <button    type="button"    className={classes.modalButton}   onClick={ this.applyJob}> <i class="fa fa-linkedin-square" aria-hidden="true"></i> Apply</button>
       
   }
+  let jobskill=[];
+  if(this.state.jobid!=='')
+  {
+    for(var i=0;i<this.state.skills.length;i++)
+    {
+      jobskill.push(<p>Skill {i+1}: {this.state.skills[i].label}</p>)
+    }
+
+  }
+  let jobfunc=[];
+  if(this.state.jobid!=='')
+  {
+    for(var i=0;i<this.state.jobfunc.length;i++)
+    {
+      jobfunc.push(<p>Job Function {i+1}: {this.state.jobfunc[i].label}</p>)
+    }
+
+  }
   let showit=null;
   
   if(this.state.jobid!=='')
@@ -191,13 +218,13 @@ handleToggleModal() {
     />
     </Grid>
     <Grid xs={8}>
-        <Typography gutterBottom component="h1" variant="h2" className={classes.title} placement="top">
+        <Typography gutterBottom component="h2" variant="h3" className={classes.title} placement="top">
         {/* {this.props.props.jobtitle} */}
         {this.state.jobtitle}
         {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
         </Typography>
 
-        <Typography component="h1"   variant="h3" color="black" >
+        <Typography component="h2"   variant="h3" color="black" >
         {this.state.company}
        
         </Typography>
@@ -242,7 +269,14 @@ handleToggleModal() {
         Job Skill
         </Typography>
           <Typography  variant="h5"  >
-          
+          {jobskill}
+        </Typography> 
+        <hr/>
+        <Typography gutterBottom variant="h4" color="Primary" >
+        Job Function
+        </Typography>
+          <Typography  variant="h5"  >
+          {jobfunc}
         </Typography> 
 
        </div>
