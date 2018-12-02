@@ -46,10 +46,17 @@ router.get('/:username', function (req, res) {
             try
             {
          
-           var base64img;
-             response.image = null;
-             
-             var bucket = new AWS.S3();
+        //    var base64img;
+        //      response.image = null;
+        console.log("response in profile")    
+        console.log(response)
+        if(!response.hasOwnProperty('image'))
+        {
+            res.end(JSON.stringify(response));
+        }
+        else{
+        //    response.image = null;
+            var bucket = new AWS.S3();
              bucket.getObject({ Bucket : 'projectli-bucket',Key : response.email+'_photo.jpg'} ,function (err,image){
                  if(err)
                 {
@@ -59,8 +66,11 @@ router.get('/:username', function (req, res) {
                 base64img = new Buffer(image.Body).toString('base64');
                 response.image = base64img;
       
-              res.end(JSON.stringify(response));
-             })
+        res.end(JSON.stringify(response));
+         })
+        }
+
+       
             }
             catch(err){
                 console.log(err);
