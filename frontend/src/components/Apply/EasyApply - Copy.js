@@ -3,9 +3,8 @@ import '../../App.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { BACKEND_HOST } from '../../store/actions/host_config';
+
 import './drawer.css';
-import { connect } from "react-redux";
 
 import isNil from 'lodash/fp/isNil';
 
@@ -34,32 +33,13 @@ class EasyApply extends Component {
             successPost:false,
             failPost:false
 
+
+
+
       }
         this.handleChange = this.handleChange.bind(this);
         this.applyJob = this.applyJob.bind(this);
-        this.onChangeResume =this.onChangerResume.bind(this);
-        this.submitResume  = this.submitResume.bind(this);
     }
-
-    onChangeResume = (e) => {
-        e.preventDefault();
-        this.props.uploadresume(e.target.files);
-    }
-
-    submitResume = (e) => {
-        e.preventDefault();
-
-        var resume = this.props.uploadedResume;
-        let formData = new FormData();
-
-        for (var i = 0; i < resume.length; i++) {
-            formData.append("resume", resume[i]);
-        }
-
-        axios.post(BACKEND_HOST + '/uploadresume/' + this.props.email, formData);
-    }
-
-
 
     applyJob = (e) => {
         // const url = "https://www.facebook.com/";
@@ -87,7 +67,7 @@ class EasyApply extends Component {
     
         axios.defaults.withCredentials = true;
         console.log(data);
-        axios.post(BACKEND_HOST + '/applyjob',data)
+        axios.post('http://localhost:3001/applyjob',data)
             .then(response => {
                 console.log("Status Code : ",response.status);
                 if(response.status === 200){
@@ -208,11 +188,8 @@ class EasyApply extends Component {
                         <th />
                         <div class="form-row">
                             <div class="col">
-                             <form onSubmit={this.submitResume}>
                                 <label for="exampleFormControlFile1">Upload Resume:</label>
-                                <input type="file" multiple name = "resume" class="form-control-file" id="exampleFormControlFile1" onChange = {this.onChangeResume}/>
-                                <button type="submit" className="btn btn-primary">Upload</button>
-                       </form>
+                                <input type="file" class="form-control-file" id="exampleFormControlFile1" />
                             </div>
                             <div class="col">
                                 <label for="exampleFormControlFile1">Upload Cover Letter: (Optional)</label>
@@ -262,26 +239,4 @@ class EasyApply extends Component {
     }
 }
 
-
-const mapStateToProps = state => {
-    return {
-        email: state.user.user.email,
-        user_type       : state.user.user_type,
-        name            : state.user.name,
-        token           : state.user.token,
-        uploadedResume: state.reducer.uploadedResume
-    }
-}
-
-const mapDispatchStateToProps = dispatch => {
-
-    return {
-
-        uploadresume: (value) => {
-            dispatch({ type: "UPLOADRESUME", payload: value });
-        }
-
-    }
-}
-
-export default connect(mapStateToProps, mapDispatchStateToProps)(EasyApply);
+export default EasyApply;

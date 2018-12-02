@@ -92,6 +92,7 @@ var jobupdate             = require ('./routes/jobupdate');
 var postjob               = require('./routes/postjob');
 var profile               = require('./routes/profile');
 var uploadphotos          = require('./routes/uploadphotos');
+var uploadresume          = require('./routes/uploadresume')
 var mingraph              = require('./routes/mingraph');
 var searchjob              = require('./routes/searchjob');
 var applyjob              = require('./routes/applyjob');
@@ -108,6 +109,7 @@ app.use('/jobupdate', jobupdate);
 app.use('/postjob', postjob);
 app.use('/profile',profile);
 app.use('/uploadphotos',uploadphotos);
+app.use('/uploadresume',uploadresume);
 app.use('/mingraph',mingraph);
 app.use('/searchjob',searchjob);
 app.use('/applyjob',applyjob);
