@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { BACKEND_HOST } from '../../store/actions/host_config';
 import './drawer.css';
+import { connect } from "react-redux";
 
 import isNil from 'lodash/fp/isNil';
 
@@ -36,7 +37,7 @@ class EasyApply extends Component {
       }
         this.handleChange = this.handleChange.bind(this);
         this.applyJob = this.applyJob.bind(this);
-        this.onChangeresume =this.onChangeresume.bind(this);
+        this.onChangeResume =this.onChangerResume.bind(this);
         this.submitResume  = this.submitResume.bind(this);
     }
 
