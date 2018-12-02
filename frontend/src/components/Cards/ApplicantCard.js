@@ -39,7 +39,7 @@ class ApplicantCard extends Component {
 
         axios.defaults.withCredentials = true;
 
-        axios.post('http://localhost:3001/profileviews', data)
+        axios.post('http://localhost:3001/viewapplicants', data)
             .then(response => {
                 console.log("Status Code : ", response.status);
                 if (response.status === 200) {

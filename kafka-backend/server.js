@@ -24,6 +24,7 @@ var editexperience = require('./services/profile/editexperience.js');
 var deleteeducation = require('./services/profile/deleteeducation.js');
 var deleteexperience = require('./services/profile/deleteexperience.js');
 var deleteskill = require('./services/profile/deleteskill.js');
+var viewapplicants = require('./services/viewapplicants');
 
 function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
@@ -67,6 +68,7 @@ handleTopicRequest("getalljobsforrecruiter",getalljobsforrecruiter);
 handleTopicRequest("graphdata",graphdata);
 handleTopicRequest("getusers", getusers);
 handleTopicRequest("profileviews", profileviews);
+handleTopicRequest("viewapplicants",viewapplicants);
 
 handleTopicRequest("getprofile",getprofile); 
 handleTopicRequest("getprofile_education",geteducation); 
