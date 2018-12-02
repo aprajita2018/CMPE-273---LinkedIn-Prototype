@@ -16,11 +16,12 @@ router.get('*', (req, res) => {
                 msg: "System Error, Try Again."
             })
         } else {
-            console.log("hi" +results)
+          
             if (results) {
                 console.log('in result');
                 console.log(results);
                 console.log("Inside else");
+                console.log(results.code);
                 res.status(results.code).json({
                     people: results.people,
                     message: results.message,
