@@ -36,7 +36,7 @@ const Main = () => (
             <Route path="/jobstats" component={JobStats} />
             <Route path="/drawer" component={Carddrawer}/>
             <Route path="/normal" component={NormalApply}/>
-            <Route path="/search" component={Search}/>
+            {/* <Route path="/search" component={Search}/> */}
 	        <Route path="/connections" exact component={Connections} />
             <Route path="/recruiterjobs" exact component={RecruiterJobs} />
             <Route path="/test" component={test}/>
