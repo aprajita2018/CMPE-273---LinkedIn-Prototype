@@ -16,7 +16,7 @@ import Connections from "./Connections/Connections";
 import test from "./Test/test";
 import RecruiterJobs from "./RecruiterJobs/RecruiterJobs";
 import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
-
+import PeopleSearch from './CardDrawer/PeopleDrawer';
 
 
 const Main = () => (
@@ -35,7 +35,7 @@ const Main = () => (
 	        <Route path="/connections" exact component={Connections} />
             <Route path="/recruiterjobs" exact component={RecruiterJobs} />
             <Route path="/test" component={test}/>
-            
+            <Route path="/peoplesearch" component={PeopleSearch} />
         {/* <Route path="/recruterapplyfind" component={RecruterApplyFind}/> */}
             {/* </Switch> */}
     </div>
