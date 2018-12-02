@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import '../../drawer.css'
+
 import axios from 'axios';
 //import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
@@ -22,9 +22,7 @@ class Carddrawer extends Component{
             joblocation: '',
             jobtype: 'null',
             jobapplytype: 'null',
-            // applicant key get from rajas = ''
-            // visit counter = '' ...compodidmount cnt++
-            // submit counter = ''
+            authFlag:'',
             job_list : [],
             tosendjobpaper:'',
             cardsin:false,
