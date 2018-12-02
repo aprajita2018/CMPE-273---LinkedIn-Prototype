@@ -6,6 +6,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { BACKEND_HOST } from '../../store/actions/host_config';
+import { connect } from "react-redux";
 
 class NormalApply extends Component {
 
@@ -53,7 +54,7 @@ class NormalApply extends Component {
 
         this.applyJob = this.applyJob.bind(this);
         this.handleChange = this.handleChange.bind(this);
-        this.onChangeresume =this.onChangeresume.bind(this);
+        this.onChangeResume =this.onChangeResume.bind(this);
         this.submitResume  = this.submitResume.bind(this);
     }
 
