@@ -97,7 +97,8 @@ var searchjob              = require('./routes/searchjob');
 var applyjob              = require('./routes/applyjob');
 var getalljobsforrecruiter = require('./routes/getalljobsforrecruiter');
 var jobstats               = require('./routes/jobstats');
-
+var searchpeople          = require('./routes/searchpeople');
+var profileviews          = require('./routes/profileviews');
 // routing to different routes
 app.use('/login', loginRouter);
 app.use('/userSignup', signupRouter);
@@ -111,6 +112,8 @@ app.use('/searchjob',searchjob);
 app.use('/applyjob',applyjob);
 app.use('/getalljobsforrecruiter',getalljobsforrecruiter);
 app.use('/graphdata',jobstats);
+app.use('/searchpeople',searchpeople);
+app.use('/profileviews',profileviews);
 
 //Protected authenticated route with JWT
 app.get('/protectedRoute', requireAuth, function (request, response) {
