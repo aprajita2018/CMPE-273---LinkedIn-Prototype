@@ -1,4 +1,4 @@
-import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER} from '../actions/actionTypes';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB} from '../actions/actionTypes';
 
 const initialState = {
   user  : {},
@@ -25,6 +25,19 @@ export default function(state = initialState, action) {
         return {
           ...state,
         }
+      
+      case GET_ALL_JOBS:
+        return {
+          ...state,
+          jobs: action.payload.jobs,
+        }
+
+      case SET_CURRENT_JOB:{
+        return {
+          ...state,
+          currentjob: action.payload,
+        }
+      }
 
       case LOGOUT_USER:
         console.log("Logging out user. Resetting users store");

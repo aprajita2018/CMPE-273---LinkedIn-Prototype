@@ -2,6 +2,8 @@
 export const LOGIN_USER             = "login_user";
 export const SIGNUP_USER            = "signup_user";
 export const LOGOUT_USER            = "logout_user";
+export const GET_ALL_JOBS           = "get_all_jobs";
+export const SET_CURRENT_JOB        = "set_current_job";
 
 //Job Post
 export const INIT_GET_JOB_SUCCESS = 'INIT_GET_JOB_SUCCESS';
