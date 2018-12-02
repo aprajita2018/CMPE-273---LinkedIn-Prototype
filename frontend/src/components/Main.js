@@ -17,6 +17,7 @@ import test from "./Test/test";
 import RecruiterJobs from "./RecruiterJobs/RecruiterJobs";
 import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
 import PeopleSearch from './CardDrawer/PeopleDrawer';
+import ProfileSkills from './Profile/ProfileSkills';
 
 
 const Main = () => (
@@ -28,6 +29,9 @@ const Main = () => (
             <Route path ="/profile" component={Profile} />
             <Route path="/profile/contact-information" component={ProfileContact} />
             <Route path="/profile/edit-intro" component={ProfileEditIntro} />
+
+
+            <Route path="/profile/add-skills" component={ProfileSkills} />
             <Route path="/jobstats" component={JobStats} />
             <Route path="/drawer" component={Carddrawer}/>
             <Route path="/normal" component={NormalApply}/>
