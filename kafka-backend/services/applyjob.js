@@ -82,6 +82,14 @@ function handle_request(msg, callback){
         console.log("in kafka applyjob");
         console.log(msg);
 
+        // if(msg.jobid==='')
+        // {
+        //     console.log("in if")
+        //     res.code    = '404';
+        //     res.status  = 'ERROR';
+        //     res.message = 'Empty Submit. Please add data';
+        //     callback(null, res);
+        // }
        if(msg.easy_apply=='true')
        {
         var newapply ={
@@ -140,7 +148,7 @@ function handle_request(msg, callback){
            applynew.save(function(err,result){
             if(err){
 
-                res.code    = '200';
+                res.code    = '400';
                 res.status  = 'ERROR';
                 res.message = 'Could not add job application. Please try again later.';
                 callback(null, res);

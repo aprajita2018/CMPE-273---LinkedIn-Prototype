@@ -59,7 +59,7 @@ class Jobopen
               easy_apply: "false",  
               text:"Description of the job title of the comapy andthe job in general ",
               showModal: false,
-              jobtitle:'Test',
+              jobtitle:'',
               company:'',
               address:'',
               poststatus:'',
@@ -95,7 +95,7 @@ componentDidUpdate() {
   if(this.props.props!==undefined)
   {
  
-    this.state.jobtitle=this.props.props.jobtitle;
+    this.state.jobtitle=this.props.props.jobtitle?this.props.props.jobtitle:'';
     this.state.company=this.props.props.company;
     this.state.address=this.props.props.address;
     this.state.poststatus=this.props.props.poststatus;
@@ -176,85 +176,85 @@ handleToggleModal() {
           <button    type="button"    className={classes.modalButton}   onClick={ this.applyJob}> <i class="fa fa-linkedin-square" aria-hidden="true"></i> Apply</button>
       
   }
+  let showit=null;
+  
+  if(this.state.jobid!=='')
+  {
+    showit= <Paper className={classes.card} elevation={1}><div className={classes.details}>
+    <Grid container spacing={24}>
+      <Grid item xs>
+      <CardMedia
+      className={classes.cover}
+      image="https://png.pngtree.com/svg/20170508/company_573865.png"
+      title="Property"
 
+    />
+    </Grid>
+    <Grid xs={8}>
+        <Typography gutterBottom component="h1" variant="h2" className={classes.title} placement="top">
+        {/* {this.props.props.jobtitle} */}
+        {this.state.jobtitle}
+        {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
+        </Typography>
+
+        <Typography component="h1"   variant="h3" color="black" >
+        {this.state.company}
+       
+        </Typography>
+      
+     
+        <Typography gutterBottom variant="h4" color="textSecondary" >
+        {this.state.address}
+        </Typography>
+       
+       
+        <Typography  variant="h5" gutterBottom>
+        {this.state.poststatus} &nbsp;
+         {/* {easyapply} */}
+        </Typography>
+        <div class="save-button">
+          <button>Save</button>
+          {/* <button>Apply</button> */}
+        {link}
+        {showModal &&
+        <SimpleModal onCloseRequest={() => this.handleToggleModal()}>
+            <EasyApply props={this.state}></EasyApply>
+        </SimpleModal>}
+               
+          </div>
+         <br/>
+          </Grid>
+        </Grid>
+        <br/>
+        <hr/>
+       
+          </div>
+          
+          <div >
+          <Typography gutterBottom variant="h4" color="Primary" >
+         Job Description
+        </Typography>
+          <Typography  variant="h5"  >
+          {this.state.jobdes}
+        </Typography> 
+        <hr/>
+        <Typography gutterBottom variant="h4" color="Primary" >
+        Job Skill
+        </Typography>
+          <Typography  variant="h5"  >
+          
+        </Typography> 
+
+       </div>
+     </Paper>
+  }
 
 
   return (
     <div>
-      <Paper className={classes.card} elevation={1}>
-      
-      
      
-      <div className={classes.details}>
-      <Grid container spacing={24}>
-        <Grid item xs>
-        <CardMedia
-        className={classes.cover}
-        image="https://www.arabianbusiness.com/sites/default/files/styles/full_img/public/images/2017/01/17/apple-logo-rainbow.jpg"
-        title="Property"
-
-      />
-      </Grid>
-      <Grid xs={8}>
-          <Typography gutterBottom component="h1" variant="h2" className={classes.title} placement="top">
-          {/* {this.props.props.jobtitle} */}
-          {this.state.jobtitle}
-          {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
-          </Typography>
-
-          <Typography component="h1"   variant="h3" color="black" >
-          {this.state.company}
-         
-          </Typography>
-        
-       
-          <Typography gutterBottom variant="h4" color="textSecondary" >
-          {this.state.address}
-          </Typography>
-         
-         
-          <Typography  variant="h5" gutterBottom>
-          {this.state.poststatus} &nbsp;
-           {/* {easyapply} */}
-          </Typography>
-          <div class="save-button">
-            <button>Save</button>
-            {/* <button>Apply</button> */}
-          {link}
-          {showModal &&
-          <SimpleModal onCloseRequest={() => this.handleToggleModal()}>
-              <EasyApply props={this.state}></EasyApply>
-          </SimpleModal>}
-                 
-            </div>
-           <br/>
-            </Grid>
-          </Grid>
-          <br/>
-          <hr/>
-         
-            </div>
-            
-            <div >
-            <Typography gutterBottom variant="h4" color="Primary" >
-           Job Description
-          </Typography>
-            <Typography  variant="h5"  >
-            {this.state.jobdes}
-          </Typography> 
-          <hr/>
-          <Typography gutterBottom variant="h4" color="Primary" >
-           Job Skills
-          </Typography>
-            <Typography  variant="h5"  >
-            
-          </Typography> 
-  
-         </div>
-        
-    
-      </Paper>
-      
+      {showit}
+           
     </div>
     
   );
