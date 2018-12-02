@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER} from './actionTypes';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB} from './actionTypes';
 import {BACKEND_HOST} from './host_config';
 
 //function/ action to post the login form
@@ -48,4 +48,30 @@ export const logout = (callback) => dispatch =>  {
         type : LOGOUT_USER,
     });
     callback({status: 'SUCCESS', message: 'You have been logged out.'});
+}
+
+export const getAllJobs = (values, callback) => dispatch => {
+    axios.get(BACKEND_HOST+ '/getalljobsforrecruiter', {
+        params: {
+            ...values
+        }
+    })
+        .then((res) => {
+            if(res.data.status === 'SUCCESS'){  
+                dispatch({
+                    type : GET_ALL_JOBS,
+                    payload: res.data
+                });
+            }
+            callback(res.data);
+           
+        });
+}
+
+export const setCurrentJobDetail = (values) => dispatch => {
+
+    dispatch({
+        type : SET_CURRENT_JOB,
+        payload: values,
+    });
 }

@@ -16,8 +16,8 @@ var config = require('./settings');
 const uuidv4 = require('uuid/v4');
 const path = require('path');
 const fs = require('fs');
-var redis = require('redis');
-var client = redis.createClient();
+//var redis = require('redis');
+//var client = redis.createClient();
 var mysql =require("mysql");
 
 const storage = multer.diskStorage({
@@ -95,6 +95,7 @@ var uploadphotos          = require('./routes/uploadphotos');
 var mingraph              = require('./routes/mingraph');
 var searchjob              = require('./routes/searchjob');
 var applyjob              = require('./routes/applyjob');
+var getalljobsforrecruiter = require('./routes/getalljobsforrecruiter');
 
 // routing to different routes
 app.use('/login', loginRouter);
@@ -107,6 +108,7 @@ app.use('/uploadphotos',uploadphotos);
 app.use('/mingraph',mingraph);
 app.use('/searchjob',searchjob);
 app.use('/applyjob',applyjob);
+app.use('/getalljobsforrecruiter',getalljobsforrecruiter);
 
 
 //Protected authenticated route with JWT

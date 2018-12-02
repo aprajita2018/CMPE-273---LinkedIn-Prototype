@@ -119,7 +119,7 @@ class NavBar extends Component {
                                         <Link to="/connections"><span className='icon-text'><i className="fas fa-user-friends fa-2x"></i><br/>My Network</span></Link>                                 
                                     </li>
                                     <li className='nav-item nav-link mx-4 py-0'>
-                                        <Link to="/drawer"><span className='icon-text'><i className="fas fa-briefcase fa-2x"></i><br/>Jobs</span></Link>                                 
+                                        <Link to={ this.props.user_type === 'recruiter' ? "/recruiterJobs" : "/drawer"}><span className='icon-text'><i className="fas fa-briefcase fa-2x"></i><br/>Jobs</span></Link>                                 
                                     </li>
                                     <li className='nav-item nav-link mx-4 py-0'>
                                         <Link to="/"><span className='icon-text'><i className="fas fa-envelope fa-2x"></i><br/>Messaging</span></Link>                                 
