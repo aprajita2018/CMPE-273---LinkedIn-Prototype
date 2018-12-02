@@ -44,6 +44,7 @@ class PeopleDrawer extends Component {
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);
+                
                 if (response.status === 200) {
                     this.setState({
                         person_list: this.state.person_list.concat(response.data.people),
