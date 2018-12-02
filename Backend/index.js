@@ -96,6 +96,7 @@ var mingraph              = require('./routes/mingraph');
 var searchjob              = require('./routes/searchjob');
 var applyjob              = require('./routes/applyjob');
 var getalljobsforrecruiter = require('./routes/getalljobsforrecruiter');
+var jobstats               = require('./routes/jobstats');
 
 // routing to different routes
 app.use('/login', loginRouter);
@@ -109,7 +110,7 @@ app.use('/mingraph',mingraph);
 app.use('/searchjob',searchjob);
 app.use('/applyjob',applyjob);
 app.use('/getalljobsforrecruiter',getalljobsforrecruiter);
-
+app.use('/graphdata',jobstats);
 
 //Protected authenticated route with JWT
 app.get('/protectedRoute', requireAuth, function (request, response) {

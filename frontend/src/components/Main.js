@@ -18,6 +18,7 @@ import RecruiterJobs from "./RecruiterJobs/RecruiterJobs";
 import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
 
 
+
 const Main = () => (
     <BrowserRouter>
         <div>
@@ -27,13 +28,14 @@ const Main = () => (
             <Route path ="/profile" component={Profile} />
             <Route path="/profile/contact-information" component={ProfileContact} />
             <Route path="/profile/edit-intro" component={ProfileEditIntro} />
-            <Route path="/JobStats" component={JobStats} />
+            <Route path="/jobstats" component={JobStats} />
             <Route path="/drawer" component={Carddrawer}/>
             <Route path="/normal" component={NormalApply}/>
             <Route path="/search" component={Search}/>
 	        <Route path="/connections" exact component={Connections} />
             <Route path="/recruiterjobs" exact component={RecruiterJobs} />
             <Route path="/test" component={test}/>
+            
         {/* <Route path="/recruterapplyfind" component={RecruterApplyFind}/> */}
             {/* </Switch> */}
     </div>
