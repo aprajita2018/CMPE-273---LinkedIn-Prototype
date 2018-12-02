@@ -31,6 +31,8 @@ console.log(msg);
         if (msg.headline)
         updatedIntro.headline = msg.headline;
 
+        // updatedIntro.image=true;
+    
     updatedIntro = { $set: updatedIntro };
 
     console.log(updatedIntro);
