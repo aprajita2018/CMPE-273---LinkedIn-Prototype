@@ -1,6 +1,6 @@
 const multer = require('multer');
-var filename = "";
-var counter = 0;
+//var filename = "";
+//var counter = 0;
 
 var express = require('express');
 var router = express.Router();
@@ -14,11 +14,12 @@ AWS.config.update({"accessKeyId": "AKIAISHXQVRQVMLKEUEA", "secretAccessKey": "lo
 const storage = multer.diskStorage({
 
     destination: (req, file, callback) => {
+        console.log("Destination");
         callback(null, './uploads');
     },
     filename: (req, file, callback) => {
         console.log(req.params);
-           counter++;
+           //counter++;
         const newFilename = req.params.username + '_resume.pdf';
         callback(null, newFilename);
     },
@@ -28,7 +29,7 @@ const upload = multer({ storage });
 
 
 router.post('/:username', upload.array("resume", 10), (req, res) => {
-    console.log("Uploading Multiple Files");
+    console.log("Uploading Resume");
     console.log(req.params);
     try{
 
