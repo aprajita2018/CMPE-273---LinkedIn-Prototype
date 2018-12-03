@@ -1,3 +1,7 @@
+<<<<<<< HEAD
+=======
+
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 var crypt = require('../crypt');
 var passport = require('passport');
 var jwt = require('jsonwebtoken');
@@ -105,7 +109,11 @@ function handle_request(msg, callback){
                 res.message = 'Job created ';
                 res.jobid = job.jobid ;
                 callback(null,res); 
+<<<<<<< HEAD
                      
+=======
+                
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
             },(error)=>{
                 res.code = "404";
                 res.message = "Could not create new job. Try Again !!";
@@ -114,6 +122,11 @@ function handle_request(msg, callback){
                 callback(null,res); 
             })
          }
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 }
 
 exports.handle_request = handle_request;

@@ -390,6 +390,7 @@ function validate(values) {
     return errors;
 }
 
+<<<<<<< HEAD
 var email = "raj@gmail.com"
 const mapStateToProps = state => {
     console.log("Mapping State To Props - NA");
@@ -397,6 +398,14 @@ const mapStateToProps = state => {
     console.log(state.user.user.email);
     return {
         email:  "raj@gmail.com",
+=======
+
+const mapStateToProps = state => {
+    console.log("Mapping State To Props - NA");
+    console.log(state.reducer.uploadedResume);
+    return {
+        email: state.user.user.email,
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
         user_type       : state.user.user_type,
         name            : state.user.name,
         token           : state.user.token,

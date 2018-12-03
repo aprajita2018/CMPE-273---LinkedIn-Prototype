@@ -12,7 +12,10 @@ import reducer_profile from './store/reducers/reducer_profile';
 import reducer from './store/reducers/reducer';
 import { reducer as formReducer } from "redux-form";
 import userReducer from './store/reducers/userReducer';
+<<<<<<< HEAD
 import reducer_mingraph from './store/reducers/reducer_mingraph';
+=======
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 import jobstatsReducer from './store/reducers/jobstats';
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
@@ -21,7 +24,10 @@ const rootReducer = combineReducers({
     user: userReducer,
     jobpost : jobpostReducer,
     reducer_profile: reducer_profile,
+<<<<<<< HEAD
     reducer_mingraph : reducer_mingraph,
+=======
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
     form: formReducer,
     jobstats : jobstatsReducer,
     reducer : reducer

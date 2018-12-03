@@ -11,6 +11,12 @@ const initialState ={
   toplowapps : null,
   appmonSelect : null,
   appstatusSelect : null,
+<<<<<<< HEAD
+=======
+  appbycity : null,
+  appclicks : null,
+  appbycitySelect: null,
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
   
 }
 
@@ -28,6 +34,12 @@ const getgraphSuccess = (state, action) => {
         appstatus : action.appstatus,
         toplowapps : action.toplowapps,
         appstatusSelect : action.appstatusSelect,
+<<<<<<< HEAD
+=======
+        appbycity : action.appbycity,
+        appclicks : action.appclicks,
+        appbycitySelect: action.appbycitySelect,
+>>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
  
     })
  
