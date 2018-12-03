@@ -2,7 +2,7 @@ import axios from '../../axios-setup';
 
 import * as actionTypes from './actionTypes';
 
-export const getgraphSuccess = (result,appmonSelect, appstatusSelect) => {
+export const getgraphSuccess = (result,appmonSelect, appstatusSelect,appbycitySelect) => {
     return {
         type: actionTypes.GET_GRAPH_DATA_SUCCESS,
         grapherrFlag : false,
@@ -12,6 +12,9 @@ export const getgraphSuccess = (result,appmonSelect, appstatusSelect) => {
         appsaves : result[1],
         appstatus : result[2],
         toplowapps : result[3],
+        appbycity : result[4],
+        appclicks : result[1],
+        appbycitySelect: appbycitySelect,
         appstatusSelect : appstatusSelect,
     };
 };
@@ -33,6 +36,7 @@ export const getgraphdata = (username) => {
      
     let appmonSelect =  [];
     let appstatusSelect = [];
+    let appbycitySelect =[];
         axios.get('/graphdata',{
            params: {
                username : username,
@@ -59,16 +63,26 @@ export const getgraphdata = (username) => {
        
             }
 
-            for(var i =0;i < response.data.results[0].length;i++){
+            for(i=0;i < response.data.results[1].length;i++){
                 appstatusSelect.push({
-                label:response.data.results[0][i].jobtitle,
-                value:response.data.results[0][i].jobid,
-            })
+                label:response.data.results[1][i].jobtitle,
+                value:response.data.results[1][i].jobid,
+               })
    
-        }
+            }
+            
+            for(i=0;i < response.data.results[4].length;i++){
+                appbycitySelect.push({
+                label:response.data.results[4][i].location,
+                value:response.data.results[4][i].location,
+               })
+   
+            }
+
+
 
        //console.log("options", appmonSelect); 
-       dispatch(getgraphSuccess(response.data.results, appmonSelect, appstatusSelect));
+       dispatch(getgraphSuccess(response.data.results, appmonSelect, appstatusSelect, appbycitySelect));
                
                    //ispatch(getgraphSuccess(response.data.results)); 
                    //dispatch(getgraphSuccess(response.data))  ; 

@@ -16,6 +16,9 @@ import NavBar from '../NavBar/NavBar';
 //  {label: "Software Intern", value: "6"},
 //  {label: "Marketing Intern", value: "7"},
 // ]
+//import { Stats } from 'fs';
+
+
 class JobStats extends Component {
   constructor(props) {
     //Call the constructor of Super class i.e The Component
@@ -28,13 +31,13 @@ class JobStats extends Component {
       appmonSelectState : [],
       appmonSel : this.props.appmonSelect?this.props.appmonSelect[0]:null,
       appstatusSel : this.props.appstatusSelect?this.props.appstatusSelect[0]:null,
+      appbycitySel : this.props.appbycitySelect?this.props.appbycitySelect[0]:null
     }
     
 
 
   }
   componentDidMount() {
-    // this.props.minGraphData("recruiter1@mail.com" /this.props.email/);
 
     this.props.getgraphData('recruiter1@mail.com');
    
@@ -54,13 +57,21 @@ class JobStats extends Component {
     }
 
 render() {
-var MinAppsBar = null;
+var showappclicks = null;
 var showmonthapp = null;
 var showappstatus = null;
 var showsaveapp = null;
 let showtoplowapp = null;
 let statuspiedata = [];
 let appmonbardata = [];
+let appbycitydata = [];
+let showappbycity = [];
+let redirectVar = null;
+
+if(!this.props.token){
+        
+  // redirectVar = <Redirect to= "/"/>
+}
 
 
 if(this.props.apppermonth){
@@ -243,6 +254,100 @@ if(this.props.toplowapps){
     showtoplowapp = <h4>No Data Found</h4>
   }
 
+  if(this.props.appbyCity){
+  
+    if(this.state.appbycitySel){
+       let val = this.state.appbycitySel.value;
+       let temp = this.props.appbyCity;
+       let j = 0;
+      for(var i=0;i<temp.length ;i++){
+        if(val === temp[i].location) {
+          j = i;
+        }
+        
+         
+      } 
+      
+      appbycitydata = Object.values(this.props.appbyCity[j]);  
+    
+    }
+    else{
+    
+      appbycitydata = Object.values(this.props.appbyCity[0]);  
+        
+    }
+    
+    var appbycityData = {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'June', 'July','Aug','Sep','Oct','Nov','Dec'],
+      datasets: [
+        {
+          label: 'Applications',
+          backgroundColor: 'coral',
+          borderWidth: 1,
+          data: appbycitydata.splice(1,12),
+        }
+      ]
+    };
+    
+    showappbycity =   
+      <Bar
+      data={appbycityData}
+      width={220}
+      height={400}
+      options={{
+        maintainAspectRatio: false
+      }}
+    />
+    
+    
+    
+    }else{
+    
+      showappbycity = <h4>No Data Found</h4>
+    }
+
+
+    if(this.props.appClicks){
+      var propclicks =  this.props.appClicks; 
+      var appclicksabel =[];
+      var appclicksdata = [];
+        for(i =0;i < propsave.length;i++){
+      
+          appclicksdata.push(propclicks[i].saves);
+          appclicksabel.push(propclicks[i].jobtitle);
+      
+        }  
+      
+      
+        var appclicksData = {
+      
+            datasets: [{
+              data: appclicksdata,
+              backgroundColor: ['purple', 'coral','blue','burlyWood','darkOrchid','fuchsia','hotPink','orange','violet','cyan','olive','green']
+            }],
+            labels: appclicksabel,
+          };
+        
+        showappclicks =  
+          <Pie
+          data={appclicksData}
+          width={220}
+          height={400}
+          options={{
+            maintainAspectRatio: false
+          }}
+        />
+      
+      }
+      else{
+      
+        showappclicks = <h4>No Data Found</h4>
+      }
+
+
+
+
+
 
 
     return (
@@ -258,7 +363,7 @@ if(this.props.toplowapps){
            <h4>Application Status by Job</h4>
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
-               <h4>Saved Applications</h4>
+               <h4>Applications by City </h4>
           </div>
         </div>
        </div>
@@ -288,7 +393,9 @@ if(this.props.toplowapps){
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' ,borderWidth: '1px', borderStyle: 'groove' }}>
             
-          {showsaveapp}
+          
+          {showappbycity}
+
             {/* <Bar
               // data={MinAppsBar}
               redraw
@@ -314,8 +421,8 @@ if(this.props.toplowapps){
           
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
-          {/* <label >Select Job to View Graph</label> */}
-          {/* <Select></Select> */}
+          <label >Select City to View Graph</label>
+          <CreatableSelect options={this.props.appbyCitySelect} defaultValue={this.props.appbyCitySelect?this.props.appbyCitySelect:null} name="appbycitySel" onChange={this.handleChange('appbycitySel')}  />
           </div>
         </div>
        </div>  
@@ -326,7 +433,7 @@ if(this.props.toplowapps){
           <h4>Top 5 Lowest Applications</h4>
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
-           <h4>Applications by City</h4>
+           <h4>Applications Saves</h4>
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
                <h4>Total Clicks</h4>
@@ -348,24 +455,14 @@ if(this.props.toplowapps){
 
           <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' , borderWidth: '1px', borderStyle: 'groove' }}>
 
-            {/* <Pie
-              // data={piedata}
-              width={220}
-              height={400}
-              options={{
-                maintainAspectRatio: false
-              }}
-            /> */}
+           {showsaveapp}
+
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' ,borderWidth: '1px', borderStyle: 'groove' }}>
-            {/* <Bar
-              data={MinAppsBar}
-              width={220}
-              height={400}
-              options={{
-                maintainAspectRatio: false
-              }}
-            /> */}
+            
+            {showappclicks}
+            
+           
           </div>
 
 
@@ -397,23 +494,17 @@ const mapStateToProps = state => {
     appstatus : state.jobstats.appstatus, 
     toplowapps : state.jobstats.toplowapps,
     appstatusSelect : state.jobstats.appstatusSelect,
-    mingraphjobs: state.reducer_mingraph.mingraphjobs
-
+    appbyCity : state.jobstats.appbycity,
+    appbyCitySelect : state.jobstats.appbycitySelect,
+    appClicks : state.jobstats.appclicks,
+    token : state.user.token,
   };
 };
 
 const mapDispatchStateToProps = dispatch => {
   return {
-    //getchartdata:(jobid) =>dispatch(actions.getinitdata(jobid)),
     getgraphData : (username) => dispatch( actions.getgraphdata(username) ),
-    // minGraphData: (username) => {
-      
-
-    //   axios.get(BACKEND_HOST + "/mingraph/" + username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
-    //     .then((response) => {
-    //       dispatch({ type: "GET_GRAPH_DATA", payload: response.data, statusCode: response.status })
-    //     })
-    // }
+    
   };
 };
 

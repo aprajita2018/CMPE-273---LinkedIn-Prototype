@@ -44,14 +44,31 @@ class ConnReqCard extends Component {
     super();
     this.state = {
       easy_apply: 1,
-      text: "Description of the job title of the comapy andthe job in general "
+      text: "Description of the job title of the comapy andthe job in general ",
+      status: ""
     };
+    this.accept = this.accept.bind(this);
+    this.ignore = this.ignore.bind(this);
   }
 
   componentDidMount() {
     console.log("card in search");
     // console.log(this.props)
   }
+
+  accept = e => {
+    this.setState({
+      status: "Connection Request Accepted",
+      disabledAccept: true
+    });
+  };
+
+  ignore = e => {
+    this.setState({
+      status: "Connection Request Rejected",
+      disabledAccept: true
+    });
+  };
 
   render() {
     //console.log(this.props.props)
@@ -116,19 +133,27 @@ class ConnReqCard extends Component {
                   variant="contained"
                   color="secondary"
                   className={classes.button}
+                  onClick={this.ignore}
+                  disabled={this.state.disabledAccept}
                 >
                   Ignore
                 </Button>
-                &nbsp;&nbsp;&nbsp;&nbsp;
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 <Button
                   variant="contained"
                   color="primary"
                   className={classes.button}
+                  onClick={this.accept}
+                  disabled={this.state.disabledAccept}
                 >
                   Accept
                 </Button>
                 {/* </Typography> */}
               </CardActions>
+
+              <Typography variant="h6" color="secondary">
+                {this.state.status}
+              </Typography>
             </CardContent>
           </div>
         </Card>
