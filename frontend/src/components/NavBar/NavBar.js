@@ -115,7 +115,7 @@ class NavBar extends Component {
 
                             <div className='align-self-center align-items-end ml-auto' style={{display: this.state.isLoggedIn? 'flex': 'none'}}>
                                 <ul className='navbar-nav' style={{display: this.state.isLoggedIn? 'flex': 'none'}}>
-                                <li className='nav-item nav-link mx-4 py-0'>
+                                <li className='nav-item nav-link mx-4 py-0'  style={{display: this.props.user_type === 'recruiter'? 'flex': 'none'}}>
                                         <Link to="/viewapplicants"><span className='icon-text'><i className="fas fa-search fa-2x"></i><br/>View Applicants</span></Link>                                 
                                     </li>
                                 <li className='nav-item nav-link mx-4 py-0'>
