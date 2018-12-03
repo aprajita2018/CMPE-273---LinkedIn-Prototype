@@ -89,8 +89,26 @@ class NormalApply extends Component {
 
         }
         axios.defaults.withCredentials = true;
-       // console.log(data);
+        console.log(data);
         axios.post(BACKEND_HOST + '/applyjob',data)
+            .then(response => {
+                console.log("Status Code : ",response);
+                if(response.status === 200){
+                    console.log("success")
+                    this.setState({
+                        successPost:true,
+                    })
+                    
+                    // window.location = '/ownerlogin'
+                }else{
+                   console.log("error")
+                  
+                   this.setState({
+                       failPost:true,
+                   })
+                }
+            });
+         axios.post(BACKEND_HOST + '/applyjobclick',data)
             .then(response => {
                 console.log("Status Code : ",response);
                 if(response.status === 200){
