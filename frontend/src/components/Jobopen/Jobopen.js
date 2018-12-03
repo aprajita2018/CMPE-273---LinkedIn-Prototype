@@ -18,6 +18,7 @@ import NormalApply from '../Apply/NormalApply';
 import {Redirect} from 'react-router';
 import axios from 'axios';
 import { connect } from "react-redux";
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 const styles = theme => ({
     
@@ -174,7 +175,7 @@ save() {
 }
 axios.defaults.withCredentials = true;
 
-axios.post('http://localhost:3001/savejob', data)
+axios.post(BACKEND_HOST + '/savejob', data)
 .then(response => {
   console.log("Status Code : ", response.status);
   if (response.status === 200) {

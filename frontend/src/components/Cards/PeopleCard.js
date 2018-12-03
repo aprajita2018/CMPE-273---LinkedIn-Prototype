@@ -5,7 +5,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 // import '../../drawer.css'
 
-
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 class PeopleCard extends Component {
   constructor() {
@@ -53,7 +53,7 @@ class PeopleCard extends Component {
 
     axios.defaults.withCredentials = true;
 
-    axios.post('http://localhost:3001/profileviews', data)
+    axios.post(BACKEND_HOST + '/profileviews', data)
       .then(response => {
         console.log("Status Code: ", response.status);
         if (response.status === 200) {
@@ -94,7 +94,7 @@ class PeopleCard extends Component {
     
     axios.defaults.withCredentials = true;
 
-    axios.post('http://localhost:3001/makeconnection', conndata)
+    axios.post(BACKEND_HOST + '/makeconnection', conndata)
       .then(response => {
         console.log("Status Code : ", response.status);
         if (response.status === 200) {

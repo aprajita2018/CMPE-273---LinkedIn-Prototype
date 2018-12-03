@@ -107,7 +107,34 @@ class EasyApply extends Component {
                     failPost:true,
                 })
                 }
+            })
+            .catch(err => {
+                if(err.response){
+                    this.setState({
+                        failPost:true,
+                    })
+                    //dispatch(getinitdataFail(err.response));
+                    console.log(err);
+                }   
             });
+
+            if(this.state.successPost)
+            {
+            axios.post(BACKEND_HOST + '/applyjobclick',data)
+                .then(response => {
+                    console.log("Status Code : ",response);
+                    if(response.status === 200){
+                        console.log("success")
+                    
+                        
+                        // window.location = '/ownerlogin'
+                    }else{
+                    console.log("error")
+                    
+                    
+                    }
+                });
+            }
 
     }
 
