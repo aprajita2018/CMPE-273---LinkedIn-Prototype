@@ -1,5 +1,5 @@
 import axios from 'axios';
-import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB} from './actionTypes';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB, SET_JOB_TO_DRAFT} from './actionTypes';
 import {BACKEND_HOST} from './host_config';
 
 //function/ action to post the login form
@@ -72,6 +72,14 @@ export const setCurrentJobDetail = (values) => dispatch => {
 
     dispatch({
         type : SET_CURRENT_JOB,
+        payload: values,
+    });
+}
+
+export const setJobtoDraft = (values) => dispatch => {
+
+    dispatch({
+        type : SET_JOB_TO_DRAFT,
         payload: values,
     });
 }

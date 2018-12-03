@@ -1,7 +1,7 @@
 .search-result-page{
     padding         :   2%;
     width           : 100%;
-    background-image: linear-gradient(to right, #fbf9fc,#fdfff4,#f2fffd,#f8f4ff,#edfeff,#fdedff);
+    /* background-color: lightgray; */
 }
 
 .searched-results{

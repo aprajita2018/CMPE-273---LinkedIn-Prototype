@@ -2,9 +2,9 @@ import React, {Component} from 'react';
 import JobCard from '../JobCard/JobCard';
 import NavBar from '../NavBar/NavBar';
 import {connect} from 'react-redux';
-import {Link} from 'react-router-dom'
+import {Link, Redirect} from 'react-router-dom'
 import './RecruiterJobs.css';
-import {getAllJobs} from '../../store/actions/useraction';
+import {getAllJobs, setJobtoDraft} from '../../store/actions/useraction';
 
 class RecruiterJobs extends Component{
 
@@ -14,9 +14,11 @@ class RecruiterJobs extends Component{
         this.state = {
             jobs: [],
             currentjob: {},
+            redirectToJobPost: false,
         };
 
         this.handleGetAllJobs = this.handleGetAllJobs.bind(this);
+        this.handleSetJobtoDraft = this.handleSetJobtoDraft.bind(this);
     }
 
     componentDidMount(){
@@ -33,6 +35,11 @@ class RecruiterJobs extends Component{
             this.setState({
                 currentjob: nextProps.currentjob
             });
+        if(nextProps.jobedit){
+            this.setState({
+                redirectToJobPost: true
+            })
+        }
         }
     }
 
@@ -41,7 +48,16 @@ class RecruiterJobs extends Component{
             username: this.props.user.email
         };
         this.props.getAllJobs(values, (res) => {
+            //if callback needs to be defined
+        });
+    }
 
+    handleSetJobtoDraft(){
+        const values = {
+            job: this.state.currentjob
+        };
+        this.props.setJobtoDraft(values, (res) => {
+            //if callback needs to be defined
         });
     }
 
@@ -50,8 +66,13 @@ class RecruiterJobs extends Component{
         let jobs = this.state.jobs.map((job) => {
             return <JobCard job={job} />
         });
+        let redirectVar = null;
+        if(this.state.redirectToJobPost){
+            redirectVar = <Redirect to="/JobPost" />
+        }
         return(
             <div>
+                {redirectVar}
                 <NavBar />
                 <div className="container search-result-page">
                     <div className="row">
@@ -61,14 +82,19 @@ class RecruiterJobs extends Component{
                         <div className="col-sm-6" id="job_details">
                             <strong>Job Details</strong>
                             {/* //TODO: add details from props */}
-                            <div className="job_title text-success my-2">
-                                {this.state.currentjob.jobtitle}
+                            <div className="job_details_div"  style={{display: Object.keys(this.state.currentjob).length === 0 ? "none" : 'block'}}>
+                                <div className="job_title text-success my-2">
+                                    {this.state.currentjob.jobtitle}
+                                </div>
+                                <div className="d-flex-inline flex-row align-items-left">
+                                    <button className="btn btn-info m-2" onClick={this.handleSetJobtoDraft}>Edit</button> 
+                                </div>
+                                <div className="job_desc">
+                                    {this.state.currentjob.jobdes}
+                                </div>
                             </div>
-                            <div className="d-flex-inline flex-row align-items-left">
-                                <Link to="/"><button className="btn btn-info m-2">Edit</button></Link> {/* TODO: This needs to redirect to JobPost after setting poststatus=draft*/}
-                            </div>
-                            <div className="job_desc">
-                                {this.state.currentjob.jobdes}
+                            <div style={{display: Object.keys(this.state.currentjob).length === 0 ? "block" : 'none'}} className="m-3 font-weight-light">
+                                Please select a job on the left panel to view details
                             </div>
                         </div>
                     </div>
@@ -86,7 +112,8 @@ const mapStateToProps = state => {
         user_type: state.user.user_type,
         jobs: state.user.jobs,
         currentjob: state.user.currentjob,
+        jobedit: state.user.jobedit,
     }    
 };
 
-export default connect(mapStateToProps, {getAllJobs})(RecruiterJobs);
+export default connect(mapStateToProps, {getAllJobs, setJobtoDraft})(RecruiterJobs);
