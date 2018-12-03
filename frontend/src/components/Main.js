@@ -17,6 +17,7 @@ import test from "./Test/test";
 import RecruiterJobs from "./RecruiterJobs/RecruiterJobs";
 import RecruterApplyFind from './RecruterApplyList/RecruterApplyFind';
 import PeopleSearch from './CardDrawer/PeopleDrawer';
+import ViewApplicants from './CardDrawer/ViewApplicants';
 import ProfileSkills from './Profile/ProfileSkills';
 
 
@@ -40,6 +41,7 @@ const Main = () => (
             <Route path="/recruiterjobs" exact component={RecruiterJobs} />
             <Route path="/test" component={test}/>
             <Route path="/peoplesearch" component={PeopleSearch} />
+            <Route path="/viewapplicants" component={ViewApplicants}/>
         {/* <Route path="/recruterapplyfind" component={RecruterApplyFind}/> */}
             {/* </Switch> */}
     </div>

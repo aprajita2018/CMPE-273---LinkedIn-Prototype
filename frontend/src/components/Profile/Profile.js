@@ -23,11 +23,14 @@ class Profile extends Component {
         this.editEducation = this.editEducation.bind(this);
         this.editExperience = this.editExperience.bind(this);
         this.deleteSkill = this.deleteSkill.bind(this);
+        this.onChangeresume =this.onChangeresume.bind(this);
+        this.submitResume  = this.submitResume.bind(this);
 
     }
 
     componentWillMount() {
         this.props.getprofile(this.props.email);
+      
     }
     onChangeimages = (e) => {
         this.props.uploadimages(e.target.files);
@@ -70,10 +73,13 @@ class Profile extends Component {
     }
 
     edit_intro_toggle() {
+        
         this.props.toggleEditIntro();
     }
 
-    editIntro(values) {
+    editIntro (values) {
+       // values.preventDefault();
+       this.props.toggleEditIntro();
         var image = this.props.uploadedImage;
         let formData = new FormData();
         if (image != null) {
@@ -206,7 +212,7 @@ class Profile extends Component {
 
         return (
             <div className={className}>
-                <input className="form-control" initialValue={field.initialValue} hidden={field.hidden} label={field.label} pattern={field.pattern} value="" placeholder={field.placeholder} type={field.type} onChange={field.onChange} {...field.input} />
+                <input className="form-control" pattern = {field.pattern} initialValue={field.initialValue} hidden={field.hidden} label={field.label}  value="" placeholder={field.placeholder} type={field.type} onChange={field.onChange} {...field.input} />
                 <div className="text-help">
                     {touched ? error : ""}
                 </div>
@@ -491,12 +497,14 @@ class Profile extends Component {
                                                             type="text"
                                                             component={this.renderField}
                                                         />
-                                                         ZipCode
+                                                         Zip Code
                                                         <Field
                                                             placeholder={zipcode}
                                                             name="zipcode"
                                                             type="text"
-                                                            component={this.renderField}
+                                                          
+                                                         pattern = {'^[0-9]{5}(?:-[0-9]{4})?$'}
+                                                          component={this.renderField}
                                                         />
                                                         Profile Summary
                                                         <Field
@@ -506,7 +514,7 @@ class Profile extends Component {
                                                             component={this.renderField}
                                                         />
                                                         {/* <button onClick= /*{this.submitUpdate} {handleSubmit(this.submitUpdate.bind(this))} className="btn btn-primary">Update</button> */}
-                                                        <button type="submit" onClick={this.edit_intro_toggle} className="btn btn-primary">Save</button>
+                                                        <button type="submit" /*onClick={this.edit_intro_toggle}*/ className="btn btn-primary">Save</button>
                                                     </form>
                                                 </ModalBody>
 
@@ -800,8 +808,8 @@ const mapStateToProps = state => {
     return {
         email: state.user.user.email,
         user_type       : state.user.user_type,
-        name            : state.user.name,
-        token           : state.user.token,
+         name            : state.user.name,
+         token           : state.user.token,
 
         image: state.reducer_profile.image,
         firstName: state.reducer_profile.firstName,
@@ -848,7 +856,10 @@ const mapStateToProps = state => {
         modal_edit_experience: state.reducer_profile.modal_edit_experience,
 
         uploadedImage: state.reducer_profile.uploadedImage,
-        uploadedResume: state.reducer_profile.uploadedResume
+        uploadedResume: state.reducer_profile.uploadedResume,
+
+        validstateabr : state.reducer_profile.validstateabr,
+        validstatenames : state.reducer_profile.validstatenames
 
     }
 }
@@ -1074,9 +1085,17 @@ const mapDispatchStateToProps = dispatch => {
 function validate(values) {
 
     const errors = {};
-    if (!values.school) {
-        errors.school = "Enter School";
-    }
+    
+    var    validstateabr = [ 'AL', 'AK', 'AS', 'AZ', 'AR', 'CA', 'CO', 'CT', 'DE', 'DC', 'FM', 'FL', 'GA', 'GU', 'HI', 'ID', 'IL', 'IN', 'IA', 'KS', 'KY', 'LA', 'ME', 'MH', 'MD', 'MA', 'MI', 'MN', 'MS', 'MO', 'MT', 'NE', 'NV', 'NH', 'NJ', 'NM', 'NY', 'NC', 'ND', 'MP', 'OH', 'OK', 'OR', 'PW', 'PA', 'PR', 'RI', 'SC', 'SD', 'TN', 'TX', 'UT', 'VT', 'VI', 'VA', 'WA', 'WV', 'WI', 'WY' ];
+        var validstatenames = ['Alabama','Alaska','American Samoa','Arizona','Arkansas','California','Colorado','Connecticut','Delaware','District of Columbia','Federated States of Micronesia','Florida','Georgia','Guam','Hawaii','Idaho','Illinois','Indiana','Iowa','Kansas','Kentucky','Louisiana','Maine','Marshall Islands','Maryland','Massachusetts','Michigan','Minnesota','Mississippi','Missouri','Montana','Nebraska','Nevada','New Hampshire','New Jersey','New Mexico','New York','North Carolina','North Dakota','Northern Mariana Islands','Ohio','Oklahoma','Oregon','Palau','Pennsylvania','Puerto Rico','Rhode Island','South Carolina','South Dakota','Tennessee','Texas','Utah','Vermont','Virgin Island','Virginia','Washington','West Virginia','Wisconsin','Wyoming'];
+    
+     
+        if((typeof(values.userstate)!="undefined" && values.userstate!="undefined" && values.userstate!="") && (!validstateabr.includes(values.userstate) && !validstatenames.includes(values.userstate) ))
+       {
+        errors.userstate = "Please enter correct state name or abbreviation";
+       
+       }
+       
     return errors;
 }
 

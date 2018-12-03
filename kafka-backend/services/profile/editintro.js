@@ -28,7 +28,11 @@ console.log(msg);
         updatedIntro.current_position = msg.current_position;
     if (msg.profile_summary)
         updatedIntro.profile_summary = msg.profile_summary;
+        if (msg.headline)
+        updatedIntro.headline = msg.headline;
 
+        // updatedIntro.image=true;
+    
     updatedIntro = { $set: updatedIntro };
 
     console.log(updatedIntro);
