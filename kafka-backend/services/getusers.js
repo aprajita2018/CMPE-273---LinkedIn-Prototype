@@ -39,11 +39,8 @@ function handle_request(msg, callback) {
 
     })
 
-<<<<<<< HEAD
-=======
     
 
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 }
 
 exports.handle_request = handle_request;

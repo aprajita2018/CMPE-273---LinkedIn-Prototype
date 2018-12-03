@@ -25,10 +25,8 @@ var deleteeducation = require('./services/profile/deleteeducation.js');
 var deleteexperience = require('./services/profile/deleteexperience.js');
 var deleteskill = require('./services/profile/deleteskill.js');
 var viewapplicants = require('./services/viewapplicants');
-<<<<<<< HEAD
 var makeconnection = require('./services/makeconnection');
-=======
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
+
 
 function handleTopicRequest(topic_name,fname){  
     var consumer = connection.getConsumer(topic_name);
@@ -73,10 +71,7 @@ handleTopicRequest("graphdata",graphdata);
 handleTopicRequest("getusers", getusers);
 handleTopicRequest("profileviews", profileviews);
 handleTopicRequest("viewapplicants",viewapplicants);
-<<<<<<< HEAD
 handleTopicRequest("makeconnection", makeconnection);
-=======
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 
 handleTopicRequest("getprofile",getprofile); 
 handleTopicRequest("getprofile_education",geteducation); 

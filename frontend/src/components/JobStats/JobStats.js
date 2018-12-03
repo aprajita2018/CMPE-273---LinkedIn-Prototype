@@ -8,7 +8,6 @@ import { Bar, Pie } from 'react-chartjs-2';
 import CreatableSelect from 'react-select/lib/Creatable';
 
 import NavBar from '../NavBar/NavBar';
-<<<<<<< HEAD
 
 // const testop = [
 // {label: "Software Engineering", value: "1"},
@@ -17,11 +16,9 @@ import NavBar from '../NavBar/NavBar';
 //  {label: "Software Intern", value: "6"},
 //  {label: "Marketing Intern", value: "7"},
 // ]
-=======
 //import { Stats } from 'fs';
 
 
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 class JobStats extends Component {
   constructor(props) {
     //Call the constructor of Super class i.e The Component
@@ -34,20 +31,13 @@ class JobStats extends Component {
       appmonSelectState : [],
       appmonSel : this.props.appmonSelect?this.props.appmonSelect[0]:null,
       appstatusSel : this.props.appstatusSelect?this.props.appstatusSelect[0]:null,
-<<<<<<< HEAD
-=======
       appbycitySel : this.props.appbycitySelect?this.props.appbycitySelect[0]:null
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
     }
     
 
 
   }
   componentDidMount() {
-<<<<<<< HEAD
-    // this.props.minGraphData("recruiter1@mail.com" /this.props.email/);
-=======
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 
     this.props.getgraphData('recruiter1@mail.com');
    
@@ -67,19 +57,13 @@ class JobStats extends Component {
     }
 
 render() {
-<<<<<<< HEAD
-var MinAppsBar = null;
-=======
 var showappclicks = null;
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 var showmonthapp = null;
 var showappstatus = null;
 var showsaveapp = null;
 let showtoplowapp = null;
 let statuspiedata = [];
 let appmonbardata = [];
-<<<<<<< HEAD
-=======
 let appbycitydata = [];
 let showappbycity = [];
 let redirectVar = null;
@@ -88,7 +72,6 @@ if(!this.props.token){
         
   // redirectVar = <Redirect to= "/"/>
 }
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 
 
 if(this.props.apppermonth){
@@ -271,8 +254,6 @@ if(this.props.toplowapps){
     showtoplowapp = <h4>No Data Found</h4>
   }
 
-<<<<<<< HEAD
-=======
   if(this.props.appbyCity){
   
     if(this.state.appbycitySel){
@@ -367,7 +348,6 @@ if(this.props.toplowapps){
 
 
 
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
 
 
     return (
@@ -383,11 +363,7 @@ if(this.props.toplowapps){
            <h4>Application Status by Job</h4>
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
-<<<<<<< HEAD
-               <h4>Saved Applications</h4>
-=======
                <h4>Applications by City </h4>
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
           </div>
         </div>
        </div>
@@ -417,13 +393,9 @@ if(this.props.toplowapps){
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' ,borderWidth: '1px', borderStyle: 'groove' }}>
             
-<<<<<<< HEAD
-          {showsaveapp}
-=======
           
           {showappbycity}
 
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
             {/* <Bar
               // data={MinAppsBar}
               redraw
@@ -449,13 +421,8 @@ if(this.props.toplowapps){
           
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
-<<<<<<< HEAD
-          {/* <label >Select Job to View Graph</label> */}
-          {/* <Select></Select> */}
-=======
           <label >Select City to View Graph</label>
           <CreatableSelect options={this.props.appbyCitySelect} defaultValue={this.props.appbyCitySelect?this.props.appbyCitySelect:null} name="appbycitySel" onChange={this.handleChange('appbycitySel')}  />
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
           </div>
         </div>
        </div>  
@@ -466,11 +433,7 @@ if(this.props.toplowapps){
           <h4>Top 5 Lowest Applications</h4>
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
-<<<<<<< HEAD
-           <h4>Applications by City</h4>
-=======
            <h4>Applications Saves</h4>
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
                <h4>Total Clicks</h4>
@@ -492,26 +455,6 @@ if(this.props.toplowapps){
 
           <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' , borderWidth: '1px', borderStyle: 'groove' }}>
 
-<<<<<<< HEAD
-            {/* <Pie
-              // data={piedata}
-              width={220}
-              height={400}
-              options={{
-                maintainAspectRatio: false
-              }}
-            /> */}
-          </div>
-          <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' ,borderWidth: '1px', borderStyle: 'groove' }}>
-            {/* <Bar
-              data={MinAppsBar}
-              width={220}
-              height={400}
-              options={{
-                maintainAspectRatio: false
-              }}
-            /> */}
-=======
            {showsaveapp}
 
           </div>
@@ -520,7 +463,6 @@ if(this.props.toplowapps){
             {showappclicks}
             
            
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
           </div>
 
 
@@ -552,35 +494,17 @@ const mapStateToProps = state => {
     appstatus : state.jobstats.appstatus, 
     toplowapps : state.jobstats.toplowapps,
     appstatusSelect : state.jobstats.appstatusSelect,
-<<<<<<< HEAD
-    mingraphjobs: state.reducer_mingraph.mingraphjobs
-
-=======
     appbyCity : state.jobstats.appbycity,
     appbyCitySelect : state.jobstats.appbycitySelect,
     appClicks : state.jobstats.appclicks,
     token : state.user.token,
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
   };
 };
 
 const mapDispatchStateToProps = dispatch => {
   return {
-<<<<<<< HEAD
-    //getchartdata:(jobid) =>dispatch(actions.getinitdata(jobid)),
-    getgraphData : (username) => dispatch( actions.getgraphdata(username) ),
-    // minGraphData: (username) => {
-      
-
-    //   axios.get(BACKEND_HOST + "/mingraph/" + username, { headers: { authorization: "jwt" + sessionStorage.getItem("usertoken") } })
-    //     .then((response) => {
-    //       dispatch({ type: "GET_GRAPH_DATA", payload: response.data, statusCode: response.status })
-    //     })
-    // }
-=======
     getgraphData : (username) => dispatch( actions.getgraphdata(username) ),
     
->>>>>>> 8e03b24762dc7524e630e5a36f41105216f10660
   };
 };
 
