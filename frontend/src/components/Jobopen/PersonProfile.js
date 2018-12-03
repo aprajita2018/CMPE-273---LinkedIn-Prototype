@@ -65,7 +65,7 @@ class PersonProfile extends Component {
             </p>)
         }
 
-        console.log(this.state);
+        // console.log(this.state);
 
         let showit=null;
         if(this.state.firstName!=='')

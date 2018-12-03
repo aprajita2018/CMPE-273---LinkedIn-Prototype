@@ -29,7 +29,7 @@ const upload = multer({ storage });
 
 
 router.post('/:username', upload.array("resume", 10), (req, res) => {
-    console.log("Uploading Resume");
+    console.log("Uploading Resume Req Params");
     console.log(req.params);
     try{
 

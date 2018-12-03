@@ -390,12 +390,13 @@ function validate(values) {
     return errors;
 }
 
-
+var email = "raj@gmail.com"
 const mapStateToProps = state => {
     console.log("Mapping State To Props - NA");
     console.log(state.reducer.uploadedResume);
+    console.log(state.user.user.email);
     return {
-        email: state.user.user.email,
+        email:  "raj@gmail.com",
         user_type       : state.user.user_type,
         name            : state.user.name,
         token           : state.user.token,

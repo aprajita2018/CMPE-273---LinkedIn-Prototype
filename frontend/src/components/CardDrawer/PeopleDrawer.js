@@ -85,9 +85,9 @@ class PeopleDrawer extends Component {
         let peoplelist = null;
         if (this.state.authFlag == true) {
             var arr = Object.values(this.state.person_list);
-            console.log(arr)
+            // console.log(arr)
 
-            console.log(this.state.person_list.length)
+            // console.log(this.state.person_list.length)
             var elements = [];
             console.log(arr.length)
             for (var i = 0; i < arr.length; i++) {
