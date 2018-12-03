@@ -1,4 +1,4 @@
-import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB} from '../actions/actionTypes';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB, SET_JOB_TO_DRAFT} from '../actions/actionTypes';
 
 const initialState = {
   user  : {},
@@ -36,6 +36,13 @@ export default function(state = initialState, action) {
         return {
           ...state,
           currentjob: action.payload,
+        }
+      }
+
+      case SET_JOB_TO_DRAFT:{
+        return {
+          ...state,
+          jobedit: action.payload.job,
         }
       }
 
