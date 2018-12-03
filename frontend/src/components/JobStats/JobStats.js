@@ -8,6 +8,14 @@ import { Bar, Pie } from 'react-chartjs-2';
 import CreatableSelect from 'react-select/lib/Creatable';
 
 import NavBar from '../NavBar/NavBar';
+
+// const testop = [
+// {label: "Software Engineering", value: "1"},
+//  {label: "Junior Manager", value: "2"},
+// {label: "Senior Manager", value: "3"},
+//  {label: "Software Intern", value: "6"},
+//  {label: "Marketing Intern", value: "7"},
+// ]
 //import { Stats } from 'fs';
 
 

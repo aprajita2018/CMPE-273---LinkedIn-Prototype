@@ -82,14 +82,14 @@ function handle_request(msg, callback){
         console.log("in kafka applyjob");
         console.log(msg);
 
-        // if(msg.jobid==='')
-        // {
-        //     console.log("in if")
-        //     res.code    = '404';
-        //     res.status  = 'ERROR';
-        //     res.message = 'Empty Submit. Please add data';
-        //     callback(null, res);
-        // }
+        if(msg.jobid==='')
+        {
+            console.log("in if")
+            res.code    = '404';
+            res.status  = 'ERROR';
+            res.message = 'Empty Submit. Please add data';
+            callback(null, res);
+        }
        if(msg.easy_apply=='true')
        {
         var newapply ={
