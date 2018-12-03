@@ -37,7 +37,7 @@ class EasyApply extends Component {
       }
         this.handleChange = this.handleChange.bind(this);
         this.applyJob = this.applyJob.bind(this);
-        this.onChangeResume =this.onChangerResume.bind(this);
+        this.onChangeResume =this.onChangeResume.bind(this);
         this.submitResume  = this.submitResume.bind(this);
     }
 

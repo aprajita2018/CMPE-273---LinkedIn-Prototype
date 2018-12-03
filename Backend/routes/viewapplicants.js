@@ -22,7 +22,7 @@ router.get('*', (req, res) => {
                 console.log(results);
                 console.log("Inside else");
                 res.status(results.code).json({
-                    applicants: results.applicants,
+                    applicants: results.people,
                     message: results.message,
                     success: results.success,
 

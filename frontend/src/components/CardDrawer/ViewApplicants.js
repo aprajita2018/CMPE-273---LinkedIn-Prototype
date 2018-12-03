@@ -8,6 +8,7 @@ import PeopleSearch from '../Search/PeopleSearch';
 import ApplicantCard from '../Cards/ApplicantCard';
 import PersonProfile from '../Jobopen/ApplicantProfile';
 import Navbar from '../NavBar/NavBar';
+import { connect } from "react-redux";
 
 class PeopleDrawer extends Component {
 
@@ -25,10 +26,23 @@ class PeopleDrawer extends Component {
         this.routeTo = this.routeTo.bind(this);
     }
 
-    componentWillMount() {
-        this.setState({
-            authFlag: false
-        })
+    componentDidMount() {
+        
+        axios.defaults.withCredentials = true;
+        axios.get('http://localhost:3001/viewapplicants', { params: {email:this.props.email} })
+            //also send counters with axios on a different route 
+            .then(response => {
+                console.log("Status Code : ", response);
+                if (response.status === 200) {
+                    this.setState({
+                        applicants_list: this.state.applicants_list.concat(response.data.applicants),
+                        authFlag: true
+                    });
+                    //window.location = '/travellerlogin'
+                } else {
+
+                }
+            });
 
     }
 
@@ -131,6 +145,12 @@ class PeopleDrawer extends Component {
         )
     }
 }
+const mapStateToProps = state => {
+    
+    return {
+      name: state.user.name,
+      email:state.user.email
+    };
+  };
 
-
-export default PeopleDrawer;
+export default connect(mapStateToProps)( PeopleDrawer);
