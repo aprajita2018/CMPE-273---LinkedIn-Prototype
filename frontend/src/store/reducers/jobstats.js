@@ -11,6 +11,9 @@ const initialState ={
   toplowapps : null,
   appmonSelect : null,
   appstatusSelect : null,
+  appbycity : null,
+  appclicks : null,
+  appbycitySelect: null,
   
 }
 
@@ -28,6 +31,9 @@ const getgraphSuccess = (state, action) => {
         appstatus : action.appstatus,
         toplowapps : action.toplowapps,
         appstatusSelect : action.appstatusSelect,
+        appbycity : action.appbycity,
+        appclicks : action.appclicks,
+        appbycitySelect: action.appbycitySelect,
  
     })
  
