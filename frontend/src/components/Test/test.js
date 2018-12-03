@@ -4,7 +4,7 @@ import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
-
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 
 class test extends Component {
@@ -22,7 +22,7 @@ class test extends Component {
   
         console.log("card in test")
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/test',)
+        axios.get(BACKEND_HOST + '/test',)
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);

@@ -1,7 +1,7 @@
 
 import React, {Component} from 'react';
 
-
+import { BACKEND_HOST } from '../../store/actions/host_config';
 import axios from 'axios';
 //import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
@@ -66,7 +66,7 @@ class Carddrawer extends Component{
         // window.open(url, '_blank');
 
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/searchjob',{ params: jobdata})
+        axios.get(BACKEND_HOST + '/searchjob',{ params: jobdata})
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);
@@ -105,7 +105,7 @@ class Carddrawer extends Component{
         }
         axios.defaults.withCredentials = true;
 
-        axios.post('http://localhost:3001/viewjobcard', data)
+        axios.post(BACKEND_HOST + '/viewjobcard', data)
           .then(response => {
             console.log("Status Code : ", response.status);
             if (response.status === 200) {

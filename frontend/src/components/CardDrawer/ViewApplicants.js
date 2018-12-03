@@ -9,6 +9,7 @@ import ApplicantCard from '../Cards/ApplicantCard';
 import PersonProfile from '../Jobopen/ApplicantProfile';
 import Navbar from '../NavBar/NavBar';
 import { connect } from "react-redux";
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 class PeopleDrawer extends Component {
 
@@ -29,7 +30,7 @@ class PeopleDrawer extends Component {
     componentDidMount() {
         
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/viewapplicants', { params: {email:this.props.email} })
+        axios.get(BACKEND_HOST +'/viewapplicants', { params: {email:this.props.email} })
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);
