@@ -89,7 +89,7 @@ class NormalApply extends Component {
 
         }
         axios.defaults.withCredentials = true;
-       // console.log(data);
+        console.log(data);
         axios.post(BACKEND_HOST + '/applyjob',data)
             .then(response => {
                 console.log("Status Code : ",response);
@@ -107,7 +107,34 @@ class NormalApply extends Component {
                        failPost:true,
                    })
                 }
+            })
+            .catch(err => {
+                if(err.response){
+                    this.setState({
+                        failPost:true,
+                    })
+                    //dispatch(getinitdataFail(err.response));
+                    console.log(err);
+                }   
             });
+           
+            if(this.state.successPost)
+            {
+            axios.post(BACKEND_HOST + '/applyjobclick',data)
+                .then(response => {
+                    console.log("Status Code : ",response);
+                    if(response.status === 200){
+                        console.log("success")
+                    
+                        
+                        // window.location = '/ownerlogin'
+                    }else{
+                    console.log("error")
+                    
+                    
+                    }
+                });
+            }
 
             
            
@@ -196,8 +223,8 @@ class NormalApply extends Component {
           </div>
         }
        
-        else{
-        return (
+        
+        return(
 
             <div>
                 <div className="container">
@@ -378,7 +405,7 @@ class NormalApply extends Component {
         )
     }
 }
-}
+
 
 function validate(values) {
     const errors = {};

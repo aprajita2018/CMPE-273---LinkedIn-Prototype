@@ -10,6 +10,7 @@ import { Alert } from 'reactstrap';
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import { Glyphicon } from "react-bootstrap";
 import ProfileContact from './ProfileContact';
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 class Profile extends Component {
 
@@ -198,7 +199,7 @@ const mapDispatchStateToProps = dispatch => {
         editIntro: (values) => {
             console.log('Editing Intro');
             console.log("Dispatching Action EI");
-            axios.put('http://localhost:3001/profile/intro', values)
+            axios.put(BACKEND_HOST + '/profile/intro', values)
                 .then((response) => {
                     console.log("Response", response.data);
                     dispatch({

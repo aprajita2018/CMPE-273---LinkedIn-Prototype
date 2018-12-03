@@ -16,6 +16,9 @@ import Jobcard from '../Cards/Jobcard';
 import EasyApply from '../Apply/EasyApply';
 import NormalApply from '../Apply/NormalApply';
 import {Redirect} from 'react-router';
+import axios from 'axios';
+import { connect } from "react-redux";
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 const styles = theme => ({
     
@@ -75,20 +78,23 @@ class Jobopen
               skills:'',
               emplevel:'',
               alldata:'',
-
+              applicantid:'',
 
 
         }
        
         this.applyJob = this.applyJob.bind(this);
+        this.save = this.save.bind(this);
        
     }
    
 componentDidMount(){
   
-  console.log("card in search")
+  console.log("card in paper")
   console.log(this.props)
- 
+ this.setState({
+   applicantid:this.props.id
+ })
 
  // console.log(this.props)
 
@@ -138,6 +144,7 @@ applyJob = (e) => {
     _id:this.state._id,
     source:this.state.source,
     recruiterid:this.state.recruiterid,
+    applicantid:this.state.applicantid,
      
   };
   this.setState({
@@ -157,6 +164,29 @@ handleToggleModal() {
     console.log("in toggle")
 }
 
+save() {
+ console.log("In save");
+ console.log(this.props)
+ const data={
+  applicantid:this.props.id,
+  recruterid:this.props.props.username,
+  jobtitile:this.props.props.jobtitle,
+  jobid:this.props.props._id
+}
+axios.defaults.withCredentials = true;
+
+axios.post(BACKEND_HOST + '/savejob', data)
+.then(response => {
+  console.log("Status Code : ", response.status);
+  if (response.status === 200) {
+    console.log("success")
+
+  } else {
+    console.log("error")
+  }
+});
+}
+
   
 
  
@@ -174,7 +204,7 @@ handleToggleModal() {
   if(this.state.easy_apply=="true"){
     link=  <button
     type="button"
-  className={classes.modalButton}
+    mapStateToProps
    
     onClick={() => this.handleToggleModal()}><i class="fa fa-linkedin-square" aria-hidden="true"></i>Easy Apply</button>
 
@@ -240,7 +270,7 @@ handleToggleModal() {
          {/* {easyapply} */}
         </Typography>
         <div class="save-button">
-          <button>Save</button>
+          <button onClick={this.save}>Save</button>
           {/* <button>Apply</button> */}
         {link}
         {showModal &&
@@ -296,11 +326,23 @@ handleToggleModal() {
 }
 }
 
+const mapStateToProps = state => {
+    
+  return {
+    name: state.user.name,
+    email:state.user.email
+  };
+};
 Jobopen
 .propTypes = {
   classes: PropTypes.object.isRequired,
   theme: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles, { withTheme: true })(Jobopen
-);
+// export default withStyles(styles, { withTheme: true })(connect(mapStateToProps)(Jobopen));
+// export default withStyles(styles)(connect(mapStateToProps)(Jobopen));
+export default withStyles(styles, { withTheme: true })(Jobopen);
+// export default connect(mapStateToProps)(withStyles(styles, { withTheme: true })(Jobopen));
+
+// Jobopen = withStyles(styles, { withTheme: true })(Jobopen);
+// export default connect(mapStateToProps)(Jobopen);

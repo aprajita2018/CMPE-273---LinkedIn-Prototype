@@ -82,88 +82,89 @@ function handle_request(msg, callback){
         console.log("in kafka applyjob");
         console.log(msg);
 
-        // if(msg.jobid==='')
-        // {
-        //     console.log("in if")
-        //     res.code    = '404';
-        //     res.status  = 'ERROR';
-        //     res.message = 'Empty Submit. Please add data';
-        //     callback(null, res);
-        // }
-       if(msg.easy_apply=='true')
-       {
-        var newapply ={
-            jobid :msg.jobid,
-            jobtitle :msg.jobtitle,
-            applicantid :msg.email,
-            recruiterid :msg.recruiterid ,
-            company :msg.company ,
-            firstname :msg.firstname ,
-            lastname :msg.lastname ,
-            jobidgenerated :msg._id ,
-            phoneno :msg.phoneno ,
-            typeofapply :msg.easy_apply,
-            address:msg.address,
-            applicantaddress: null,
-            applicantcity: null,
-            applicantdisability: null,
-            applicantrace:null,
-            applicantstate: null,
-            applicantzipcode: null,
-            gender: null,
-            hearabout: null,
-            phoneno: null,
-            source:null
-           };
-       }
-       else{
-        var newapply ={
-            jobid :msg.jobid,
-            jobtitle :msg.jobtitle,
-            applicantid :msg.email,
-            recruiterid :msg.recruiterid ,
-            company :msg.company ,
-            firstname :msg.firstname ,
-            lastname :msg.lastname ,
-            jobidgenerated :msg._id ,
-            phoneno :msg.phoneno ,
-            typeofapply :msg.easy_apply,
-            address:msg.address,
-            applicantaddress: msg.applicantaddress,
-            applicantcity: msg.applicantcity,
-            applicantdisability: msg.applicantdisability,
-            applicantrace:msg.applicantrace,
-            applicantstate: msg.applicantstate,
-            applicantzipcode: msg.applicantzipcode,
-            gender: msg.gender,
-            hearabout: msg.hearabout,
-            phoneno: msg.phoneno,
-            source:msg.source
-
-           };
-       }
-       console.log(newapply)
-           var apply=mongoose.model('applyjob',applyjob,'applyjob');
-           var applynew=new apply(newapply);
-           applynew.save(function(err,result){
-            if(err){
-
-                res.code    = '400';
-                res.status  = 'ERROR';
-                res.message = 'Could not add job application. Please try again later.';
-                callback(null, res);
+        if(msg.jobid==='' || msg.email==='' || msg.firstname==='')
+        {
+            console.log("in if")
+            res.code    = '404';
+            res.status  = 'ERROR';
+            res.message = 'Empty Submit. Please add data';
+            callback(null, res);
+        }
+        else{
+            if(msg.easy_apply=='true')
+            {
+                var newapply ={
+                    jobid :msg.jobid,
+                    jobtitle :msg.jobtitle,
+                    applicantid :msg.email,
+                    recruiterid :msg.recruiterid ,
+                    company :msg.company ,
+                    firstname :msg.firstname ,
+                    lastname :msg.lastname ,
+                    jobidgenerated :msg._id ,
+                    phoneno :msg.phoneno ,
+                    typeofapply :msg.easy_apply,
+                    address:msg.address,
+                    applicantaddress: null,
+                    applicantcity: null,
+                    applicantdisability: null,
+                    applicantrace:null,
+                    applicantstate: null,
+                    applicantzipcode: null,
+                    gender: null,
+                    hearabout: null,
+                    phoneno: null,
+                    source:null
+                };
             }
             else{
+                var newapply ={
+                    jobid :msg.jobid,
+                    jobtitle :msg.jobtitle,
+                    applicantid :msg.email,
+                    recruiterid :msg.recruiterid ,
+                    company :msg.company ,
+                    firstname :msg.firstname ,
+                    lastname :msg.lastname ,
+                    jobidgenerated :msg._id ,
+                    phoneno :msg.phoneno ,
+                    typeofapply :msg.easy_apply,
+                    address:msg.address,
+                    applicantaddress: msg.applicantaddress,
+                    applicantcity: msg.applicantcity,
+                    applicantdisability: msg.applicantdisability,
+                    applicantrace:msg.applicantrace,
+                    applicantstate: msg.applicantstate,
+                    applicantzipcode: msg.applicantzipcode,
+                    gender: msg.gender,
+                    hearabout: msg.hearabout,
+                    phoneno: msg.phoneno,
+                    source:msg.source
 
-                console.log("Successfuly created the job application in db!");
-                res.code    =  '200';
-                res.status  = 'SUCCESS';
-                res.message = 'Job application successfully added. ';
-                callback(null, res);
-            }; 
-           });
+                };
+            }
+            console.log(newapply)
+                var apply=mongoose.model('applyjob',applyjob,'applyjob');
+                var applynew=new apply(newapply);
+                applynew.save(function(err,result){
+                    if(err){
 
+                        res.code    = '400';
+                        res.status  = 'ERROR';
+                        res.message = 'Could not add job application. Please try again later.';
+                        callback(null, res);
+                    }
+                    else{
 
+                        console.log("Successfuly created the job application in db!");
+                        res.code    =  '200';
+                        res.status  = 'SUCCESS';
+                        res.message = 'Job application successfully added. ';
+                        callback(null, res);
+                    }; 
+                });
+
+        }
   
         
 

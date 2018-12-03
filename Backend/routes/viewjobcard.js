@@ -9,30 +9,20 @@ router.post('*', (req,res) => {
     //console.log(req);
    
    
-        kafka.make_request('applyjob',req.body, function(err,result){
+        kafka.make_request('viewjobcard',req.body, function(err,result){
 
-            console.log('Inside kafka.make_request for applyjob.')
+            console.log('Inside kafka.make_request for viewcarjob.')
             console.log(result);
             if(err){
                 console.log('Inside err of kafka.make_request.');
-                res.status(404).json({
+                res.json({
                     status:"error",
                     msg:"System Error, Try Again."
                 })
             }
             else if(result){
                 console.log('Response from kafka-backend: ' + JSON.stringify(result));
-                console.log(result.code)
-                if(result.code=='200')
-                {
-                    res.status(200).send(JSON.stringify(result));
-                }
-                else{
-                    console.log(result.code)
-                    res.status(result.code).send({statusCode:result.code,status:"error",
-                    msg:"System Error, Try Again."});
-                }
-               
+                res.status(200).send(JSON.stringify(result));
             }       
         });
     });

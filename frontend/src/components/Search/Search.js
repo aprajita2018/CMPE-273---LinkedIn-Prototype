@@ -3,7 +3,7 @@ import '../../App.css';
 import axios from 'axios';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 
 
@@ -41,7 +41,7 @@ class Search extends Component {
         // window.open(url, '_blank');
 
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/searchjob',{ params: jobdata})
+        axios.get(BACKEND_HOST + '/searchjob',{ params: jobdata})
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);

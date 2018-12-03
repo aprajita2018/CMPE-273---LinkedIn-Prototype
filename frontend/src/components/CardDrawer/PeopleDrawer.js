@@ -8,6 +8,7 @@ import PeopleSearch from '../Search/PeopleSearch';
 import PeopleCard from '../Cards/PeopleCard';
 import PersonProfile from '../Jobopen/PersonProfile';
 import Navbar from '../NavBar/NavBar';
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 class PeopleDrawer extends Component {
 
@@ -40,7 +41,7 @@ class PeopleDrawer extends Component {
         e.preventDefault();
 
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/searchpeople', { params: personname })
+        axios.get(BACKEND_HOST + '/searchpeople', { params: personname })
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);

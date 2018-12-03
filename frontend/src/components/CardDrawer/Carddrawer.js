@@ -1,6 +1,7 @@
+
 import React, {Component} from 'react';
 
-
+import { BACKEND_HOST } from '../../store/actions/host_config';
 import axios from 'axios';
 //import cookie from 'react-cookies';
 import {Redirect} from 'react-router';
@@ -9,6 +10,7 @@ import Jobcard from '../Cards/Jobcard';
 import Jobopen from '../Jobopen/Jobopen';
 import Search from '../Search/Search';
 import NavBar from '../NavBar/NavBar';
+import { connect } from 'react-redux';
 
 class Carddrawer extends Component{
     
@@ -26,6 +28,7 @@ class Carddrawer extends Component{
             job_list : [],
             tosendjobpaper:'',
             cardsin:false,
+            email:'',
         }
         this.searchJob = this.searchJob.bind(this);
         this.handleChange = this.handleChange.bind(this);
@@ -34,16 +37,21 @@ class Carddrawer extends Component{
        
     }
 
-    componentWillMount(){
+    componentDidMount(){
         this.setState({
+            email:this.props.email,
+            //job_list : this.state.job_list.concat(this.props.email) ,
+            //job_list: [...this.state.job_list, this.props.email],
             authFlag : false
         })
 
+        
     }
    
 
 
     searchJob = (e) => {
+        console.log(this.state)
         const jobdata = {
             jobdesc: this.state.jobdesc,
             joblocation: this.state.joblocation,
@@ -58,7 +66,7 @@ class Carddrawer extends Component{
         // window.open(url, '_blank');
 
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/searchjob',{ params: jobdata})
+        axios.get(BACKEND_HOST + '/searchjob',{ params: jobdata})
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);
@@ -89,6 +97,24 @@ class Carddrawer extends Component{
             tosendjobpaper:e,
             cardsin : true
         })
+        const data={
+            applicantid:this.props.email,
+            recruterid:this.state.job_list[e].username,
+            jobtitile:this.state.job_list[e].jobtitle,
+            jobid:this.state.job_list[e]._id
+        }
+        axios.defaults.withCredentials = true;
+
+        axios.post(BACKEND_HOST + '/viewjobcard', data)
+          .then(response => {
+            console.log("Status Code : ", response.status);
+            if (response.status === 200) {
+              console.log("success")
+    
+            } else {
+              console.log("error")
+            }
+          });
        
     };
 
@@ -183,7 +209,7 @@ class Carddrawer extends Component{
 		</div>
 	
         <div class="col-md-6 map-box mx-0 px-0">
-        <Jobopen props={this.state.job_list[this.state.tosendjobpaper]}/>
+        <Jobopen props={this.state.job_list[this.state.tosendjobpaper]} id={this.state.email}/>
         {/* {jobopen} */}
         </div>
        
@@ -197,4 +223,12 @@ class Carddrawer extends Component{
     }
 }
 
-export default Carddrawer;
+const mapStateToProps = state => {
+    
+    return {
+      name: state.user.name,
+      email:state.user.email
+    };
+  };
+
+export default connect(mapStateToProps)(Carddrawer);

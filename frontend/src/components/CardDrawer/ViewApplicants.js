@@ -9,6 +9,7 @@ import ApplicantCard from '../Cards/ApplicantCard';
 import PersonProfile from '../Jobopen/ApplicantProfile';
 import Navbar from '../NavBar/NavBar';
 import { connect } from "react-redux";
+import { BACKEND_HOST } from '../../store/actions/host_config';
 
 class PeopleDrawer extends Component {
 
@@ -21,7 +22,7 @@ class PeopleDrawer extends Component {
             tosendapplicantcard: '',
             cardsin: false
         }
-        this.searchPeople = this.searchPeople.bind(this);
+      
         this.handleChange = this.handleChange.bind(this);
         this.routeTo = this.routeTo.bind(this);
     }
@@ -29,7 +30,7 @@ class PeopleDrawer extends Component {
     componentDidMount() {
         
         axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/viewapplicants', { params: {email:this.props.email} })
+        axios.get(BACKEND_HOST +'/viewapplicants', { params: {email:this.props.email} })
             //also send counters with axios on a different route 
             .then(response => {
                 console.log("Status Code : ", response);
@@ -46,29 +47,6 @@ class PeopleDrawer extends Component {
 
     }
 
-    searchPeople = (e) => {
-        const applicants = {
-            applicants: this.state.applicants
-        }
-        console.log("Form Data", applicants);
-        e.preventDefault();
-
-        axios.defaults.withCredentials = true;
-        axios.get('http://localhost:3001/viewapplicants', { params: applicants })
-            //also send counters with axios on a different route 
-            .then(response => {
-                console.log("Status Code : ", response);
-                if (response.status === 200) {
-                    this.setState({
-                        applicants_list: this.state.applicants_list.concat(response.data.people),
-                        authFlag: true
-                    });
-                    //window.location = '/travellerlogin'
-                } else {
-
-                }
-            });
-    }
 
     handleChange = name => event => {
         this.setState({
@@ -118,14 +96,7 @@ class PeopleDrawer extends Component {
                 <nav class="navbar navbar-expand-lg navbar-light bg-light">
 
                     {peoplelist}
-                    <div class="col">
-                        <input type="text" class="form-control" name="applicants" placeholder="Person Name"
-                            value={this.state.applicants}
-                            onChange={this.handleChange('applicants')}
-                        />
-                    </div>
-
-                    <button class="btn btn-primary my-2 my-sm-0" type="submit" onClick={this.searchPeople}>Search</button>
+                   
 
                 </nav>
                 <div class="container-fluid">
