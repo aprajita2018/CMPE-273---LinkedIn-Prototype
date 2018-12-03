@@ -15,7 +15,7 @@ function handle_request(msg, callback){
     let username=msg.username ;
 
     Jobs.find({
-         recapp:username
+         username:username
     }, function(err,jobs){
         if (err) {
             res.code = "400";
