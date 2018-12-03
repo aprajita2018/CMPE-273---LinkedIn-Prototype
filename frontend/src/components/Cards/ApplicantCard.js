@@ -19,11 +19,9 @@ class ApplicantCard extends Component {
     componentDidMount() {
 
         console.log("card in search for each card")
-        // console.log(this.props)
+         console.log(this.props)
 
-        this.setState = {
-            // easy_apply: this.props.props.easyapply
-        }
+      
     }
 
     routeToProfile = (e) => {
@@ -70,13 +68,13 @@ class ApplicantCard extends Component {
             // </div>
 
             <div class="card" >
-                <div class="card-body">
-                    <h5 class="card-title"> FirstName LastName</h5>
-                    <h6 class="card-subtitle mb-2 text-muted"> Headline</h6>
-                    <p class="card-text">Location</p>
-                    <a href="#" class="card-link" onClick={this.routeToProfile}>View Resume</a>
-                </div>
+            <div class="card-body">
+              <h5 class="card-title"> {this.props.props.firstname} {this.props.props.lastname}</h5>
+              <h6 class="card-subtitle mb-2 text-muted"> {this.props.props.jobtitle}</h6>
+              <p class="card-text">{this.props.props.company}</p>
+              <a href="#" class="card-link" onClick={this.routeToProfile}>View Profile</a>
             </div>
+          </div>
 
     );
 
