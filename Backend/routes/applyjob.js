@@ -30,12 +30,12 @@ router.post('*', (req,res) => {
                 else{
                     console.log(result.code)
                     res.status(result.code).send({statusCode:result.code,status:"error",
-                    msg:"System Error, Try Again."});
+                    msg:result.message});
                 }
                
             }       
         });
     });
     
-    
+
 module.exports = router;

@@ -178,9 +178,12 @@ class Carddrawer extends Component{
                             onChange={this.handleChange('jobtype')}>
                             <option selected >Job Type:</option>
                             <option >Internship</option>
-                            <option>Co-op</option>
+                            <option>Temporary</option>
                             <option>Full-time</option>
-                            <option>Contractor</option>
+                            <option>Part-time</option>
+                            <option>Contract</option>
+                            <option>Volunteer</option>
+                            <option>Other</option>
                         </select>
              
                 </div>
