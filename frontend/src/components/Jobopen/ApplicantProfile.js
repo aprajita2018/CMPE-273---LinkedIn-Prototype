@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
+import PDF from 'react-pdf-js';
+import './apply.css'
 
 
 class PersonProfile extends Component {
@@ -12,7 +14,7 @@ class PersonProfile extends Component {
             applicantid: '',
             jobtitle: '',
             phoneno: '',
-            email:''
+         
         }
 
     }
@@ -29,8 +31,7 @@ class PersonProfile extends Component {
             this.state.applicantid = this.props.props.applicantid;
             this.state.jobtitle = this.props.props.jobtitle;
             this.state.phoneno = this.props.props.phoneno;
-            this.state.email=this.props.props.email;
-
+            
         }
     }
 
@@ -38,11 +39,25 @@ class PersonProfile extends Component {
 
 
 
-        //console.log(this.state);
+       // console.log(this.state);
 
         return (
             <div>
                {/* Resume */}
+              
+               <iframe id="inlineFrameExample"
+    title="Inline Frame Example"
+    width="300"
+    height="700"
+    src="file:///home/rajas/Documents/audio.jpg">
+</iframe>
+    {/* <Document
+        file="https://ijcsmc.com/docs/papers/September2015/V4I9201521.pdf"
+        /> */}
+        {/* <PDF
+        file="https://ijcsmc.com/docs/papers/September2015/V4I9201521.pdf"/> */}
+
+              
 
             </div>
         )

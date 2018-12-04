@@ -18,8 +18,8 @@ class ApplicantCard extends Component {
 
     componentDidMount() {
 
-        console.log("card in search for each card")
-         console.log(this.props)
+        //console.log("card in search for each card")
+         //console.log(this.props)
 
       
     }
