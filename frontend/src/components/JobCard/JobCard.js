@@ -32,7 +32,7 @@ class JobCard extends Component{
                 <div className="card card-body m-2 p-2 job_card">
                     <div className="d-flex row">
                         <div className="col-sm-3 p-4">
-                            <img src={this.state.job.companyLogoURL} width="100%" alt="companyLogo"/>
+                            <img src="./img/company_logo.png" width="100%" alt="companyLogo"/>
                         </div>
                         <div className="col-sm-9">
                             <a className="job_title" href="#" onClick={this.handleClick}>
