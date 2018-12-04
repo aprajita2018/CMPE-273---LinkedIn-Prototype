@@ -32,7 +32,7 @@ class PeopleCard extends Component {
     console.log("in clicked");
     this.props.onClick(this.props.id);
     // console.log("this.props");
-    // console.log(this.props);
+     console.log(this.props);
     var today = new Date();
     var dd = today.getDate();
     var mm = today.getMonth() + 1;
@@ -47,7 +47,7 @@ class PeopleCard extends Component {
     console.log(newDate.getMonth() + 1 + '/' + newDate.getDate() + '/' + newDate.getFullYear())
 
     const data = {
-      applicant_id: this.props.props._id,
+      applicant_id: this.props.props.email,
     }
     //console.log("app" + applicant_id);
 

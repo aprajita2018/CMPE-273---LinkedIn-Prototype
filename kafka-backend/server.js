@@ -29,6 +29,7 @@ var viewjobcard = require('./services/viewjobcard');
 var savejob = require('./services/savejob');
 var applyjobclick = require('./services/applyjobclick');
 var makeconnection = require('./services/makeconnection');
+var myviews = require('./services/myviews');
 
 
 function handleTopicRequest(topic_name,fname){  
@@ -92,3 +93,4 @@ handleTopicRequest("delete_skill",deleteskill);
 handleTopicRequest("viewjobcard",viewjobcard); 
 handleTopicRequest("savejob",savejob); 
 handleTopicRequest("applyjobclick",applyjobclick); 
+handleTopicRequest("myviews",myviews); 

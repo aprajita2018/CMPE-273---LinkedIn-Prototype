@@ -108,6 +108,7 @@ var viewapplicants = require("./routes/viewapplicants");
 var viewjobcard = require("./routes/viewjobcard");
 var savejob = require("./routes/savejob");
 var applyjobclick = require("./routes/applyjobclick");
+var myviews = require("./routes/myviews");
 
 var makeconnection = require("./routes/makeconnection");
 // routing to different routes
@@ -130,6 +131,7 @@ app.use("/viewapplicants", viewapplicants);
 app.use("/viewjobcard", viewjobcard);
 app.use("/savejob", savejob);
 app.use("/applyjobclick", applyjobclick);
+app.use("/myviews", myviews);
 
 app.use("/makeconnection", makeconnection);
 
