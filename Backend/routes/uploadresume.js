@@ -42,7 +42,10 @@ router.post('/:username', upload.array("resume", 10), (req, res) => {
     bucket.upload({
         Bucket : 'projectli-bucket',
         Key : req.params.username+'_resume.pdf',
-        Body : pdf
+        Body : pdf,
+        ContentDisposition : 'inline',
+        ContentType : 'application/pdf'
+       
     },function (response) {
         console.log(response);
 

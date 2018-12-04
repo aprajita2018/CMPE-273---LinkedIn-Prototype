@@ -165,7 +165,7 @@ class NormalApply extends Component {
             formData.append("resume", resume[i]);
         }
 
-        axios.post(BACKEND_HOST + '/uploadresume/' + this.props.email, formData);
+        axios.post(BACKEND_HOST + '/uploadresume/' + this.state.email, formData);
     }
 
 
