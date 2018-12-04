@@ -14,7 +14,8 @@ export{
     jobresetErrors,
     setpropsvalue,
     getinitdata,
-    reseteditjobs
+    reseteditjobs,
+    postjobresetall,
 
 } from './jobpost'
 export{

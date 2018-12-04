@@ -207,12 +207,48 @@ export const getinitdataFail = (data) => {
     };
 };
 
-export const reseteditjobs = () => {
+export const reseteditjobs = (data) => {
     return {
        type: actionTypes.RESET_EDIT_JOBS,
        jobedit : '',
     };
 };
+
+export const postjobresetall = (data) => {
+    return {
+       type: actionTypes.POST_JOB_RESET_ALL,
+       showinit : true,
+  show1stform : false,
+  show2ndform : false,
+  show3rdform :false,
+  activeSteps : 0,
+  jobid: '',
+  company : '',
+  jobtitle : '',
+  address : '',
+  jobfunc : '',
+  emptype : '',
+  industry : '',
+  senlevel : '',
+  jobdes : '',
+  recapp : '',
+  source : '',
+  skills : '',
+  explevel : '',
+  edulevel: '',
+  rate : '',
+  easyapply: false,
+  errorFlag : false,
+  successFlag: false,
+  draftSuccessFlag: false,
+  draftFailFlag : false,
+
+       
+    };
+};
+
+
+
 
 
 
@@ -304,5 +340,4 @@ export const getinitdata = (username, jobedit) => {
     });
     
     }
-}   
-
+}

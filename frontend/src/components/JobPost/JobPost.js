@@ -455,7 +455,7 @@ class JobPost extends Component {
 componentDidMount(){
 
     this.props.getinitdata(this.props.username ,this.props.jobedit);
-    this.props.resetEditJobs();
+    
     
 }
 
@@ -665,6 +665,13 @@ submitCheckout(){
 
 
 
+}
+
+
+componentWillUnmount(){
+
+    this.props.resetEditJobs();
+    this.props.postjoResetAll();
 }
 
 render(){
@@ -915,7 +922,7 @@ render(){
           <br/> 
     <div className="form-row" >
     
-    <label>What range of relevant experience are you looking for? _{this.props.explevel?this.props.explevel[0]:this.state.explevel[0]}_ to _{this.props.explevel?this.props.explevel[1]:this.state.explevel[1]}_ years</label>
+    <label>What range of relevant experience are you looking for? {this.props.explevel?this.props.explevel[0]:this.state.explevel[0]} to {this.props.explevel?this.props.explevel[1]:this.state.explevel[1]} years</label>
     <br/> 
     <br/> 
     
@@ -1103,8 +1110,8 @@ return {
     jobresetErrors : () => dispatch (actions.jobresetErrors()),
     setPropsValue : (data) => dispatch (actions.setpropsvalue(data)),
     resetEditJobs : ()   => dispatch(actions.reseteditjobs()),
+    postjoResetAll : ()  => dispatch(actions.postjobresetall()),
 };
 };
 
 export default connect( mapStateToProps, mapDispatchToProps )(JobPost);
-
