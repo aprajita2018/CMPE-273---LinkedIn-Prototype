@@ -39,7 +39,8 @@ class NormalApply extends Component {
             applicantrace:'',
             hasError: false,
             successPost:false,
-            failPost:false
+            failPost:false,
+            errorstatus:'',
 
 
            
@@ -112,14 +113,15 @@ class NormalApply extends Component {
                 if(err.response){
                     this.setState({
                         failPost:true,
+                        errorstatus:err.response.data.msg
                     })
                     //dispatch(getinitdataFail(err.response));
                     console.log(err);
                 }   
             });
            
-            if(this.state.successPost)
-            {
+           
+             
             axios.post(BACKEND_HOST + '/applyjobclick',data)
                 .then(response => {
                     console.log("Status Code : ",response);
@@ -134,7 +136,7 @@ class NormalApply extends Component {
                     
                     }
                 });
-            }
+            
 
             
            
@@ -219,7 +221,7 @@ class NormalApply extends Component {
         }
         if(this.state.failPost){
             showError = <div className="alert-danger">
-        <h4>Application failed, Try Again Later !!</h4>
+        <h4>Application failed- {this.state.errorstatus}, Try Again Later !!</h4>
           </div>
         }
        
@@ -289,16 +291,57 @@ class NormalApply extends Component {
                                     <label for="inputState">State</label>
                                     <select id="inputState" class="form-control" onChange={this.handleChange('applicantstate')} >
                                         <option selected>Choose...</option>
-                                        <option>AL</option>
-                                        <option>AK</option>
-                                        <option>AS</option>
-                                        <option>AZ</option>
-                                        <option>AR</option>
-                                        <option>CA</option>
-                                        <option>CO</option>
-                                        <option>CT</option>
-                                        <option>DE</option>
-                                        <option>DC</option>
+                                        <option >AL</option>
+                                        <option >AK</option>
+                                        <option >AR</option>	
+                                        <option >AZ</option>
+                                        <option >CA</option>
+                                        <option >CO</option>
+                                        <option >CT</option>
+                                        <option >DC</option>
+                                        <option >DE</option>
+                                        <option >FL</option>
+                                        <option >GA</option>
+                                        <option >HI</option>
+                                        <option >IA</option>	
+                                        <option >ID</option>
+                                        <option >IL</option>
+                                        <option >IN</option>
+                                        <option >KS</option>
+                                        <option >KY</option>
+                                        <option >LA</option>
+                                        <option >MA</option>
+                                        <option >MD</option>
+                                        <option >ME</option>
+                                        <option >MI</option>
+                                        <option >MN</option>
+                                        <option >MO</option>	
+                                        <option >MS</option>
+                                        <option >MT</option>
+                                        <option >NC</option>	
+                                        <option >NE</option>
+                                        <option >NH</option>
+                                        <option >NJ</option>
+                                        <option >NM</option>			
+                                        <option >NV</option>
+                                        <option >NY</option>
+                                        <option >ND</option>
+                                        <option >OH</option>
+                                        <option >OK</option>
+                                        <option >OR</option>
+                                        <option >PA</option>
+                                        <option >RI</option>
+                                        <option >SC</option>
+                                        <option >SD</option>
+                                        <option >TN</option>
+                                        <option >TX</option>
+                                        <option >UT</option>
+                                        <option >VT</option>
+                                        <option >VA</option>
+                                        <option >WA</option>
+                                        <option >WI</option>	
+                                        <option >WV</option>
+                                        <option >WY</option>
                                     </select>
                                 </div>
                                 <div class="form-group col-md-2">

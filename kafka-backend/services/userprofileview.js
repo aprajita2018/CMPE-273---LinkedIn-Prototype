@@ -6,7 +6,7 @@ var {Jobs} = require('../models/jobs');
 var { mongoose } = require('../db/mongoose');
 var mysql = require('mysql');
 // var {mysql} = require('../pool');
-
+const connect = require('../pool');
 // mysql.connect(function(err){
 //     if(err) throw err;
 //     console.log("connected");
@@ -21,7 +21,7 @@ var dbconnection = mysql.createConnection({
 
 dbconnection.connect(function (err) {
     if (err) throw err;
-    console.log("Database connection successfull!");
+    //console.log("Database connection successfull!");
 });
 function handle_request(msg, callback){
     var res = {};
