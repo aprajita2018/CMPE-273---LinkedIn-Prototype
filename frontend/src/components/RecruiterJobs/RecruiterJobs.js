@@ -70,6 +70,9 @@ class RecruiterJobs extends Component{
         if(this.state.redirectToJobPost){
             redirectVar = <Redirect to="/JobPost" />
         }
+        if(this.props.token === ""){
+            redirectVar = <Redirect to="/" />; //it seems the user got logged out, so redirect them to landing
+        }
         return(
             <div>
                 {redirectVar}

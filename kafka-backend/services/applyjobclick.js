@@ -5,7 +5,8 @@ var config = require('../settings');
 var {Jobs} = require('../models/jobs');
 var { mongoose } = require('../db/mongoose');
 var mysql = require('mysql');
-// var {mysql} = require('../pool');
+const connect = require('../pool');
+
 
 // mysql.connect(function(err){
 //     if(err) throw err;
@@ -31,9 +32,9 @@ function handle_request(msg, callback){
     let applicantid=msg.email;
     let recruterid=msg.recruiterid;
     let jobtitile=msg.jobtitile;
-    let jobid=msg._id;
+    let jobid=msg.jobid;
     console.log(jobid);
-    var sqlcheck="SELECT * FROM `tracking` WHERE jobid =" + mysql.escape(jobid);
+    var sqlcheck="SELECT * FROM `tracking` WHERE jobid =" + mysql.escape(jobid) +" AND applicantid ="+mysql.escape(applicantid);
     dbconnection.query(sqlcheck, function (err, result) {
 
         if (err) {

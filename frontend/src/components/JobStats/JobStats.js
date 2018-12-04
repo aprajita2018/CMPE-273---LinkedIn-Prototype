@@ -4,19 +4,11 @@ import './JobStats.css';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { Bar, Pie } from 'react-chartjs-2';
+import {Redirect} from 'react-router';
 //import Select from 'react-select';
 import CreatableSelect from 'react-select/lib/Creatable';
 
 import NavBar from '../NavBar/NavBar';
-
-// const testop = [
-// {label: "Software Engineering", value: "1"},
-//  {label: "Junior Manager", value: "2"},
-// {label: "Senior Manager", value: "3"},
-//  {label: "Software Intern", value: "6"},
-//  {label: "Marketing Intern", value: "7"},
-// ]
-//import { Stats } from 'fs';
 
 
 class JobStats extends Component {
@@ -39,8 +31,10 @@ class JobStats extends Component {
   }
   componentDidMount() {
 
-    this.props.getgraphData('recruiter1@mail.com');
-   
+    if(this.props.token){
+      console.log("i am here");
+    this.props.getgraphData(this.props.username);
+    }
 
 
   }
@@ -70,7 +64,7 @@ let redirectVar = null;
 
 if(!this.props.token){
         
-  // redirectVar = <Redirect to= "/"/>
+   redirectVar = <Redirect to= "/"/>
 }
 
 
@@ -89,11 +83,15 @@ if(this.state.appmonSel){
   } 
   
   appmonbardata = Object.values(this.props.apppermonth[j]);  
+  
+
+
+
 
 }
 else{
 
-     appmonbardata = Object.values(this.props.apppermonth[0]);  
+  appmonbardata = Object.values(this.props.apppermonth[0]);  
     
 }
 
@@ -313,7 +311,7 @@ if(this.props.toplowapps){
       var appclicksdata = [];
         for(i =0;i < propsave.length;i++){
       
-          appclicksdata.push(propclicks[i].saves);
+          appclicksdata.push(propclicks[i].Clicks);
           appclicksabel.push(propclicks[i].jobtitle);
       
         }  
@@ -484,7 +482,7 @@ if(this.props.toplowapps){
 const mapStateToProps = state => {
   return {
 
-    email: state.user.user.email,
+    username: state.user.user.email,
     user_type: state.user.user_type,
     name: state.user.name,
     token: state.user.token,
