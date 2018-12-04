@@ -207,7 +207,7 @@ export const getinitdataFail = (data) => {
     };
 };
 
-export const reseteditjobs = (data) => {
+export const reseteditjobs = () => {
     return {
        type: actionTypes.RESET_EDIT_JOBS,
        jobedit : '',
