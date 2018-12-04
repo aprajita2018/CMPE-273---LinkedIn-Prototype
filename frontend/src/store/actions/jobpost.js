@@ -207,40 +207,64 @@ export const getinitdataFail = (data) => {
     };
 };
 
+export const reseteditjobs = (data) => {
+    return {
+       type: actionTypes.RESET_EDIT_JOBS,
+       jobedit : '',
+    };
+};
 
-export const getinitdata = (username) => {
+
+
+
+
+
+export const getinitdata = (username, jobedit) => {
     return dispatch => {
-        axios.defaults.withCredentials = true;
-    //     let token = JSON.parse(localStorage.getItem("token"));
-    //     console.log("print token", token );
-    //     var config = {
-    //         headers: {'Authorization': token}
-    //    };
-        axios.get('/postjob',{
-       params: {
-           username: username,
-         }
-        }) 
-    .then((response) => {
-      
-       console.log("Status Code : ",response.status);
-       if(response.status === 200){
-               console.log("Success Post");
-               console.log(response.data.job);
-               dispatch(getinitdataSuccess(response.data.job));
- 
-       }
     
-       })
-       .catch(err => {
-        if(err.response){
+
+    if(jobedit){
+
+        dispatch(getinitdataSuccess(jobedit));
+
+
+    }else{
+        axios.defaults.withCredentials = true;
+        //     let token = JSON.parse(localStorage.getItem("token"));
+        //     console.log("print token", token );
+        //     var config = {
+        //         headers: {'Authorization': token}
+        //    };
+        axios.get('/postjob',{
+            params: {
+                   username: username,
+                 }
+                }) 
+            .then((response) => {
+              
+               console.log("Status Code : ",response.status);
+               if(response.status === 200){
+                       console.log("Success Post");
+                       console.log(response.data.job);
+                       dispatch(getinitdataSuccess(response.data.job));
+         
+               }
             
-            //dispatch(getinitdataFail(err.response));
-            console.log(err.response);
-        }        
-        
-        
-    });
+               })
+               .catch(err => {
+                if(err.response){
+                    
+                    //dispatch(getinitdataFail(err.response));
+                    console.log(err.response);
+                }        
+                
+                
+            });
+
+
+
+    }
+   
        
 
     

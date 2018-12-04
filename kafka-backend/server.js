@@ -1,4 +1,4 @@
-var connection  =  new require('./kafka/Connection');
+var connection = new require("./kafka/Connection");
 
 var getjobpost  = require('./services/getjobpost.js');
 var jobpost     = require('./services/jobpost.js');
@@ -31,51 +31,56 @@ var applyjobclick = require('./services/applyjobclick');
 var makeconnection = require('./services/makeconnection');
 var myviews = require('./services/myviews');
 
+var getConns = require("./services/getConns");
+var getConnsReq = require("./services/getConnsReq");
+var updateConnection = require("./services/updateConnection");
 
-function handleTopicRequest(topic_name,fname){  
-    var consumer = connection.getConsumer(topic_name);
-    var producer = connection.getProducer();
-    console.log('server is running ');
-    consumer.on('message', function (message) {
-  
-        console.log('message received for ' + topic_name +" ", fname);
-        console.log(JSON.stringify(message.value));
-    
-        var data = JSON.parse(message.value);
-        
-        fname.handle_request(data.data, function(err,res){
-        
-            var payloads = [
-                { topic: data.replyTo,
-                    messages:JSON.stringify({
-                        correlationId:data.correlationId,
-                        data : res
-                    }),
-                    partition : 0
-                }
-            ];
-            producer.send(payloads, function(err, data){
-                console.log("Data: ",data);
-            });
-            return; 
-        });  
+function handleTopicRequest(topic_name, fname) {
+  var consumer = connection.getConsumer(topic_name);
+  var producer = connection.getProducer();
+  console.log("server is running ");
+  consumer.on("message", function(message) {
+    console.log("message received for " + topic_name + " ", fname);
+    console.log(JSON.stringify(message.value));
+
+    var data = JSON.parse(message.value);
+
+    fname.handle_request(data.data, function(err, res) {
+      var payloads = [
+        {
+          topic: data.replyTo,
+          messages: JSON.stringify({
+            correlationId: data.correlationId,
+            data: res
+          }),
+          partition: 0
+        }
+      ];
+      producer.send(payloads, function(err, data) {
+        console.log("Data: ", data);
+      });
+      return;
     });
+  });
 }
 
 console.log("Kafka Backend");
-handleTopicRequest("jobpost",jobpost);
-handleTopicRequest("getjobpost",getjobpost);
+handleTopicRequest("jobpost", jobpost);
+handleTopicRequest("getjobpost", getjobpost);
 handleTopicRequest("createuser", createUser);
-handleTopicRequest("getmingraph",GetMinGraph);
-handleTopicRequest("loginuser",loginUser);
-handleTopicRequest("getjobs",getjobs);
-handleTopicRequest("applyjob",applyjob);
-handleTopicRequest("getalljobsforrecruiter",getalljobsforrecruiter);
-handleTopicRequest("graphdata",graphdata);
+handleTopicRequest("getmingraph", GetMinGraph);
+handleTopicRequest("loginuser", loginUser);
+handleTopicRequest("getjobs", getjobs);
+handleTopicRequest("applyjob", applyjob);
+handleTopicRequest("getalljobsforrecruiter", getalljobsforrecruiter);
+handleTopicRequest("graphdata", graphdata);
 handleTopicRequest("getusers", getusers);
 handleTopicRequest("profileviews", profileviews);
-handleTopicRequest("viewapplicants",viewapplicants);
+handleTopicRequest("viewapplicants", viewapplicants);
 handleTopicRequest("makeconnection", makeconnection);
+handleTopicRequest("getConns", getConns);
+handleTopicRequest("getConnsReq", getConnsReq);
+handleTopicRequest("updateConnection", updateConnection);
 
 handleTopicRequest("getprofile",getprofile); 
 handleTopicRequest("getprofile_education",geteducation); 

@@ -454,9 +454,9 @@ class JobPost extends Component {
 }
 componentDidMount(){
 
-    this.props.getinitdata(this.props.username);
-
-
+    this.props.getinitdata(this.props.username ,this.props.jobedit);
+    this.props.resetEditJobs();
+    
 }
 
 startJobHandler(){
@@ -682,7 +682,7 @@ render(){
       
     if(!this.props.token){
         
-        // redirectVar = <Redirect to= "/"/>
+         redirectVar = <Redirect to= "/"/>
     }
     
 
@@ -690,7 +690,9 @@ render(){
     if(this.props.successPost){
         showSuccess = <div className="alert alert-success" role="alert">
     <h2>Job Post Successful</h2>
+    <Redirect to= "/recruiterjobs"/>
       </div>
+      
     }
     if(this.props.failPost){
         showError = <div className="alert-danger">
@@ -1080,6 +1082,7 @@ return {
     draftSuccessFlag: state.jobpost.draftSuccessFlag,
     draftFailFlag : state.jobpost.draftFailFlag,
     token : state.user.token,
+    jobedit : state.user.jobedit,
     // isLoggedIn : state.login.isLoggedIn,
     username : state.user.user.email,
     // unAuthRedirect : state.login.unAuthRedirect
@@ -1088,7 +1091,7 @@ return {
 
 const mapDispatchToProps = dispatch => {
 return {
-    getinitdata:(username) =>dispatch(actions.getinitdata(username)),
+    getinitdata:(username, jobedit) =>dispatch(actions.getinitdata(username,jobedit)),
     showinit : () => dispatch (actions.showInit()),
     showjobdesc : () => dispatch (actions.showJobdesc()),
     showjobqual : () => dispatch (actions.showJobqual()),
@@ -1099,6 +1102,7 @@ return {
     jobcheckout : (data) => dispatch (actions.jobcheckout(data)),
     jobresetErrors : () => dispatch (actions.jobresetErrors()),
     setPropsValue : (data) => dispatch (actions.setpropsvalue(data)),
+    resetEditJobs : ()   => dispatch(actions.reseteditjobs()),
 };
 };
 
