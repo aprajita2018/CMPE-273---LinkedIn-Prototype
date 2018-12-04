@@ -12,6 +12,7 @@ class PersonProfile extends Component {
             applicantid: '',
             jobtitle: '',
             phoneno: '',
+            email:''
         }
 
     }
@@ -28,6 +29,7 @@ class PersonProfile extends Component {
             this.state.applicantid = this.props.props.applicantid;
             this.state.jobtitle = this.props.props.jobtitle;
             this.state.phoneno = this.props.props.phoneno;
+            this.state.email=this.props.props.email;
 
         }
     }
@@ -40,7 +42,8 @@ class PersonProfile extends Component {
 
         return (
             <div>
-               Resume
+               {/* Resume */}
+
             </div>
         )
     }

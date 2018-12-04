@@ -110,19 +110,19 @@ class ConnCard extends Component {
                 {easyapply}
               </Typography> */}
 
-              <CardActions>
-                <Typography variant="h6" gutterBottom>
+              {/* <CardActions> */}
+                {/* <Typography variant="h6" gutterBottom>
                   Connected T hours ago {this.props.renderAgain}
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                  <Button
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "} */}
+                  {/* <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
                   >
                     Message
-                  </Button>
-                </Typography>
-              </CardActions>
+                  </Button> */}
+                {/* </Typography> */}
+              {/* </CardActions> */}
             </CardContent>
           </div>
         </Card>
