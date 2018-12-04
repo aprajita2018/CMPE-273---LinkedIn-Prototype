@@ -33,7 +33,7 @@ const Main = () => (
 
 
             <Route path="/profile/add-skills" component={ProfileSkills} />
-            <Route path="/jobstats" component={JobStats} />
+            <Route exact path="/jobstats" component={JobStats} />
             <Route path="/drawer" component={Carddrawer}/>
             <Route path="/normal" component={NormalApply}/>
             {/* <Route path="/search" component={Search}/> */}

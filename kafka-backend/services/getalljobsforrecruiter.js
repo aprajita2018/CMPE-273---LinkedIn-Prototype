@@ -12,10 +12,10 @@ function handle_request(msg, callback){
  
     console.log("Get job");
     console.log(msg);
-    let username=msg.username ;
+    let username = msg.username ;
 
     Jobs.find({
-         username:username
+         username : username, poststatus :{$eq :'active'}
     }, function(err,jobs){
         if (err) {
             res.code = "400";

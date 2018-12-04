@@ -171,7 +171,7 @@ save() {
   applicantid:this.props.id,
   recruterid:this.props.props.username,
   jobtitile:this.props.props.jobtitle,
-  jobid:this.props.props._id
+  jobid:this.props.props.jobid
 }
 axios.defaults.withCredentials = true;
 

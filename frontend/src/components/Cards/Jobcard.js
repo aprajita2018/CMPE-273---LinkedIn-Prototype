@@ -109,12 +109,7 @@ routeToJob =(e) =>  {
       
         
           <Typography gutterBottom component="h3" variant="heading" className={classes.title}>
-          {this.props.props.jobtitle}&nbsp;&nbsp;<Icon class="fa fa-thumbs-up" aria-hidden="true" style={{
-                position: 'absolute',
-                right: 10,
-                top: 10,
-                
-          }}></Icon>
+          {this.props.props.jobtitle}&nbsp;&nbsp;<Icon class="fa fa-thumbs-up" aria-hidden="true" ></Icon>
           {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
           </Typography>
           <Typography variant="h4" color="black" >

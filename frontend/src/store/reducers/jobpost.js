@@ -1,6 +1,7 @@
 import * as actionTypes from '../actions/actionTypes';
 import { updateObject } from '../utility';
 
+
 const initialState ={
   showinit : true,
   show1stform : false,
@@ -230,6 +231,36 @@ const getinitdataFail = (state ,action) => {
     })
 }
 
+const postjobResetAll = (state ,action) => {
+    return updateObject (state,{
+        showinit : true,
+  show1stform : false,
+  show2ndform : false,
+  show3rdform :false,
+  activeSteps : 0,
+  jobid: '',
+  company : '',
+  jobtitle : '',
+  address : '',
+  jobfunc : '',
+  emptype : '',
+  industry : '',
+  senlevel : '',
+  jobdes : '',
+  recapp : '',
+  source : '',
+  skills : '',
+  explevel : '',
+  edulevel: '',
+  rate : '',
+  easyapply: false,
+  errorFlag : false,
+  successFlag: false,
+  draftSuccessFlag: false,
+  draftFailFlag : false,
+    })
+}
+
 
 
  const reducer = ( state = initialState, action ) => {
@@ -249,10 +280,7 @@ const getinitdataFail = (state ,action) => {
         case actionTypes.POST_JOB_DRAFT_FAIL: return jobdraftFail(state, action);
         case actionTypes.POST_JOB_RESET_ERRORS: return jobResetErrors(state, action);
         case actionTypes.SET_PROPS_VALUE: return setpropsval(state, action);
-
-        
-
-        
+        case actionTypes.POST_JOB_RESET_ALL: return postjobResetAll(state, action);
         default :   
             return state;
     }

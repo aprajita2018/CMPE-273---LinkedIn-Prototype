@@ -101,7 +101,7 @@ class Carddrawer extends Component{
             applicantid:this.props.email,
             recruterid:this.state.job_list[e].username,
             jobtitile:this.state.job_list[e].jobtitle,
-            jobid:this.state.job_list[e]._id
+            jobid:this.state.job_list[e].jobid
         }
         axios.defaults.withCredentials = true;
 
@@ -178,9 +178,12 @@ class Carddrawer extends Component{
                             onChange={this.handleChange('jobtype')}>
                             <option selected >Job Type:</option>
                             <option >Internship</option>
-                            <option>Co-op</option>
+                            <option>Temporary</option>
                             <option>Full-time</option>
-                            <option>Contractor</option>
+                            <option>Part-time</option>
+                            <option>Contract</option>
+                            <option>Volunteer</option>
+                            <option>Other</option>
                         </select>
              
                 </div>

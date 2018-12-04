@@ -207,40 +207,100 @@ export const getinitdataFail = (data) => {
     };
 };
 
+export const reseteditjobs = (data) => {
+    return {
+       type: actionTypes.RESET_EDIT_JOBS,
+       jobedit : '',
+    };
+};
 
-export const getinitdata = (username) => {
+export const postjobresetall = (data) => {
+    return {
+       type: actionTypes.POST_JOB_RESET_ALL,
+       showinit : true,
+  show1stform : false,
+  show2ndform : false,
+  show3rdform :false,
+  activeSteps : 0,
+  jobid: '',
+  company : '',
+  jobtitle : '',
+  address : '',
+  jobfunc : '',
+  emptype : '',
+  industry : '',
+  senlevel : '',
+  jobdes : '',
+  recapp : '',
+  source : '',
+  skills : '',
+  explevel : '',
+  edulevel: '',
+  rate : '',
+  easyapply: false,
+  errorFlag : false,
+  successFlag: false,
+  draftSuccessFlag: false,
+  draftFailFlag : false,
+
+       
+    };
+};
+
+
+
+
+
+
+
+
+
+export const getinitdata = (username, jobedit) => {
     return dispatch => {
-        axios.defaults.withCredentials = true;
-    //     let token = JSON.parse(localStorage.getItem("token"));
-    //     console.log("print token", token );
-    //     var config = {
-    //         headers: {'Authorization': token}
-    //    };
-        axios.get('/postjob',{
-       params: {
-           username: username,
-         }
-        }) 
-    .then((response) => {
-      
-       console.log("Status Code : ",response.status);
-       if(response.status === 200){
-               console.log("Success Post");
-               console.log(response.data.job);
-               dispatch(getinitdataSuccess(response.data.job));
- 
-       }
     
-       })
-       .catch(err => {
-        if(err.response){
+
+    if(jobedit){
+
+        dispatch(getinitdataSuccess(jobedit));
+
+
+    }else{
+        axios.defaults.withCredentials = true;
+        //     let token = JSON.parse(localStorage.getItem("token"));
+        //     console.log("print token", token );
+        //     var config = {
+        //         headers: {'Authorization': token}
+        //    };
+        axios.get('/postjob',{
+            params: {
+                   username: username,
+                 }
+                }) 
+            .then((response) => {
+              
+               console.log("Status Code : ",response.status);
+               if(response.status === 200){
+                       console.log("Success Post");
+                       console.log(response.data.job);
+                       dispatch(getinitdataSuccess(response.data.job));
+         
+               }
             
-            //dispatch(getinitdataFail(err.response));
-            console.log(err.response);
-        }        
-        
-        
-    });
+               })
+               .catch(err => {
+                if(err.response){
+                    
+                    //dispatch(getinitdataFail(err.response));
+                    console.log(err.response);
+                }        
+                
+                
+            });
+
+
+
+    }
+   
        
 
     
@@ -280,5 +340,4 @@ export const getinitdata = (username) => {
     });
     
     }
-}   
-
+}

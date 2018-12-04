@@ -32,7 +32,8 @@ class EasyApply extends Component {
             easy_apply:'',
             recruiterid:'',
             successPost:false,
-            failPost:false
+            failPost:false,
+            errorstatus:''
 
       }
         this.handleChange = this.handleChange.bind(this);
@@ -110,16 +111,17 @@ class EasyApply extends Component {
             })
             .catch(err => {
                 if(err.response){
+                   
                     this.setState({
                         failPost:true,
+                        errorstatus:err.response.data.msg
                     })
                     //dispatch(getinitdataFail(err.response));
                     console.log(err);
                 }   
             });
 
-            if(this.state.successPost)
-            {
+            
             axios.post(BACKEND_HOST + '/applyjobclick',data)
                 .then(response => {
                     console.log("Status Code : ",response);
@@ -134,7 +136,7 @@ class EasyApply extends Component {
                     
                     }
                 });
-            }
+            
 
     }
 
@@ -179,7 +181,7 @@ class EasyApply extends Component {
         }
         if(this.state.failPost){
             showError = <div className="alert-danger">
-        <h4>Application failed, Try Again Later !!</h4>
+        <h4>Application failed- {this.state.errorstatus}, Try Again Later !!</h4>
         
           </div>
         }

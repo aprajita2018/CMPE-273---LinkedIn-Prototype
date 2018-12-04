@@ -113,7 +113,6 @@ function handle_request(msg, callback){
                     applicantzipcode: null,
                     gender: null,
                     hearabout: null,
-                    phoneno: null,
                     source:null
                 };
             }
@@ -144,6 +143,26 @@ function handle_request(msg, callback){
                 };
             }
             console.log(newapply)
+
+
+            var db=mongoose.connection;
+            //console.log(db)
+            db.collection("applyjob").find({jobid:msg.jobid,applicantid:msg.email}).toArray(function(err, people) {
+             if (err) {
+                 res.code = "400";
+                 res.value = "Error in search. Try Again !!";
+                 console.log(res.value);
+                 callback(null,res);
+             } else if(people[0]){
+                 console.log("people in if: ",people);
+                     res.code = 404 ;
+                     res.people = people;
+                     res.message = "Already applied to the job";
+                     res.success = true;
+         
+                     callback(null,res);
+             }
+             else{
                 var apply=mongoose.model('applyjob',applyjob,'applyjob');
                 var applynew=new apply(newapply);
                 applynew.save(function(err,result){
@@ -164,6 +183,10 @@ function handle_request(msg, callback){
                     }; 
                 });
 
+             }
+            });
+
+                
         }
   
         

@@ -66,11 +66,11 @@ class ConnCard extends Component {
     return (
       <CardActionArea>
         <Card className={classes.card}>
-          <CardMedia
+          {/* <CardMedia
             className={classes.cover}
             image="https://d28hgpri8am2if.cloudfront.net/book_images/onix/cvr9781501127625/steve-jobs-9781501127625_lg.jpg"
             title="Property"
-          />
+          /> */}
 
           <div className={classes.details}>
             <CardContent className={classes.content}>
@@ -80,7 +80,7 @@ class ConnCard extends Component {
                 variant="h5"
                 className={classes.title}
               >
-                User Name
+                {this.props.sendername}
                 {/* <Icon
                   class="fa fa-thumbs-up"
                   aria-hidden="true"
@@ -93,7 +93,7 @@ class ConnCard extends Component {
                 {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
               </Typography>
               <Typography variant="h6" color="textPrimary">
-                Occupation
+                Email: {this.props.senderid}
               </Typography>
 
               {/* <Typography gutterBottom variant="h5" color="textSecondary">
@@ -110,18 +110,19 @@ class ConnCard extends Component {
                 {easyapply}
               </Typography> */}
 
-              <CardActions>
-                <Typography variant="h6" gutterBottom>
-                  Connected T hours ago &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "}
-                  <Button
+              {/* <CardActions> */}
+                {/* <Typography variant="h6" gutterBottom>
+                  Connected T hours ago {this.props.renderAgain}
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{" "} */}
+                  {/* <Button
                     variant="contained"
                     color="primary"
                     className={classes.button}
                   >
                     Message
-                  </Button>
-                </Typography>
-              </CardActions>
+                  </Button> */}
+                {/* </Typography> */}
+              {/* </CardActions> */}
             </CardContent>
           </div>
         </Card>

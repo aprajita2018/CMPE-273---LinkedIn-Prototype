@@ -4,19 +4,11 @@ import './JobStats.css';
 import * as actions from '../../store/actions/index';
 import { connect } from 'react-redux';
 import { Bar, Pie } from 'react-chartjs-2';
+import {Redirect} from 'react-router';
 //import Select from 'react-select';
 import CreatableSelect from 'react-select/lib/Creatable';
 
 import NavBar from '../NavBar/NavBar';
-
-// const testop = [
-// {label: "Software Engineering", value: "1"},
-//  {label: "Junior Manager", value: "2"},
-// {label: "Senior Manager", value: "3"},
-//  {label: "Software Intern", value: "6"},
-//  {label: "Marketing Intern", value: "7"},
-// ]
-//import { Stats } from 'fs';
 
 
 class JobStats extends Component {
@@ -39,8 +31,11 @@ class JobStats extends Component {
   }
   componentDidMount() {
 
-    this.props.getgraphData('recruiter1@mail.com');
-   
+    if(this.props.token){
+      
+    this.props.getgraphData(this.props.username);
+    //this.props.getgraphData('recruiter1@mail.com');
+    }
 
 
   }
@@ -57,21 +52,25 @@ class JobStats extends Component {
     }
 
 render() {
-var showappclicks = null;
-var showmonthapp = null;
-var showappstatus = null;
-var showsaveapp = null;
-let showtoplowapp = null;
+var showappclicks = '';
+var showmonthapp = '';
+var showappstatus = '';
+var showsaveapp = '';
+let showtoplowapp = '';
+let showappbycity = '';
 let statuspiedata = [];
 let appmonbardata = [];
 let appbycitydata = [];
-let showappbycity = [];
-let redirectVar = null;
+let showalldata = '';
+
+let redirectVar = '';
+let shownoData = '';
 
 if(!this.props.token){
         
-  // redirectVar = <Redirect to= "/"/>
+   redirectVar = <Redirect to= "/"/>
 }
+
 
 
 if(this.props.apppermonth){
@@ -89,11 +88,15 @@ if(this.state.appmonSel){
   } 
   
   appmonbardata = Object.values(this.props.apppermonth[j]);  
+  
+
+
+
 
 }
 else{
 
-     appmonbardata = Object.values(this.props.apppermonth[0]);  
+  appmonbardata = Object.values(this.props.apppermonth[0]);  
     
 }
 
@@ -313,7 +316,7 @@ if(this.props.toplowapps){
       var appclicksdata = [];
         for(i =0;i < propsave.length;i++){
       
-          appclicksdata.push(propclicks[i].saves);
+          appclicksdata.push(propclicks[i].Clicks);
           appclicksabel.push(propclicks[i].jobtitle);
       
         }  
@@ -344,18 +347,29 @@ if(this.props.toplowapps){
         showappclicks = <h4>No Data Found</h4>
       }
 
-
-
-
-
-
-
-    return (
-      <div>
-        <NavBar />
+      if (!this.props.apppermonth && !this.props.appstatus && !this.props.appsaves && 
+        !this.props.toplowapps && !this.props.appbyCity && !this.props.appClicks){
+           showappclicks = null;
+           showmonthapp = null;
+           showappstatus = null;
+           showsaveapp = null;
+           showtoplowapp = null;
+           showappbycity = null;
+          
+          
+          shownoData = <div className="container" style={{textAlign:'center', margin:'100px' ,minWidth: '600px', padding:'5px'}}>
+          
+          <div className="alert-danger">
+          <h2>No Data Found ...</h2>
+            </div>
+            
+            </div> 
+        }else
+        {
+            showalldata = <div>
+                    <div className="container" style={{ minWidth: '1300px', padding:'5px'}}>
+          <div className="row">
         
-        <div className="container" style={{ minWidth: '1300px', padding:'5px'}}>
-        <div className="row">
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>  
           <h4>Applications per month</h4>
           </div>
@@ -382,29 +396,13 @@ if(this.props.toplowapps){
 
             {showappstatus}
             
-            {/* <Pie
-              //data={piedata}
-              width={220}
-              height={400}
-              options={{
-                maintainAspectRatio: false
-              }}
-            /> */}
+           
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px',margin:'10px' ,borderWidth: '1px', borderStyle: 'groove' }}>
             
           
           {showappbycity}
 
-            {/* <Bar
-              // data={MinAppsBar}
-              redraw
-              width={220}
-              height={400}
-              options={{
-                maintainAspectRatio: false
-              }}
-            /> */}
           </div>
         </div>
        </div>
@@ -413,16 +411,16 @@ if(this.props.toplowapps){
         <div className="row">
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>  
           <label >Select Job Title to View Graph</label>
-          <CreatableSelect options={this.props.appmonSelect} defaultValue={this.props.appmonSelect?this.props.appmonSelect:null} name="appmonSel" onChange={this.handleChange('appmonSel')} />
+          <CreatableSelect options={this.props.appmonSelect?this.props.appmonSelect:''}  name="appmonSel" onChange={this.handleChange('appmonSel')} />
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
           <label >Select Job Title to View Graph</label>
-          <CreatableSelect options={this.props.appstatusSelect} defaultValue={this.props.appstatusSelect?this.props.appstatusSelect:null} name="appstatusSel" onChange={this.handleChange('appstatusSel')} />
+          <CreatableSelect options={this.props.appstatusSelect?this.props.appstatusSelect:''}  name="appstatusSel" onChange={this.handleChange('appstatusSel')} />
           
           </div>
           <div className="col-sm-5" style={{ maxWidth: '400px', margin:'10px'}}>
           <label >Select City to View Graph</label>
-          <CreatableSelect options={this.props.appbyCitySelect} defaultValue={this.props.appbyCitySelect?this.props.appbyCitySelect:null} name="appbycitySel" onChange={this.handleChange('appbycitySel')}  />
+          <CreatableSelect options={this.props.appbyCitySelect?this.props.appbyCitySelect:''}  name="appbycitySel" onChange={this.handleChange('appbycitySel')}  />
           </div>
         </div>
        </div>  
@@ -473,6 +471,29 @@ if(this.props.toplowapps){
 
 
 
+            </div>
+
+        }
+
+
+
+
+
+    return (
+      <div>
+        <NavBar />
+
+        {redirectVar}
+
+        {shownoData}  
+         {showalldata}
+
+
+        
+        
+
+
+
       </div>
 
     )
@@ -484,7 +505,7 @@ if(this.props.toplowapps){
 const mapStateToProps = state => {
   return {
 
-    email: state.user.user.email,
+    username: state.user.user.email,
     user_type: state.user.user_type,
     name: state.user.name,
     token: state.user.token,

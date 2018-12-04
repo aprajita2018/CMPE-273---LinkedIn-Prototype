@@ -1,9 +1,10 @@
-import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB} from '../actions/actionTypes';
+import {LOGIN_USER, SIGNUP_USER, LOGOUT_USER, GET_ALL_JOBS, SET_CURRENT_JOB, SET_JOB_TO_DRAFT, RESET_EDIT_JOBS} from '../actions/actionTypes';
 
 const initialState = {
   user  : {},
   token : "",
   name  : "",
+  jobedit : '',
 };
 
 export default function(state = initialState, action) {
@@ -39,11 +40,25 @@ export default function(state = initialState, action) {
         }
       }
 
+      case SET_JOB_TO_DRAFT:{
+        return {
+          ...state,
+          jobedit: action.payload.job,
+        }
+      }
+
       case LOGOUT_USER:
         console.log("Logging out user. Resetting users store");
         return {
           ...initialState  // resetting the state
         }
+
+      case RESET_EDIT_JOBS:
+      return {
+          ...state,
+          jobedit : action.jobedit,
+
+      }
 
       default:
         return state;
