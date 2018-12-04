@@ -96,7 +96,7 @@ class ConnReqCard extends Component {
     }
 
     return (
-      <CardActionArea>
+      // <CardActionArea>
         <Card className={classes.card}>
           {/* <CardMedia
             className={classes.cover}
@@ -172,7 +172,7 @@ class ConnReqCard extends Component {
             </CardContent>
           </div>
         </Card>
-      </CardActionArea>
+      // </CardActionArea>
     );
   }
 }

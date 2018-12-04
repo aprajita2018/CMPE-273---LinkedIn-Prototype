@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Route } from 'react-router-dom';
-import PDF from 'react-pdf-js';
+
 import './apply.css'
 
 import Iframe from 'react-iframe'
@@ -15,11 +15,7 @@ class PersonProfile extends Component {
             applicantid: '',
             jobtitle: '',
             phoneno: '',
-<<<<<<< HEAD
-         
-=======
             gotit:false
->>>>>>> db21a1095786db8df4169ad78ccb7d0a4261e0d8
         }
 
     }
