@@ -47,6 +47,7 @@ class ConnReqCard extends Component {
       text: "Description of the job title of the comapy andthe job in general ",
       status: ""
     };
+
     this.accept = this.accept.bind(this);
     this.ignore = this.ignore.bind(this);
   }
@@ -61,6 +62,13 @@ class ConnReqCard extends Component {
       status: "Connection Request Accepted",
       disabledAccept: true
     });
+
+    const statusObject = {
+      connectionstatus: "Accepted",
+      receiveremail: this.props.receiveremail,
+      senderid: this.props.senderid
+    };
+    this.props.setStatus(statusObject);
   };
 
   ignore = e => {
@@ -68,6 +76,13 @@ class ConnReqCard extends Component {
       status: "Connection Request Rejected",
       disabledAccept: true
     });
+
+    const statusObject = {
+      connectionstatus: "Ignored",
+      receiveremail: this.props.receiveremail,
+      senderid: this.props.senderid
+    };
+    this.props.setStatus(statusObject);
   };
 
   render() {
@@ -83,11 +98,11 @@ class ConnReqCard extends Component {
     return (
       <CardActionArea>
         <Card className={classes.card}>
-          <CardMedia
+          {/* <CardMedia
             className={classes.cover}
             image="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRepCc8zOyfAGerA49mGbFuQcWVP2Wn8sQ_RGPkJQIiF6Jt1GZ"
             title="Property"
-          />
+          /> */}
 
           <div className={classes.details}>
             <CardContent className={classes.content}>
@@ -97,7 +112,7 @@ class ConnReqCard extends Component {
                 variant="h5"
                 className={classes.title}
               >
-                User Name
+                {this.props.sendername}
                 {/* <Icon
                   class="fa fa-thumbs-up"
                   aria-hidden="true"
@@ -110,7 +125,7 @@ class ConnReqCard extends Component {
                 {/* <i class="fa fa-thumbs-up" aria-hidden="true" style={{justifyContent: 'flex-end'}}></i> */}
               </Typography>
               <Typography variant="h6" color="textPrimary">
-                Occupation
+                Email: {this.props.senderid}
               </Typography>
 
               {/* <Typography gutterBottom variant="h5" color="textSecondary">
