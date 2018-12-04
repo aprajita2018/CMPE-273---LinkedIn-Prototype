@@ -4,6 +4,7 @@ import { Route } from 'react-router-dom';
 import PDF from 'react-pdf-js';
 import './apply.css'
 
+import Iframe from 'react-iframe'
 
 class PersonProfile extends Component {
     constructor() {
@@ -14,7 +15,11 @@ class PersonProfile extends Component {
             applicantid: '',
             jobtitle: '',
             phoneno: '',
+<<<<<<< HEAD
          
+=======
+            gotit:false
+>>>>>>> db21a1095786db8df4169ad78ccb7d0a4261e0d8
         }
 
     }
@@ -31,7 +36,7 @@ class PersonProfile extends Component {
             this.state.applicantid = this.props.props.applicantid;
             this.state.jobtitle = this.props.props.jobtitle;
             this.state.phoneno = this.props.props.phoneno;
-            
+            this.state.gotit=true
         }
     }
 
@@ -40,25 +45,23 @@ class PersonProfile extends Component {
 
 
        // console.log(this.state);
-
+       if(this.state.gotit===true)
+       {
+        var url="https://s3.us-east-2.amazonaws.com/projectli-bucket/"+this.state.applicantid+"_resume.pdf"
+       }
+       // console.log(url)
         return (
             <div>
-               {/* Resume */}
-              
-               <iframe id="inlineFrameExample"
-    title="Inline Frame Example"
-    width="300"
-    height="700"
-    src="file:///home/rajas/Documents/audio.jpg">
-</iframe>
-    {/* <Document
-        file="https://ijcsmc.com/docs/papers/September2015/V4I9201521.pdf"
-        /> */}
-        {/* <PDF
-        file="https://ijcsmc.com/docs/papers/September2015/V4I9201521.pdf"/> */}
-
-              
-
+               
+                <Iframe url=  {url}
+               //<Iframe url="https://s3.us-east-2.amazonaws.com/projectli-bucket/aakash.alurkar95%40gmail.com_resume.pdf" 
+                    width="600px"
+                    height="1000px"
+                    id="myId"
+                    className="myClassname"
+                    display="initial"
+                    position="relative"
+                    allowFullScreen />
             </div>
         )
     }

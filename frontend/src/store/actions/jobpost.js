@@ -214,6 +214,42 @@ export const reseteditjobs = (data) => {
     };
 };
 
+export const postjobresetall = (data) => {
+    return {
+       type: actionTypes.POST_JOB_RESET_ALL,
+       showinit : true,
+  show1stform : false,
+  show2ndform : false,
+  show3rdform :false,
+  activeSteps : 0,
+  jobid: '',
+  company : '',
+  jobtitle : '',
+  address : '',
+  jobfunc : '',
+  emptype : '',
+  industry : '',
+  senlevel : '',
+  jobdes : '',
+  recapp : '',
+  source : '',
+  skills : '',
+  explevel : '',
+  edulevel: '',
+  rate : '',
+  easyapply: false,
+  errorFlag : false,
+  successFlag: false,
+  draftSuccessFlag: false,
+  draftFailFlag : false,
+
+       
+    };
+};
+
+
+
+
 
 
 
@@ -304,5 +340,4 @@ export const getinitdata = (username, jobedit) => {
     });
     
     }
-}   
-
+}

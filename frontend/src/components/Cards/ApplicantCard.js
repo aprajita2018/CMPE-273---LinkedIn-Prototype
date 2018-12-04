@@ -72,7 +72,7 @@ class ApplicantCard extends Component {
               <h5 class="card-title"> {this.props.props.firstname} {this.props.props.lastname}</h5>
               <h6 class="card-subtitle mb-2 text-muted"> {this.props.props.jobtitle}</h6>
               <p class="card-text">{this.props.props.company}</p>
-              <a href="#" class="card-link" onClick={this.routeToProfile}>View Profile</a>
+              <a href="#" class="card-link" onClick={this.routeToProfile}>View Resume</a>
             </div>
           </div>
 
