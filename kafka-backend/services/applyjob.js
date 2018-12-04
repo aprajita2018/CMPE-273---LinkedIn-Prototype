@@ -113,7 +113,6 @@ function handle_request(msg, callback){
                     applicantzipcode: null,
                     gender: null,
                     hearabout: null,
-                    phoneno: null,
                     source:null
                 };
             }

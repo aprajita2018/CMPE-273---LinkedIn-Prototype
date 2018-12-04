@@ -118,8 +118,8 @@ class NormalApply extends Component {
                 }   
             });
            
-            if(this.state.successPost)
-            {
+           
+             
             axios.post(BACKEND_HOST + '/applyjobclick',data)
                 .then(response => {
                     console.log("Status Code : ",response);
@@ -134,7 +134,7 @@ class NormalApply extends Component {
                     
                     }
                 });
-            }
+            
 
             
            

@@ -101,7 +101,7 @@ class Carddrawer extends Component{
             applicantid:this.props.email,
             recruterid:this.state.job_list[e].username,
             jobtitile:this.state.job_list[e].jobtitle,
-            jobid:this.state.job_list[e]._id
+            jobid:this.state.job_list[e].jobid
         }
         axios.defaults.withCredentials = true;
 

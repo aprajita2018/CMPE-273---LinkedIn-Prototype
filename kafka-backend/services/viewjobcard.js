@@ -5,7 +5,8 @@ var config = require('../settings');
 var {Jobs} = require('../models/jobs');
 var { mongoose } = require('../db/mongoose');
 var mysql = require('mysql');
-// var {mysql} = require('../pool');
+// var {connect} = require('../pool');
+const connect = require('../pool');
 
 // mysql.connect(function(err){
 //     if(err) throw err;
@@ -21,10 +22,13 @@ var dbconnection = mysql.createConnection({
 
 dbconnection.connect(function (err) {
     if (err) throw err;
-    console.log("Database connection successfull!");
+    console.log("Database connection successfull in here!");
 });
+
 function handle_request(msg, callback){
     var res = {};
+
+   
 
    
     console.log("MSG in backend", msg);
@@ -33,7 +37,7 @@ function handle_request(msg, callback){
     let jobtitile=msg.jobtitile;
     let jobid=msg.jobid;
 
-    var sqlcheck="SELECT jobid FROM `tracking` WHERE jobid =" + mysql.escape(jobid);
+    var sqlcheck="SELECT jobid FROM `tracking` WHERE jobid =" + mysql.escape(jobid)+" AND applicantid ="+mysql.escape(applicantid);
     dbconnection.query(sqlcheck, function (err, result) {
 
         if (err) {
@@ -75,7 +79,7 @@ function handle_request(msg, callback){
             // res.end("Successful Login");
         }
     })
-
+    
    
  
    
