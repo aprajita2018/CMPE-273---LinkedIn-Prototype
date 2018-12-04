@@ -1,15 +1,11 @@
 import React, { Component } from 'react';
 import '../../App.css';
-// import '../../drawer.css'
 import axios from 'axios';
-import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
-import PeopleSearch from '../Search/PeopleSearch';
 import PeopleCard from '../Cards/PeopleCard';
-import PersonProfile from '../Jobopen/PersonProfile';
 import Navbar from '../NavBar/NavBar';
 import { BACKEND_HOST } from '../../store/actions/host_config';
 import { connect } from 'react-redux';
+import PersonProfile from '../Jobopen/PersonProfile';
 
 class PeopleDrawer extends Component {
 
@@ -147,12 +143,12 @@ class PeopleDrawer extends Component {
                 </nav>
                 <div class="container-fluid">
                     <div class="row">
-                        <div class="col-md">
+                        <div class="col-md-6 listing-block">
                             {elements}
-                        {/* </div>
+                        </div>
                         <div class="col-md-6 listing-block">
                             <PersonProfile props={this.state.person_list[this.state.tosendpersoncard]} />
-                            {elements} */}
+                            {/* {elements} */}
                         </div>
 
                     </div>
