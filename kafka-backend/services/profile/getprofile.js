@@ -35,8 +35,6 @@ var { users } = require('../../models/user');
 
 
 var bcrypt = require('bcrypt-nodejs');
-//var AWS = require('aws-sdk');
-//AWS.config.update({"accessKeyId": "AKIAISHXQVRQVMLKEUEA", "secretAccessKey": "lokYnAycKfHbbMI+c41FfW//UQwyRkPxYunCJPIXs+", "region": "us-east-2" })
 
 
 function handle_request(msg, callback){

@@ -10,7 +10,7 @@ const multer = require('multer');
 var filename = "";
 var counter = 0;
 var AWS = require('aws-sdk');
-AWS.config.update({"accessKeyId": "AKIAISHXQVRQVMLKEUEA", "secretAccessKey": "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", "region": "us-east-2" })
+AWS.config.update({"accessKeyId": ""/*AWS Access Key*/, "secretAccessKey": ""/*AWS Access Key*/, "region": "us-east-2" })
 
 
 const storage = multer.diskStorage({
@@ -57,7 +57,7 @@ router.get('/:username', function (req, res) {
         else{
         //    response.image = null;
             var bucket = new AWS.S3();
-             bucket.getObject({ Bucket : 'projectli-bucket',Key : response.email+'_photo.jpg'} ,function (err,image){
+             bucket.getObject({ Bucket : ''/*AWS Bucket Name*/,Key : response.email+'_photo.jpg'} ,function (err,image){
                  if(err)
                 {
                     console.log(err);

@@ -7,7 +7,7 @@ var router = express.Router();
 const fs = require('fs');
 const path = require('path');
 var AWS = require('aws-sdk');
-AWS.config.update({"accessKeyId": "AKIAISHXQVRQVMLKEUEA", "secretAccessKey": "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", "region": "us-east-2" })
+AWS.config.update({"accessKeyId": ""/*AWS Access Key*/, "secretAccessKey": ""/*AWS Access Key*/, "region": "us-east-2" })
 
 
 const storage = multer.diskStorage({
@@ -48,7 +48,7 @@ router.post('/:username', upload.array("images[]", 10), (req, res) => {
         base64img = new Buffer(img).toString('base64');
         
         bucket.upload({
-            Bucket : 'projectli-bucket',
+            Bucket : '' /*AWS Bucket Name */,
             Key : req.params.username+'_photo.jpg',
             Body : img,
           //  ContentEncoding: 'base64', 

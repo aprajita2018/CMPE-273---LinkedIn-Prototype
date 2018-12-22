@@ -8,7 +8,7 @@ const fs = require('fs');
 const path = require('path');
 
 var AWS = require('aws-sdk');
-AWS.config.update({"accessKeyId": "AKIAISHXQVRQVMLKEUEA", "secretAccessKey": "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", "region": "us-east-2" })
+AWS.config.update({"accessKeyId": ""/*AWS Access Key*/, "secretAccessKey": ""/*AWS Access Key*/, "region": "us-east-2" })
 
 
 const storage = multer.diskStorage({
@@ -40,7 +40,7 @@ router.post('/:username', upload.array("resume", 10), (req, res) => {
     var pdf = fs.readFileSync(fileLocation);
    
     bucket.upload({
-        Bucket : 'projectli-bucket',
+        Bucket : /*AWS Bucket Name */'',
         Key : req.params.username+'_resume.pdf',
         Body : pdf,
         ContentDisposition : 'inline',
